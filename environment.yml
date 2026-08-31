@@ -39,6 +39,3 @@ dependencies:
   - uv
   - pip:
       - inspect-ai
-      - types-networkx
-      - types-psutil
-      - types-PyYAML

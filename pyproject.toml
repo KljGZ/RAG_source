@@ -59,9 +59,6 @@ dev = [
   "pytest>=8.4",
   "pytest-xdist>=3.8",
   "ruff>=0.12",
-  "types-networkx>=3.5",
-  "types-psutil>=7",
-  "types-PyYAML>=6",
 ]
 
 [project.scripts]
@@ -87,6 +84,10 @@ python_version = "3.11"
 strict = true
 packages = ["provtrust"]
 warn_unreachable = true
+
+[[tool.mypy.overrides]]
+module = ["networkx", "psutil", "yaml"]
+ignore_missing_imports = true
 
 [tool.coverage.run]
 branch = true
