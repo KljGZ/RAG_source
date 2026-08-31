@@ -1,5 +1,5 @@
 {
-  "captured_at": "2026-08-31T14:55:39.563123+00:00",
+  "captured_at": "2026-08-31T15:00:06.365695+00:00",
   "checks": {
     "browser": {
       "chromium": "/home/jkl/provtrust_cache/ms-playwright/chromium-1117/chrome-linux/chrome",
@@ -36,8 +36,8 @@
     "git": {
       "branch": "codex/v0",
       "checks_passed": true,
-      "clean": false,
-      "head": "0706b53cf48081a8a30668ce9a879a3a030ef266"
+      "clean": true,
+      "head": "c3c522e2292af9d6ca847edf51a3c2a9cac11967"
     },
     "gpu_inventory": {
       "command": {
@@ -125,15 +125,10 @@
         "clubSandwich": "0.7.0",
         "emmeans": "2.0.4",
         "glmmTMB": "1.1.14",
-        "lme4": "2.0-6",
+        "lme4": "2.0.6",
         "targets": "1.12.0"
       },
-      "mismatches": {
-        "lme4": {
-          "expected": "2.0-6",
-          "observed": "2.0.6"
-        }
-      },
+      "mismatches": {},
       "observed": {
         "R": "4.5.3",
         "TOSTER": "0.8.6",
@@ -144,7 +139,7 @@
         "lme4": "2.0.6",
         "targets": "1.12.0"
       },
-      "passed": false
+      "passed": true
     },
     "services": {
       "passed": true,
@@ -178,7 +173,7 @@
       "stdout": ""
     }
   },
-  "passed": false,
+  "passed": true,
   "resource_gate": {
     "cuda_context_created": false,
     "experiments_executed": false,
@@ -191,7 +186,7 @@
     "conda_prefix": null,
     "cpu_logical": 384,
     "cpu_physical": 192,
-    "disk_free_gib": 2497.44,
+    "disk_free_gib": 2497.203,
     "disk_total_gib": 3518.714,
     "memory_total_gib": 503.401,
     "platform": "Linux-6.11.0-17-generic-x86_64-with-glibc2.39",
