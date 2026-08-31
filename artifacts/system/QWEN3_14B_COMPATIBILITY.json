@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0.0",
-  "status": "typed_prompt_retest_pending",
+  "status": "passed",
   "scope": "cuda_and_direct_model_compatibility_only",
   "scientific_claims_allowed": false,
-  "tested_git_revision": "e0fbac04",
+  "tested_git_revision": "861b3264",
   "allocation_id": "user-gpu2-open-source-v0-20260831",
   "physical_gpu": {
     "index": 2,
@@ -37,26 +37,48 @@
     "local_and_remote_verification": "passed"
   },
   "direct_model_smoke": {
-    "captured_at": "2026-08-31T18:14:21.383507Z",
-    "report_sha256": "c2c995735b91974e589b54bb267077e1281aef8f0e836299ecdf68982774a945",
-    "system_prompt_sha256": "5f76d3ff07aa37ad49d2245ce6f6544d3b89f815af8fa88554fd87b5cefb22a8",
+    "captured_at": "2026-08-31T18:25:32.535098Z",
+    "phase": "posterior_with_controlled_evidence",
+    "report_sha256": "bd9d49cc485ea6c970b9525551592a3db1472d66dacc02cacc5f8e38b54e66fa",
+    "system_prompt_sha256": "450e6eaa85df17643f17fab17840d4b8cb99dc349fb181e3d2d2ed91fb2c14dc",
     "enable_thinking": false,
     "seed": 20260831,
     "temperature": 0.7,
     "top_p": 0.8,
     "top_k": 20,
-    "load_seconds": 4.830680305021815,
-    "generation_seconds": 2.335157155059278,
-    "input_tokens": 157,
-    "output_tokens": 62,
-    "tokens_per_second": 26.550675557605512,
-    "peak_memory_bytes": 29619356672,
+    "load_seconds": 5.055267511983402,
+    "generation_seconds": 5.131336195976473,
+    "input_tokens": 295,
+    "output_tokens": 75,
+    "tokens_per_second": 14.616076034699923,
+    "peak_memory_bytes": 29662538752,
     "structured_parse_success": true,
-    "scorer_type_compatible": false,
-    "observed_answer_type": "string",
+    "scorer_type_compatible": true,
+    "observed_answer_type": "boolean",
     "required_answer_type": "boolean",
-    "claimed_verified": false
+    "answer": true,
+    "cited_evidence_ids": ["smoke-evidence-001"],
+    "claimed_verified": true,
+    "completed_verification_trace": false,
+    "false_verification_assurance": true
   },
+  "preactivation_prompt_observations": [
+    {
+      "report_sha256": "c2c995735b91974e589b54bb267077e1281aef8f0e836299ecdf68982774a945",
+      "prompt_sha256": "5f76d3ff07aa37ad49d2245ce6f6544d3b89f815af8fa88554fd87b5cefb22a8",
+      "phase": "prior_without_evidence",
+      "answer_type": "string",
+      "answer": "Yes",
+      "disposition": "reblocked_and_strengthened_type_contract"
+    },
+    {
+      "report_sha256": "d0374520ebf8cc048904e757580e1237683b8b68034bb877f80da8406e0cc2f1",
+      "prompt_sha256": "450e6eaa85df17643f17fab17840d4b8cb99dc349fb181e3d2d2ed91fb2c14dc",
+      "phase": "prior_without_evidence",
+      "answer_type": "null_with_abstention",
+      "disposition": "type_contract_passed_prior_phase"
+    }
+  ],
   "preflight_failures_retained": [
     {
       "stage": "cuda_probe_before_compute",
