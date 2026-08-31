@@ -24,7 +24,7 @@ mkdir -p "$LOCK_DIR"
 
 "$ENV_PREFIX/bin/Rscript" -e '
   output <- commandArgs(trailingOnly = TRUE)[1]
-  packages <- as.data.frame(installed.packages()[, c("Package", "Version", "LibPath")])
+  packages <- as.data.frame(installed.packages()[, c("Package", "Version")])
   packages <- packages[order(packages$Package), ]
   write.table(packages, file = output, sep = "\t", row.names = FALSE, quote = FALSE)
 ' "$LOCK_DIR/r-linux-64.tsv"
