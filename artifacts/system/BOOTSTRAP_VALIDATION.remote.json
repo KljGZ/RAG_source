@@ -18,6 +18,12 @@
     "ruff": "passed",
     "mypy": "passed"
   },
+  "version_control": {
+    "repository": "KljGZ/RAG_source",
+    "stage_branch": "codex/bootstrap",
+    "default_branch": "main",
+    "tag": "bootstrap-v0.1.0"
+  },
   "network": {
     "conda_forge_mirror": "https://mirrors.ustc.edu.cn/anaconda/cloud",
     "bootstrap_force_ipv4": true,

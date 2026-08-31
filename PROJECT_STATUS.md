@@ -8,7 +8,7 @@ Current stage: **infrastructure bootstrap**
 - [x] Conda-based environment specification created
 - [x] Remote `provtrust` environment installed and verified
 - [x] Environment lock files generated
-- [ ] Bootstrap checkpoint pushed and tagged
+- [x] Bootstrap checkpoint pushed and tagged
 - [ ] V0 scientific implementation started
 
 Validation on the target node:
