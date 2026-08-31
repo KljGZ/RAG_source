@@ -106,8 +106,22 @@ def main() -> int:
             "content": json.dumps(
                 {
                     "track": "deployment_smoke",
-                    "phase": "prior",
-                    "question": "Is this a harmless isolated model compatibility check?",
+                    "phase": "posterior",
+                    "question": "Is this fixture restricted to isolated deployment validation?",
+                    "candidate_claim": (
+                        "The fixture is used only for isolated deployment validation."
+                    ),
+                    "documents": [
+                        {
+                            "evidence_id": "smoke-evidence-001",
+                            "displayed_source": "Controlled Fixture Publisher",
+                            "text": (
+                                "This is a harmless deployment fixture used only to validate "
+                                "the isolated source service."
+                            ),
+                        }
+                    ],
+                    "user_endorsement": False,
                 },
                 sort_keys=True,
             ),
