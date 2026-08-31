@@ -1,0 +1,39 @@
+name: provtrust
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - setuptools
+  - wheel
+  - numpy
+  - scipy
+  - pandas
+  - polars
+  - pyarrow
+  - duckdb
+  - scikit-learn
+  - statsmodels
+  - matplotlib-base
+  - networkx
+  - pydantic>=2,<3
+  - httpx
+  - tenacity
+  - orjson
+  - jsonschema
+  - jinja2
+  - typer
+  - rich
+  - pyyaml
+  - python-dotenv
+  - fastapi
+  - uvicorn
+  - aiofiles
+  - pytest
+  - pytest-xdist
+  - hypothesis
+  - ruff
+  - mypy
+  - pre-commit
+  - pip:
+      - inspect-ai

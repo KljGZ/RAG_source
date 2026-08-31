@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0.0",
+  "captured_on": "2026-08-31",
+  "operating_system": "Ubuntu 24.04.2 LTS",
+  "kernel": "6.11.0-17-generic",
+  "architecture": "x86_64",
+  "cpu": {
+    "model": "AMD EPYC 9654 96-Core Processor",
+    "sockets": 2,
+    "cores_per_socket": 96,
+    "logical_cpus": 384
+  },
+  "memory_gib": 503,
+  "root_filesystem": {
+    "type": "ext4",
+    "size_tib": 3.5,
+    "available_tib": 2.6
+  },
+  "gpus": [
+    {
+      "index": 0,
+      "name": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "memory_mib": 97887,
+      "compute_capability": "12.0"
+    },
+    {
+      "index": 1,
+      "name": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "memory_mib": 97887,
+      "compute_capability": "12.0"
+    },
+    {
+      "index": 2,
+      "name": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "memory_mib": 97887,
+      "compute_capability": "12.0"
+    }
+  ],
+  "nvidia_driver": "610.43.02",
+  "scheduler": null,
+  "container_runtime": null,
+  "system_restart_pending": true
+}

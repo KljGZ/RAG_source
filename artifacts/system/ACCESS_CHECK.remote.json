@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0.0",
+  "captured_on": "2026-08-31",
+  "ssh": "reachable",
+  "github": "reachable",
+  "pypi": "reachable",
+  "huggingface": "timeout",
+  "notes": [
+    "Use verified upload and offline model paths for Hugging Face artifacts.",
+    "The server has no curl, Docker, Apptainer, or job scheduler at bootstrap."
+  ]
+}

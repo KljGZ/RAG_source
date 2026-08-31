@@ -1,0 +1,14 @@
+name: provtrust
+channels:
+  - conda-forge
+dependencies:
+  - r-base>=4.3
+  - r-renv
+  - r-lme4
+  - r-glmmtmb
+  - r-emmeans
+  - r-clubsandwich
+  - r-boot
+  - r-toster
+  - r-targets
+  - r-arrow

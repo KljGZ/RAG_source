@@ -1,0 +1,9 @@
+name: provtrust
+channels:
+  - conda-forge
+dependencies:
+  - beautifulsoup4
+  - lxml
+  - playwright
+  - pip:
+      - trafilatura

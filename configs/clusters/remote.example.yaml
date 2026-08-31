@@ -1,0 +1,20 @@
+schema_version: "1.0.0"
+ssh:
+  host: "REMOTE_HOST"
+  port: 22
+  user: "REMOTE_USER"
+  password_storage: "never"
+compute:
+  scheduler: "none"
+  gpu_count: 0
+paths:
+  repository: "/home/REMOTE_USER/projects/RAG_source"
+  conda_root: "/home/REMOTE_USER/miniforge3"
+  conda_environment: "provtrust"
+  data: "/home/REMOTE_USER/provtrust_data"
+  cache: "/home/REMOTE_USER/provtrust_cache"
+  runs: "/home/REMOTE_USER/provtrust_runs"
+ports:
+  controlled_web: 18080
+  controlled_search: 18081
+  inspect_viewer: 17500

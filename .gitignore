@@ -1,0 +1,46 @@
+# Secrets and machine-local configuration
+.env
+.env.*
+!.env.example
+*.local.yaml
+configs/ssh/*.local.conf
+
+# Python and Conda
+.venv/
+.conda/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+.coverage
+htmlcov/
+
+# Editors and operating systems
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Large or generated research state
+benchmark/source_snapshots/
+benchmark/synthetic/generated/
+artifacts/runs/
+artifacts/analyses/
+artifacts/figures/
+artifacts/tables/
+artifacts/publication/
+models/
+data/
+*.parquet
+*.arrow
+*.safetensors
+*.bin
+*.pt
+*.pth
+
+# Keep directory placeholders and system audit records
+!artifacts/system/
+!artifacts/system/**
