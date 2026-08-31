@@ -4,19 +4,76 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "provenance-trust-bench"
-version = "0.0.1"
+version = "0.1.0"
 description = "Provenance-grounded source discernment research infrastructure"
 readme = "README.md"
 requires-python = ">=3.11,<3.12"
 license = { text = "Apache-2.0" }
 authors = [{ name = "ProvenanceTrustBench contributors" }]
+dependencies = [
+  "duckdb>=1.3",
+  "fastapi>=0.116",
+  "httpx>=0.28",
+  "inspect-ai>=0.3.261,<0.4",
+  "jinja2>=3.1",
+  "jsonschema>=4.25",
+  "networkx>=3.5",
+  "numpy>=2.2",
+  "orjson>=3.11",
+  "pandas>=2.3",
+  "polars>=1.32",
+  "psutil>=7.0",
+  "pyarrow>=21",
+  "pydantic>=2.11,<3",
+  "pyyaml>=6.0",
+  "rich>=14",
+  "scikit-learn>=1.7",
+  "scipy>=1.16",
+  "statsmodels>=0.14",
+  "tenacity>=9.1",
+  "typer>=0.16",
+  "uvicorn>=0.35",
+]
+
+[project.optional-dependencies]
+browser = [
+  "beautifulsoup4>=4.13",
+  "browsergym-core>=0.13",
+  "lxml>=6",
+  "playwright>=1.54",
+  "trafilatura>=2",
+]
+evaluation = [
+  "sentence-transformers>=5",
+  "transformers>=4.56",
+]
+bayes = [
+  "arviz>=0.22",
+  "bambi>=0.15",
+  "pymc>=5.25",
+]
+dev = [
+  "hypothesis>=6.138",
+  "mypy>=1.17",
+  "pre-commit>=4.3",
+  "pytest>=8.4",
+  "pytest-xdist>=3.8",
+  "ruff>=0.12",
+]
+
+[project.scripts]
+provtrust = "provtrust.cli:app"
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "-ra"
+addopts = "-ra --strict-config --strict-markers"
+markers = [
+  "integration: requires local services but no external model calls",
+  "optional: requires an optional dependency layer",
+]
 
 [tool.ruff]
 target-version = "py311"
@@ -26,3 +83,12 @@ line-length = 100
 python_version = "3.11"
 strict = true
 packages = ["provtrust"]
+warn_unreachable = true
+
+[tool.coverage.run]
+branch = true
+source = ["provtrust"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 80

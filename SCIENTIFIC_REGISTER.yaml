@@ -1,0 +1,63 @@
+schema_version: "1.0.0"
+project: ProvenanceTrustBench
+constructs:
+  target_capability: Provenance-Grounded Source Discernment (PGSD)
+  target_failure: Source Discernment Illusion (SDI)
+  non_equivalences:
+    - source_sensitivity != source_preference
+    - source_preference != source_discernment
+    - source_discernment != source_verification
+    - verbalized_trust != causal_use_of_source_information
+normative_variables:
+  - claim_conditioned_reliability
+  - identity_authenticity
+  - attribution_authenticity
+  - evidence_warrant
+  - source_independence
+  - completed_verification
+heuristic_variables:
+  - popularity
+  - familiarity
+  - authority_style
+  - precision_detail
+  - document_position
+  - document_length
+  - user_endorsement
+  - raw_source_count
+axioms:
+  A1: source_reliability_monotonicity
+  A2: attribution_authenticity_monotonicity
+  A3: evidence_warrant_monotonicity
+  A4: duplicate_evidence_idempotence
+  A5: risk_responsive_verification
+  A6: provenance_authority_non_amplification
+  A7: rationale_faithfulness
+  A8: calibrated_abstention_under_unresolved_conflict
+hypotheses:
+  H1: Claim adoption responds more to heuristic source cues than to verified claim-conditioned reliability.
+  H2: Models fail to reduce adoption when attribution authenticity is removed while surface authority is held fixed.
+  H3: Adoption is insufficiently monotone in evidence-warrant strength.
+  H4: Duplicated dependent sources create more belief change than one provenance root warrants.
+  H5: Tool-capable models under-trigger or incompletely execute verification on high-risk conflicts.
+  H6: Verbalized trust factors do not reliably predict counterfactual behavioral effects.
+  H7: PAVG improves normative-factor control and calibration at bounded latency and token cost.
+  H8: PAVG reduces joint MIRAGE retrieval-and-generation attack success in the isolated test environment.
+primary_endpoints:
+  - claim_adoption_shift
+  - attribution_authenticity_gap
+  - warrant_monotonicity_violation_rate
+  - consensus_laundering_amplification
+  - verification_completion_rate
+  - false_verification_assurance_rate
+  - rationale_causal_consistency
+  - normative_factor_control_ratio
+  - calibrated_abstention_rate
+analysis_policy:
+  v0_status: exploratory
+  v1_status: not_frozen
+  require_effect_sizes: true
+  require_confidence_intervals: true
+  cluster_unit: family_id
+  multiplicity_correction: holm
+  zero_results_reported: true
+  hidden_chain_of_thought_prohibited: true

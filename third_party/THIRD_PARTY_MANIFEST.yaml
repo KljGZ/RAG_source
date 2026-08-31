@@ -1,0 +1,60 @@
+schema_version: "1.0.0"
+audited_at: "2026-08-31"
+policy: >-
+  Dependencies are consumed through packages, manifests, or user-local clones.
+  Repositories without an explicit license are neither copied nor redistributed.
+resources:
+  - id: inspect_ai
+    url: https://github.com/UKGovernmentBEIS/inspect_ai
+    commit: a729c36bbc8789571edc093ff87223f723941761
+    license: MIT
+    use: installed Python dependency and orchestration API
+    copy_code: false
+  - id: learn2discern
+    url: https://github.com/josh-ashkinaze/l2d-public
+    commit: e5a4c510abac8e7cf19bed5fe6697c8f6a19d6b5
+    license: NO-LICENSE-DETECTED
+    use: user-local data adapter and replication metadata
+    copy_code: false
+  - id: groupqa
+    url: https://github.com/anaphade/GroupQA
+    commit: 712904d0b16bafd06f0e2f369adafb669897e9a4
+    license: NO-LICENSE-DETECTED
+    use: design reference for conflict, duplication, order, and leave-one-out tests
+    copy_code: false
+  - id: authoritybench
+    url: https://github.com/floating-reeds/AuthorityBench
+    commit: 7b87bd4790c4f13a072681a174f2545f2e126a8f
+    license: NO-LICENSE-DETECTED
+    use: design reference for claim truth by citation truth
+    copy_code: false
+  - id: ragchecker
+    url: https://github.com/amazon-science/RAGChecker
+    commit: 6091f08c00e676e87a970f2aeb4a23a484746348
+    license: Apache-2.0
+    use: optional claim-level support and RAG diagnostics adapter
+    copy_code: false
+  - id: alce
+    url: https://github.com/princeton-nlp/ALCE
+    commit: 246c476a4edfc564266b7346b6e29ef4861ae937
+    license: MIT
+    use: citation correctness and completeness baselines
+    copy_code: false
+  - id: sourcecheckup
+    url: https://github.com/kevinwu23/SourceCheckup
+    commit: da945e3d0a55aef5b60785a4a05b2469a7ed5062
+    license: NO-LICENSE-DETECTED
+    use: design reference for statement-citation pairing and URL retrieval
+    copy_code: false
+  - id: browsergym
+    url: https://github.com/ServiceNow/BrowserGym
+    commit: 9e779f087de9a65668b6974d11f9ce9816026e96
+    license: Apache-2.0
+    use: optional V2 browser interaction environment
+    copy_code: false
+  - id: mirage
+    url: https://github.com/SuburbiaXX/MIRAGE
+    commit: 5e71fa0d20173010ac765622a8bb51e3e514b25a
+    license: NO-LICENSE-DETECTED
+    use: isolated manifest adapter and final adversarial pressure test only
+    copy_code: false

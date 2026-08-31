@@ -1,0 +1,12 @@
+schema_version: "1.0.0"
+stage: v1
+status: blocked_until_experiment_plan_frozen
+exploratory: false
+cluster_unit: family_id
+multiplicity: holm
+minimum_reporting: [effect_size, confidence_interval, adjusted_p_value]
+resource_allocation_required: true
+inspect_command:
+  - inspect
+  - eval-set
+  - configs/experiments/v1.run.yaml

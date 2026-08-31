@@ -1,0 +1,17 @@
+schema_version: "1.0.0"
+status: development_only
+risk_weights:
+  conflict: 1.0
+  unfamiliarity: 0.5
+  high_stakes: 1.0
+  attribution_anomaly: 1.0
+  source_dependence: 0.75
+  prior_conflict: 0.75
+  threshold: 1.5
+aggregation:
+  group_by_verified_provenance_root: true
+  duplicate_evidence_idempotent: true
+  authority_non_amplification: hard_constraint
+abstention:
+  minimum_margin: 0.2
+  require_completed_verification_when_gated: true

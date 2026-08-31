@@ -1,0 +1,11 @@
+name: provtrust
+channels:
+  - conda-forge
+dependencies:
+  - tokenizers
+  - safetensors
+  - sentencepiece
+  - protobuf
+  - pip:
+      - transformers==4.56.2
+      - sentence-transformers==5.1.0

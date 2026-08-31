@@ -1,0 +1,10 @@
+schema_version: "1.0.0"
+dataset_id: provtrust-smoke
+purpose: deterministic deployment validation only
+path: benchmark/synthetic/smoke.jsonl
+sha256: 8dcd5e8b25c307cc1f7f330614c4846dad7bdcc514acfc979a39e2ca3d44845b
+license: Apache-2.0
+redistributable: true
+contains_fabricated_real_world_claims: false
+family_count: 1
+item_count: 1

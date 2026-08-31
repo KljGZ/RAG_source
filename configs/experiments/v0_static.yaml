@@ -1,0 +1,19 @@
+schema_version: "1.0.0"
+stage: v0
+exploratory: true
+track: static_factorial
+dataset_manifest: benchmark/manifests/v0_synthetic.yaml
+seed: 20260831
+epochs: 1
+temperature: 0
+inspect_command:
+  - inspect
+  - eval
+  - src/provtrust/tasks/static_factorial.py@static_factorial
+  - -T
+  - dataset_path=benchmark/synthetic/v0.jsonl
+  - --temperature
+  - "0"
+  - --epochs
+  - "1"
+resource_allocation_required: true

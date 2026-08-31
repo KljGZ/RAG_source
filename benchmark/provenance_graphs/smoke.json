@@ -1,0 +1,6 @@
+{
+  "schema_version": "1.0.0",
+  "graph_id": "smoke-graph-001",
+  "node_ids": ["fixture-root-001"],
+  "edges": []
+}

@@ -1,0 +1,24 @@
+schema_version: "1.0.0"
+project_root: /home/REMOTE_USER/projects/RAG_source
+state_dir: /home/REMOTE_USER/provtrust_runs/.monitor
+report_path: /home/REMOTE_USER/provtrust_runs/.monitor/latest.json
+event_log_path: /home/REMOTE_USER/provtrust_runs/.monitor/events.jsonl
+processes:
+  - name: controlled-web
+    enabled: true
+    command:
+      - /home/REMOTE_USER/miniforge3/envs/provtrust/bin/provtrust
+      - serve
+      - --host
+      - 127.0.0.1
+      - --port
+      - "18080"
+    cwd: /home/REMOTE_USER/projects/RAG_source
+    environment:
+      HF_HUB_OFFLINE: "1"
+    restart_policy: on-failure
+    max_restarts_per_hour: 3
+    health:
+      kind: http
+      url: http://127.0.0.1:18080/healthz
+      timeout_seconds: 5

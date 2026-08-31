@@ -1,0 +1,8 @@
+{
+  "FIXTURE-2026-001": {
+    "source_id": "controlled-fixture",
+    "document_id": "fixture-001",
+    "published_at": "2026-08-31T00:00:00Z",
+    "snapshot_hash": "acfbe3366b85b0ad58a7f086974982768620fd8e76756fbacf84c07f146a543e"
+  }
+}

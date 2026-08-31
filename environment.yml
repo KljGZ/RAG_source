@@ -35,5 +35,7 @@ dependencies:
   - ruff
   - mypy
   - pre-commit
+  - psutil
+  - uv
   - pip:
       - inspect-ai

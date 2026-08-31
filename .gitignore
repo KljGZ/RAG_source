@@ -25,8 +25,11 @@ htmlcov/
 Thumbs.db
 
 # Large or generated research state
-benchmark/source_snapshots/
+benchmark/source_snapshots/*
+!benchmark/source_snapshots/.gitkeep
 benchmark/synthetic/generated/
+web_env/spoofed_sources/*
+!web_env/spoofed_sources/.gitkeep
 artifacts/runs/
 artifacts/analyses/
 artifacts/figures/
@@ -40,6 +43,12 @@ data/
 *.bin
 *.pt
 *.pth
+*.onnx
+
+# Runtime state and downloaded upstream checkouts
+third_party/checkouts/
+.playwright/
+artifacts/system/*.local.json
 
 # Keep directory placeholders and system audit records
 !artifacts/system/

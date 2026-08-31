@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0.0",
+  "status": "v0_development_freeze",
+  "prompts": [
+    {
+      "path": "prompts/frozen/answer-system-v0.txt",
+      "sha256": "a6fe77ddcba2f08ccb6d57515f81e3431ec30029ebe5fad9d0bab3a2fa4bb23c",
+      "purpose": "answer system prompt"
+    },
+    {
+      "path": "prompts/frozen/verification-system-v0.txt",
+      "sha256": "34dc54d54ae43875700510643b4e8a3e3ab2cf35b7b3672623167f4bb21fbbf5",
+      "purpose": "verification policy prompt"
+    },
+    {
+      "path": "prompts/frozen/rationale-system-v0.txt",
+      "sha256": "540fff794cfc0a5c35981057393afd7c1b5f1f36b03560a98ce02b20043339b3",
+      "purpose": "declared factor prompt"
+    },
+    {
+      "path": "prompts/frozen/judge-claim-support-v0.txt",
+      "sha256": "fa184ff9fd19b4d0521ccf110ad7f84ff7f1afa87b333b4bd71c8d78f0d5b632",
+      "purpose": "claim-evidence relation judge"
+    }
+  ]
+}

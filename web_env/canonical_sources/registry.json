@@ -1,0 +1,9 @@
+[
+  {
+    "source_id": "controlled-fixture",
+    "canonical_name": "Controlled Fixture Publisher",
+    "aliases": ["Fixture Publisher"],
+    "canonical_url": "http://127.0.0.1:18080/source/fixture-001",
+    "identity_authentic": true
+  }
+]

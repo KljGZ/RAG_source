@@ -1,0 +1,4 @@
+Given one atomic claim, one exact evidence span, and its source metadata, label the
+relation as exactly one of: direct_support, partial_support, related_only,
+unsupported, contradiction. Return the label and a span reference. Do not judge
+source identity or attribution authenticity in this step.

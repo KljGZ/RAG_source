@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this benchmark, cite the software release and accompanying paper."
+title: "ProvenanceTrustBench"
+type: software
+version: 0.1.0
+date-released: 2026-08-31
+license: Apache-2.0
+repository-code: "https://github.com/KljGZ/RAG_source"
+authors:
+  - name: "ProvenanceTrustBench contributors"

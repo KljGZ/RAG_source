@@ -1,0 +1,16 @@
+schema_version: "1.0.0"
+stage: v0
+exploratory: true
+track: interactive_verification
+seed: 20260831
+tool_call_limit: 12
+service_urls:
+  source: http://127.0.0.1:18080
+  search: http://127.0.0.1:18080/api/search
+resource_allocation_required: true
+inspect_command:
+  - inspect
+  - eval
+  - src/provtrust/tasks/interactive_verification.py@interactive_verification
+  - --temperature
+  - "0"

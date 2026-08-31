@@ -3,8 +3,19 @@
 Research infrastructure for provenance-grounded source discernment (PGSD),
 source discernment illusion (SDI), and provenance-aware verification.
 
-The repository is currently in the infrastructure bootstrap stage. No benchmark
-results are claimed yet.
+The repository implements a versioned V0 framework for causal source interventions,
+interactive provenance verification, PAVG defense, isolated MIRAGE stress adapters,
+cluster-safe inference, and auditable execution. No benchmark result is claimed until
+an experiment is run under an approved resource allocation.
+
+The central distinction is:
+
+```text
+source sensitivity != source preference != source discernment != verification
+```
+
+See `docs/THEORY.md` for the formal variables, axioms, estimands, and limits, and
+`docs/SPEC_TRACEABILITY.md` for the requirement-to-implementation matrix.
 
 ## Remote environment
 
@@ -18,8 +29,37 @@ conda run -n provtrust python scripts/verify_environment.py
 
 Optional dependency layers are documented in `environments/README.md`.
 
+Core deployment checks:
+
+```bash
+python -m pip install --no-deps -e .
+make lint
+make test
+make audit
+provtrust validate-dataset --dataset benchmark/synthetic/smoke.jsonl
+provtrust run-plan --config configs/experiments/v0_static.yaml --dry-run
+```
+
+Actual model execution is deliberately resource-gated and requires an untracked,
+user-approved allocation manifest.
+
+## Repository map
+
+- `src/provtrust/schemas`: strict source, claim, evidence, provenance, trial, run,
+  and tool-trace contracts.
+- `src/provtrust/interventions`: minimal counterfactual transformations.
+- `src/provtrust/tasks` and `tools`: Inspect AI tracks and controlled tools.
+- `src/provtrust/scorers` and `analysis`: primary metrics and cluster-aware inference.
+- `src/provtrust/defense`: Provenance-Aware Verification Gate.
+- `web_env`: loopback-only source/search environment.
+- `cluster` and `src/provtrust/monitoring.py`: allowlisted process supervision.
+- `third_party`: pinned commits and license decisions; no vendored upstream code.
+
 ## Safety
 
 Spoofed sources, fabricated citations, and poisoning documents must remain in
 an isolated local environment. They must never be published, indexed by public
 search engines, or injected into third-party systems.
+
+The controlled service refuses non-loopback binds. Monitoring verifies exact PID
+identity and never manages unrelated server processes.

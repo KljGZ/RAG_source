@@ -1,0 +1,3 @@
+Return a short declared_factors mapping with signed numeric weights for observable
+factors such as attribution authenticity, warrant strength, independence, and
+authority style. This is a compact auditable report, not hidden chain-of-thought.

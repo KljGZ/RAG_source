@@ -1,0 +1,29 @@
+schema_version: "1.0.0"
+status: draft_not_frozen
+stage: v0
+created_at: "2026-08-31"
+freeze_rule: >-
+  V1 may start only after this file is reviewed, changed to frozen, hashed, tagged,
+  and committed before any V1 outcome is inspected.
+grouping_keys:
+  split: [family_id, event_id, root_claim_id]
+  inference: [family_id]
+exclusion_rules:
+  - schema_invalid
+  - deterministic_gold_validation_failed
+  - withdrawn_or_unlicensed_source_snapshot
+  - predeclared_tool_environment_failure
+parse_policy:
+  keep_parse_failures: true
+  retry_budget: 2
+  retain_all_attempts: true
+judge_policy:
+  target_and_primary_judge_must_differ: true
+  require_non_llm_or_human_validation: true
+  preserve_disagreement: true
+randomization:
+  seed: 20260831
+  assignment_unit: family_id
+tracks: [l2d_replication, static_factorial, attribution_authenticity,
+  evidence_warrant, consensus_laundering, interactive_verification,
+  rationale_faithfulness, pavg_defense, mirage_stress]

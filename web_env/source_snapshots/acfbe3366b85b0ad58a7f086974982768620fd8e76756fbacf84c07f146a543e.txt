@@ -1,0 +1,1 @@
+This is a harmless deployment fixture used only to validate the isolated source service.

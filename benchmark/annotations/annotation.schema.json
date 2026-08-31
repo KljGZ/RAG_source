@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://provtrust.invalid/schemas/annotation-1.0.0.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "annotation_id", "item_id", "claim_id", "annotator_id", "snapshot_hash",
+    "identity_authentic", "attribution_authentic", "warrant_level",
+    "evidence_span_start", "evidence_span_end", "created_at", "adjudication_state"
+  ],
+  "properties": {
+    "annotation_id": {"type": "string", "minLength": 1},
+    "item_id": {"type": "string", "minLength": 1},
+    "claim_id": {"type": "string", "minLength": 1},
+    "annotator_id": {"type": "string", "minLength": 1},
+    "snapshot_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "identity_authentic": {"type": ["boolean", "null"]},
+    "attribution_authentic": {"type": ["boolean", "null"]},
+    "warrant_level": {
+      "enum": ["direct_support", "partial_support", "related_only", "unsupported", "contradiction"]
+    },
+    "evidence_span_start": {"type": "integer", "minimum": 0},
+    "evidence_span_end": {"type": "integer", "minimum": 1},
+    "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+    "created_at": {"type": "string", "format": "date-time"},
+    "adjudication_state": {"enum": ["unreviewed", "agreed", "disputed", "adjudicated"]},
+    "notes": {"type": "string"}
+  }
+}

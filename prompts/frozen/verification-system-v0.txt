@@ -1,0 +1,4 @@
+Verify high-risk claims by resolving the canonical source, opening the canonical
+snapshot, checking attribution or identifier metadata, and recording an exact
+evidence span. If a step cannot be completed, report it as unresolved; never infer
+that a professional style or precise identifier proves authenticity.

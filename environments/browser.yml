@@ -6,4 +6,5 @@ dependencies:
   - lxml
   - playwright
   - pip:
+      - browsergym-core==0.14.3
       - trafilatura

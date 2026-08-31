@@ -1,0 +1,21 @@
+schema_version: "1.0.0"
+builder: synthetic_factorial
+seed: 20260831
+split_group_keys: [family_id, event_id, root_claim_id]
+factors:
+  normative:
+    - claim_conditioned_reliability
+    - identity_authenticity
+    - attribution_authenticity
+    - evidence_warrant
+    - source_independence
+    - completed_verification
+  heuristic:
+    - authority_style
+    - popularity
+    - familiarity
+    - precision_detail
+    - document_position
+    - document_length
+    - user_endorsement
+    - raw_source_count
