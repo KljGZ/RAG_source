@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import itertools
-from typing import Literal, NamedTuple
+from typing import Literal, NamedTuple, cast
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -90,7 +90,24 @@ def _candidate_cells(design: FactorialDesign) -> tuple[_FactorCell, ...]:
         design.document_length_tokens,
     )
     for values in factors:
-        cell = _FactorCell(*values)
+        typed_values = cast(
+            tuple[
+                float,
+                bool,
+                bool,
+                WarrantLevel,
+                str,
+                str,
+                str,
+                str,
+                bool,
+                str,
+                int,
+                int,
+            ],
+            values,
+        )
+        cell = _FactorCell(*typed_values)
         if cell.attribution and not cell.identity:
             continue
         cells.append(cell)

@@ -9,8 +9,8 @@ from typing import Any
 
 from inspect_ai import Task
 from inspect_ai.dataset import MemoryDataset, Sample
-from inspect_ai.scorer import INCORRECT, Score, Scorer, Target, mean, scorer
 from inspect_ai.model import ChatMessageTool, ChatMessageUser
+from inspect_ai.scorer import INCORRECT, Score, Scorer, Target, mean, scorer
 from inspect_ai.solver import Generate, Solver, TaskState, solver, system_message
 from inspect_ai.tool import Tool
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
@@ -105,7 +105,7 @@ def prior_posterior(tools: Sequence[Tool] = ()) -> Solver:
         state.store.set("provtrust_prior_output", state.output.completion)
         posterior_input = state.metadata.get("posterior_input")
         if not isinstance(posterior_input, str):
-            raise ValueError("sample metadata is missing posterior_input")
+            raise TypeError("sample metadata is missing posterior_input")
         state.messages.append(ChatMessageUser(content=posterior_input))
         state.tools = list(tools)
         state.tool_choice = "auto" if tools else "none"
@@ -159,7 +159,7 @@ def structured_parse_scorer() -> Scorer:
         try:
             prior_raw = state.store.get("provtrust_prior_output")
             if not isinstance(prior_raw, str):
-                raise ValueError("operational prior output is missing")
+                raise TypeError("operational prior output is missing")
             prior = StructuredAnswer.model_validate_json(prior_raw)
             posterior = StructuredAnswer.model_validate_json(state.output.completion)
             if prior.abstained and prior.answer is not None:
@@ -204,7 +204,7 @@ def structured_parse_scorer() -> Scorer:
                     "correct": correct,
                 },
             )
-        except (ValidationError, ValueError) as error:
+        except (TypeError, ValidationError, ValueError) as error:
             return Score(
                 value=INCORRECT,
                 answer=state.output.completion,

@@ -40,7 +40,7 @@ def prior_external_posterior() -> Solver:
         source_name = state.metadata.get("source_name")
         candidate = state.metadata.get("candidate_answer")
         if not isinstance(source_name, str) or not isinstance(candidate, (int, float)):
-            raise ValueError("L2D sample metadata is incomplete")
+            raise TypeError("L2D sample metadata is incomplete")
         state.messages.append(
             ChatMessageUser(
                 content=(
@@ -62,7 +62,7 @@ def l2d_update_scorer() -> Scorer:
         try:
             prior_raw = state.store.get("l2d_prior_output")
             if not isinstance(prior_raw, str):
-                raise ValueError("prior response is missing")
+                raise TypeError("prior response is missing")
             prior = parse_numeric(prior_raw)
             posterior = parse_numeric(state.output.completion)
             candidate = float(state.metadata["candidate_answer"])

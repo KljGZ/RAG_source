@@ -54,7 +54,9 @@ R_PACKAGES = {
 
 def run_command(command: list[str], *, cwd: Path) -> dict[str, Any]:
     try:
-        result = subprocess.run(command, cwd=cwd, capture_output=True, text=True, timeout=120)
+        result = subprocess.run(
+            command, cwd=cwd, capture_output=True, text=True, timeout=120, check=False
+        )
         return {
             "command": command,
             "returncode": result.returncode,
