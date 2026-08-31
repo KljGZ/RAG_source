@@ -46,7 +46,8 @@ R_PACKAGES = {
     "clubSandwich": "0.7.0",
     "emmeans": "2.0.4",
     "glmmTMB": "1.1.14",
-    "lme4": "2.0-6",
+    # R's packageVersion() normalizes the source/Conda separator to a dot.
+    "lme4": "2.0.6",
     "targets": "1.12.0",
     "TOSTER": "0.8.6",
 }

@@ -1,0 +1,201 @@
+{
+  "captured_at": "2026-08-31T14:55:39.563123+00:00",
+  "checks": {
+    "browser": {
+      "chromium": "/home/jkl/provtrust_cache/ms-playwright/chromium-1117/chrome-linux/chrome",
+      "chromium_check": {
+        "command": [
+          "/home/jkl/provtrust_cache/ms-playwright/chromium-1117/chrome-linux/chrome",
+          "--version"
+        ],
+        "passed": true,
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "Chromium 125.0.6422.26"
+      },
+      "ffmpeg": "/home/jkl/provtrust_cache/ms-playwright/ffmpeg-1009/ffmpeg-linux",
+      "ffmpeg_check": {
+        "command": [
+          "/home/jkl/provtrust_cache/ms-playwright/ffmpeg-1009/ffmpeg-linux",
+          "-version"
+        ],
+        "passed": true,
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "ffmpeg version n4.3.1-playwright-build-1009 Copyright (c) 2000-2020 the FFmpeg developers\nbuilt with gcc 7 (Ubuntu 7.5.0-3ubuntu1~18.04)\nconfiguration: --pkg-config=pkg-config --pkg-config-flags=--static --extra-cflags=-I//root/prefix/include --extra-ldflags='-L//root/prefix/lib -static' --prefix=/root/prefix --bindir=/root/ffmpeg/bin --extra-version=playwright-build-1009 --disable-debug --disable-autodetect --disable-everything --enable-ffmpeg --enable-protocol=pipe --enable-protocol=file --enable-parser=mjpeg --enable-decoder=mjpeg --enable-demuxer=image2pipe --enable-filter=pad --enable-filter=crop --enable-filter=scale --enable-muxer=webm --enable-libvpx --enable-static --enable-encoder=libvpx_vp8 --enable-decoder=libvpx_vp8 --enable-demuxer=matroska --enable-encoder=png --enable-zlib --enable-muxer=image2 --disable-pthreads --disable-iconv --disable-w32threads --disable-bzlib\nlibavutil      56. 51.100 / 56. 51.100\nlibavcodec     58. 91.100 / 58. 91.100\nlibavformat    58. 45.100 / 58. 45.100\nlibavdevice    58. 10.100 / 58. 10.100\nlibavfilter     7. 85.100 /  7. 85.100\nlibswscale      5.  7.100 /  5.  7.100\nlibswresample   3.  7.100 /  3.  7.100"
+      },
+      "passed": true,
+      "root": "/home/jkl/provtrust_cache/ms-playwright"
+    },
+    "environment_locks": {
+      "checked": 5,
+      "failures": [],
+      "manifest": "/home/jkl/projects/RAG_source/environments/locks/LOCKS.sha256",
+      "passed": true
+    },
+    "git": {
+      "branch": "codex/v0",
+      "checks_passed": true,
+      "clean": false,
+      "head": "0706b53cf48081a8a30668ce9a879a3a030ef266"
+    },
+    "gpu_inventory": {
+      "command": {
+        "command": [
+          "/usr/bin/nvidia-smi",
+          "--query-gpu=index,name,driver_version,memory.total,compute_cap",
+          "--format=csv,noheader,nounits"
+        ],
+        "passed": true,
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "0, NVIDIA RTX PRO 6000 Blackwell Server Edition, 610.43.02, 97887, 12.0\n1, NVIDIA RTX PRO 6000 Blackwell Server Edition, 610.43.02, 97887, 12.0\n2, NVIDIA RTX PRO 6000 Blackwell Server Edition, 610.43.02, 97887, 12.0"
+      },
+      "devices": [
+        "0, NVIDIA RTX PRO 6000 Blackwell Server Edition, 610.43.02, 97887, 12.0",
+        "1, NVIDIA RTX PRO 6000 Blackwell Server Edition, 610.43.02, 97887, 12.0",
+        "2, NVIDIA RTX PRO 6000 Blackwell Server Edition, 610.43.02, 97887, 12.0"
+      ],
+      "method": "inventory_only_no_cuda_context",
+      "passed": true
+    },
+    "pip_check": {
+      "command": [
+        "/home/jkl/miniforge3/envs/provtrust/bin/python",
+        "-m",
+        "pip",
+        "check"
+      ],
+      "passed": true,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "No broken requirements found."
+    },
+    "python_packages": {
+      "expected": {
+        "browsergym-core": "0.14.3",
+        "cuda-bindings": "13.0.3",
+        "cuda-toolkit": "13.0.2",
+        "inspect-ai": "0.3.261",
+        "nvidia-cudnn-cu13": "9.20.0.48",
+        "nvidia-nccl-cu13": "2.29.7",
+        "playwright": "1.44.0",
+        "provenance-trust-bench": "0.1.0",
+        "sentence-transformers": "5.1.0",
+        "torch": "2.12.1+cu130",
+        "trafilatura": "2.0.0",
+        "transformers": "4.56.2",
+        "triton": "3.7.1"
+      },
+      "mismatches": {},
+      "observed": {
+        "browsergym-core": "0.14.3",
+        "cuda-bindings": "13.0.3",
+        "cuda-toolkit": "13.0.2",
+        "inspect-ai": "0.3.261",
+        "nvidia-cudnn-cu13": "9.20.0.48",
+        "nvidia-nccl-cu13": "2.29.7",
+        "playwright": "1.44.0",
+        "provenance-trust-bench": "0.1.0",
+        "sentence-transformers": "5.1.0",
+        "torch": "2.12.1+cu130",
+        "trafilatura": "2.0.0",
+        "transformers": "4.56.2",
+        "triton": "3.7.1"
+      },
+      "passed": true,
+      "torch_imported": false
+    },
+    "r_packages": {
+      "command": {
+        "command": [
+          "/home/jkl/miniforge3/envs/provtrust/bin/Rscript",
+          "-e",
+          "cat(paste(c(paste0('R=', getRversion()), paste0('arrow=', as.character(packageVersion('arrow'))),paste0('clubSandwich=', as.character(packageVersion('clubSandwich'))),paste0('emmeans=', as.character(packageVersion('emmeans'))),paste0('glmmTMB=', as.character(packageVersion('glmmTMB'))),paste0('lme4=', as.character(packageVersion('lme4'))),paste0('targets=', as.character(packageVersion('targets'))),paste0('TOSTER=', as.character(packageVersion('TOSTER')))), collapse='\\n'))"
+        ],
+        "passed": true,
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "R=4.5.3\narrow=25.0.0\nclubSandwich=0.7.0\nemmeans=2.0.4\nglmmTMB=1.1.14\nlme4=2.0.6\ntargets=1.12.0\nTOSTER=0.8.6"
+      },
+      "expected": {
+        "R": "4.5.3",
+        "TOSTER": "0.8.6",
+        "arrow": "25.0.0",
+        "clubSandwich": "0.7.0",
+        "emmeans": "2.0.4",
+        "glmmTMB": "1.1.14",
+        "lme4": "2.0-6",
+        "targets": "1.12.0"
+      },
+      "mismatches": {
+        "lme4": {
+          "expected": "2.0-6",
+          "observed": "2.0.6"
+        }
+      },
+      "observed": {
+        "R": "4.5.3",
+        "TOSTER": "0.8.6",
+        "arrow": "25.0.0",
+        "clubSandwich": "0.7.0",
+        "emmeans": "2.0.4",
+        "glmmTMB": "1.1.14",
+        "lme4": "2.0.6",
+        "targets": "1.12.0"
+      },
+      "passed": false
+    },
+    "services": {
+      "passed": true,
+      "results": {
+        "http://127.0.0.1:18080/healthz": {
+          "cache_control": "no-store",
+          "passed": true,
+          "status_code": 200,
+          "x_robots_tag": "noindex, nofollow, noarchive, nosnippet"
+        },
+        "http://127.0.0.1:18081/healthz": {
+          "cache_control": "no-store",
+          "passed": true,
+          "status_code": 200,
+          "x_robots_tag": "noindex, nofollow, noarchive, nosnippet"
+        }
+      }
+    },
+    "uv_lock": {
+      "command": [
+        "uv",
+        "lock",
+        "--check",
+        "--offline",
+        "--python",
+        "/home/jkl/miniforge3/envs/provtrust/bin/python"
+      ],
+      "passed": true,
+      "returncode": 0,
+      "stderr": "Using CPython 3.11.16 interpreter at: /home/jkl/miniforge3/envs/provtrust/bin/python\nResolved 219 packages in 1ms",
+      "stdout": ""
+    }
+  },
+  "passed": false,
+  "resource_gate": {
+    "cuda_context_created": false,
+    "experiments_executed": false,
+    "gpu_probe_executed": false,
+    "model_or_api_call_executed": false
+  },
+  "schema_version": "1.0.0",
+  "stage": "v0_deployment_acceptance",
+  "system": {
+    "conda_prefix": null,
+    "cpu_logical": 384,
+    "cpu_physical": 192,
+    "disk_free_gib": 2497.44,
+    "disk_total_gib": 3518.714,
+    "memory_total_gib": 503.401,
+    "platform": "Linux-6.11.0-17-generic-x86_64-with-glibc2.39",
+    "python": "3.11.16 | packaged by conda-forge | (main, Aug 21 2026, 22:44:51) [GCC 14.4.0]",
+    "python_executable": "/home/jkl/miniforge3/envs/provtrust/bin/python"
+  }
+}
