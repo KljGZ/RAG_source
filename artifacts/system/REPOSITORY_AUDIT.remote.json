@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0.0",
+  "errors": [],
+  "warnings": [],
+  "checks": {
+    "all_experiments_resource_gated": true,
+    "confirmatory_plan_not_prematurely_frozen": true,
+    "controlled_urls_loopback": true,
+    "eight_axioms": true,
+    "environment_lock_hashes": true,
+    "example_allocation_unapproved": true,
+    "experiment_resource_contracts": true,
+    "frozen_prompt_hashes": true,
+    "frozen_schema_hashes": true,
+    "monitor_allowlist_safe": true,
+    "required_paths": true,
+    "six_normative_variables": true,
+    "smoke_dataset_hash": true,
+    "tracked_secret_scan": true,
+    "unlicensed_code_not_copied": true
+  }
+}

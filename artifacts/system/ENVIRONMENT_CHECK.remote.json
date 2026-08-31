@@ -14,7 +14,7 @@
     "inspect_ai": "0.3.261",
     "networkx": "3.6.1",
     "polars": "1.44.1",
-    "provtrust": "0.0.1",
+    "provtrust": "0.1.0",
     "pyarrow": "25.0.0",
     "pydantic": "2.13.5",
     "pytest": "9.1.1",

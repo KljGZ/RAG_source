@@ -1,5 +1,5 @@
 {
-  "captured_at": "2026-08-31T15:00:06.365695+00:00",
+  "captured_at": "2026-08-31T15:50:51.542445+00:00",
   "checks": {
     "browser": {
       "chromium": "/home/jkl/provtrust_cache/ms-playwright/chromium-1117/chrome-linux/chrome",
@@ -37,7 +37,7 @@
       "branch": "codex/v0",
       "checks_passed": true,
       "clean": true,
-      "head": "c3c522e2292af9d6ca847edf51a3c2a9cac11967"
+      "head": "547f5f4900aa529af4b3c1a67839bbdca712731a"
     },
     "gpu_inventory": {
       "command": {
@@ -169,7 +169,7 @@
       ],
       "passed": true,
       "returncode": 0,
-      "stderr": "Using CPython 3.11.16 interpreter at: /home/jkl/miniforge3/envs/provtrust/bin/python\nResolved 219 packages in 1ms",
+      "stderr": "Using CPython 3.11.16 interpreter at: /home/jkl/miniforge3/envs/provtrust/bin/python\nResolved 219 packages in 5ms",
       "stdout": ""
     }
   },
@@ -183,10 +183,10 @@
   "schema_version": "1.0.0",
   "stage": "v0_deployment_acceptance",
   "system": {
-    "conda_prefix": null,
+    "conda_prefix": "/home/jkl/miniforge3/envs/provtrust",
     "cpu_logical": 384,
     "cpu_physical": 192,
-    "disk_free_gib": 2497.203,
+    "disk_free_gib": 2494.476,
     "disk_total_gib": 3518.714,
     "memory_total_gib": 503.401,
     "platform": "Linux-6.11.0-17-generic-x86_64-with-glibc2.39",

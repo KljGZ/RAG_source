@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.0.0",
+  "resources": [
+    {
+      "id": "inspect_ai",
+      "pinned_commit": "a729c36bbc8789571edc093ff87223f723941761",
+      "license": "MIT",
+      "copy_code": false
+    },
+    {
+      "id": "learn2discern",
+      "pinned_commit": "e5a4c510abac8e7cf19bed5fe6697c8f6a19d6b5",
+      "license": "NO-LICENSE-DETECTED",
+      "copy_code": false
+    },
+    {
+      "id": "groupqa",
+      "pinned_commit": "712904d0b16bafd06f0e2f369adafb669897e9a4",
+      "license": "NO-LICENSE-DETECTED",
+      "copy_code": false
+    },
+    {
+      "id": "authoritybench",
+      "pinned_commit": "7b87bd4790c4f13a072681a174f2545f2e126a8f",
+      "license": "NO-LICENSE-DETECTED",
+      "copy_code": false
+    },
+    {
+      "id": "ragchecker",
+      "pinned_commit": "6091f08c00e676e87a970f2aeb4a23a484746348",
+      "license": "Apache-2.0",
+      "copy_code": false
+    },
+    {
+      "id": "alce",
+      "pinned_commit": "246c476a4edfc564266b7346b6e29ef4861ae937",
+      "license": "MIT",
+      "copy_code": false
+    },
+    {
+      "id": "sourcecheckup",
+      "pinned_commit": "da945e3d0a55aef5b60785a4a05b2469a7ed5062",
+      "license": "NO-LICENSE-DETECTED",
+      "copy_code": false
+    },
+    {
+      "id": "browsergym",
+      "pinned_commit": "9e779f087de9a65668b6974d11f9ce9816026e96",
+      "license": "Apache-2.0",
+      "copy_code": false
+    },
+    {
+      "id": "mirage",
+      "pinned_commit": "5e71fa0d20173010ac765622a8bb51e3e514b25a",
+      "license": "NO-LICENSE-DETECTED",
+      "copy_code": false
+    }
+  ]
+}
