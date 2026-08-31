@@ -13,18 +13,9 @@ from typing import Any
 
 from packaging.utils import canonicalize_name
 
-CONDA_FORGE_BASE = "https://conda.anaconda.org/conda-forge"
+from provtrust.execution.environment_manifest import portable_conda_url
+
 PROJECT_DISTRIBUTIONS = {"provenance-trust-bench"}
-
-
-def portable_conda_url(record: dict[str, Any]) -> str:
-    url = str(record.get("url") or "")
-    channel = str(record.get("channel") or "")
-    filename = str(record.get("fn") or "")
-    subdir = str(record.get("subdir") or "")
-    if filename and subdir and (url.startswith("file:") or channel == "<unknown>" or not url):
-        return f"{CONDA_FORGE_BASE}/{subdir}/{filename}"
-    return url
 
 
 def conda_records(prefix: Path) -> list[dict[str, object]]:

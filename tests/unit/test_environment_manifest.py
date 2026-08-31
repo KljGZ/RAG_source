@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from scripts.export_environment_manifest import portable_conda_url
+from provtrust.execution.environment_manifest import portable_conda_url
 
 
 def test_local_conda_url_is_normalized() -> None:
