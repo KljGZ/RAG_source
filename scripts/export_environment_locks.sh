@@ -10,7 +10,10 @@ ENV_PREFIX="$($CONDA_BIN info --base)/envs/$ENV_NAME"
 mkdir -p "$LOCK_DIR"
 
 "$CONDA_BIN" env export -n "$ENV_NAME" --no-builds \
-  | sed -e '/^  - pip:/,$d' -e '/^prefix:/d' \
+  | sed \
+      -e '/^  - pip:/,$d' \
+      -e '/^prefix:/d' \
+      -e 's#^  - https://mirrors\.ustc\.edu\.cn/anaconda/cloud/conda-forge$#  - conda-forge#' \
   > "$LOCK_DIR/conda-linux-64.yml"
 
 "$ENV_PREFIX/bin/python" "$PROJECT_ROOT/scripts/export_environment_manifest.py" \
