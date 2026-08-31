@@ -26,6 +26,9 @@ The requirement file also pins every Linux CUDA runtime wheel declared by that
 Torch build. NVIDIA publishes these across several equivalent manylinux tags;
 the offline wheelhouse records the exact files and validates them on the target
 host before installation.
+The same Linux-only pins are exposed as the project `gpu` optional dependency;
+`uv` sources Torch from the explicit official CUDA 13.0 index while all other
+packages remain on PyPI.
 
 BrowserGym is pinned to release 0.14.3 together with its declared
 `playwright==1.44` and `lxml<6` constraints. Trafilatura is pinned to 2.0.0,
