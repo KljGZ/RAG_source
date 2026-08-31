@@ -5,7 +5,7 @@ from __future__ import annotations
 import math
 from collections.abc import Mapping
 
-from scipy.stats import spearmanr
+from scipy.stats import spearmanr  # type: ignore[import-untyped]
 
 
 def rationale_causal_consistency(

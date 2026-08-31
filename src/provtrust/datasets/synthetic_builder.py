@@ -54,9 +54,11 @@ def _digest(text: str) -> str:
 
 def _provenance(family_id: str, dependency: str) -> tuple[ProvenanceGraph, int, int]:
     root = f"{family_id}:root:0"
+    nodes: tuple[str, ...]
+    edges: tuple[ProvenanceEdge, ...]
     if dependency == "single":
         nodes = (root,)
-        edges: tuple[ProvenanceEdge, ...] = ()
+        edges = ()
         raw_count, effective_count = 1, 1
     elif dependency == "duplicate":
         copies = tuple(f"{family_id}:copy:{index}" for index in range(3))

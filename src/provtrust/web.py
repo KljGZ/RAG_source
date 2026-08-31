@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import hashlib
+from collections.abc import Awaitable, Callable
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException, Query, Request, Response
@@ -37,10 +38,10 @@ def create_app(*, index_path: Path, snapshot_root: Path, template_root: Path) ->
     )
 
     @app.middleware("http")
-    async def isolation_headers(request: Request, call_next: object) -> Response:
-        # `call_next` is supplied by Starlette; keeping the annotation generic avoids
-        # binding project code to an internal protocol.
-        response = await call_next(request)  # type: ignore[operator]
+    async def isolation_headers(
+        request: Request, call_next: Callable[[Request], Awaitable[Response]]
+    ) -> Response:
+        response = await call_next(request)
         response.headers["X-Robots-Tag"] = "noindex, nofollow, noarchive, nosnippet"
         response.headers["Cache-Control"] = "no-store"
         response.headers["Content-Security-Policy"] = "default-src 'self'; frame-ancestors 'none'"

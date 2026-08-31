@@ -2,7 +2,11 @@
 
 from __future__ import annotations
 
-from sklearn.metrics import cohen_kappa_score, f1_score, matthews_corrcoef
+from sklearn.metrics import (  # type: ignore[import-untyped]
+    cohen_kappa_score,
+    f1_score,
+    matthews_corrcoef,
+)
 
 
 def binary_agreement(reference: tuple[bool, ...], prediction: tuple[bool, ...]) -> dict[str, float]:

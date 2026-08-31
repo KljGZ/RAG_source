@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from collections import Counter, defaultdict
+from collections.abc import Callable
 
 from pydantic import BaseModel, ConfigDict
 
@@ -47,11 +48,12 @@ def validate_trials(
         assignment_map = {entry.item_id: entry.split for entry in assignments}
         if set(assignment_map) != set(ids):
             errors.append("split assignments do not match trial item identifiers")
-        for key_name, key in (
+        grouping_keys: tuple[tuple[str, Callable[[Trial], str | None]], ...] = (
             ("family_id", lambda trial: trial.family_id),
             ("root_claim_id", lambda trial: trial.root_claim_id),
             ("event_id", lambda trial: trial.event_id),
-        ):
+        )
+        for key_name, key in grouping_keys:
             grouped: dict[str, set[str]] = defaultdict(set)
             for trial in trials:
                 value = key(trial)

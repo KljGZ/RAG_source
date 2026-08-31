@@ -59,6 +59,9 @@ dev = [
   "pytest>=8.4",
   "pytest-xdist>=3.8",
   "ruff>=0.12",
+  "types-networkx>=3.5",
+  "types-psutil>=7",
+  "types-PyYAML>=6",
 ]
 
 [project.scripts]

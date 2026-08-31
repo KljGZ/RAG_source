@@ -18,6 +18,7 @@ class SourceResolution(BaseModel):
 
 
 def resolve_source(query: str, registry: SourceRegistry) -> SourceResolution:
+    matches: tuple[SourceEntity, ...]
     try:
         direct = registry.get(query)
         matches = (direct,)
