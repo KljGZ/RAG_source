@@ -5766,9 +5766,14 @@
       "version": "1.5.7"
     }
   ],
-  "generated_at": "2026-08-31T15:11:30.117921+00:00",
-  "pip_package_count": 92,
+  "generated_at": "2026-08-31T17:58:22.985654+00:00",
+  "pip_package_count": 93,
   "pip_packages": [
+    {
+      "installer": "pip",
+      "name": "accelerate",
+      "version": "1.14.0"
+    },
     {
       "installer": "pip",
       "name": "agent-client-protocol",

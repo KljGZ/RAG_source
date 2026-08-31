@@ -53,3 +53,5 @@ artifacts/system/*.local.json
 # Keep directory placeholders and system audit records
 !artifacts/system/
 !artifacts/system/**
+# Machine-specific probe records stay private even though audited system records are tracked.
+artifacts/system/*.local.json

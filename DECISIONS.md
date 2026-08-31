@@ -73,3 +73,6 @@
   before the first model call and enforce equality with a regression test. This
   corrects a pre-execution manifest/runtime drift; no empirical outcome had been
   generated under the earlier mismatch.
+- Pin Accelerate 1.14.0 in the evaluation layer. The first guarded load exposed
+  that Inspect's Hugging Face `device_map` path requires Accelerate; the failed
+  attempt stopped before weights were loaded or a model response was generated.

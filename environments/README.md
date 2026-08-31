@@ -17,6 +17,11 @@ The matching `.requirements.txt` files are the canonical inputs for an offline
 Linux wheelhouse. The YAML layers retain the same top-level pins for normal
 online Conda workflows.
 
+The evaluation layer pins Accelerate 1.14.0 because Inspect AI's local
+Hugging Face provider loads models with `device_map`; Transformers requires
+Accelerate for that path. A direct Transformers smoke test guards this dependency
+before an Inspect experiment may become execution-ready.
+
 The GPU layer is pinned to the official PyTorch 2.12.1 CUDA 13.0 Linux wheel,
 whose published support matrix includes Blackwell compute capability 12.0 through
 PTX. Installation is allowed during deployment, but CUDA execution and the final

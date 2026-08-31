@@ -1,3 +1,4 @@
+accelerate==1.14.0
 agent-client-protocol==0.12.1
 aioboto3==15.5.0
 aiobotocore==2.25.1
