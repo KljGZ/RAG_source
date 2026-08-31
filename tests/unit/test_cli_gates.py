@@ -4,7 +4,7 @@ from pathlib import Path
 
 from typer.testing import CliRunner
 
-from provtrust.cli import app
+from provtrust.cli import _resolve_task_resource_arguments, app
 
 runner = CliRunner()
 
@@ -42,3 +42,24 @@ minimum_resources:
     )
     assert result.exit_code == 2
     assert '"dry_run": false' in result.output
+
+
+def test_task_resource_arguments_are_resolved_against_project_root(tmp_path: Path) -> None:
+    dataset = tmp_path / "benchmark/synthetic/smoke.jsonl"
+    dataset.parent.mkdir(parents=True)
+    dataset.write_text("{}\n", encoding="utf-8")
+    command = [
+        "inspect",
+        "eval",
+        "fixture-task",
+        "-T",
+        "dataset_path=benchmark/synthetic/smoke.jsonl",
+        "-T",
+        "ordinary_value=unchanged",
+    ]
+
+    resolved = _resolve_task_resource_arguments(command, tmp_path)
+
+    assert resolved[4] == f"dataset_path={dataset.resolve()}"
+    assert resolved[6] == "ordinary_value=unchanged"
+    assert command[4] == "dataset_path=benchmark/synthetic/smoke.jsonl"

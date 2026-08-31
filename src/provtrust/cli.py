@@ -106,6 +106,30 @@ def _load_object(path: Path) -> dict[str, Any]:
     return value
 
 
+def _resolve_task_resource_arguments(command: list[str], root: Path) -> list[str]:
+    """Make project task resources independent of Inspect's loader working directory."""
+
+    root = root.resolve()
+    resolved = list(command)
+    for index, part in enumerate(command[:-1]):
+        if part != "-T":
+            continue
+        argument = command[index + 1]
+        key, separator, value = argument.partition("=")
+        if separator != "=" or not key.endswith(("_path", "_root")):
+            continue
+        relative = Path(value)
+        if relative.is_absolute():
+            raise typer.BadParameter(f"task resource must be project-relative: {key}")
+        resource = (root / relative).resolve()
+        if resource == root or root not in resource.parents:
+            raise typer.BadParameter(f"task resource escapes project root: {key}")
+        if not resource.exists():
+            raise typer.BadParameter(f"task resource does not exist: {key}={value}")
+        resolved[index + 1] = f"{key}={resource}"
+    return resolved
+
+
 @app.command("run-plan")
 def run_plan(
     config: Annotated[Path, typer.Option(exists=True, dir_okay=False)],
@@ -138,7 +162,8 @@ def run_plan(
     )
     if errors:
         raise typer.BadParameter(f"resource allocation failed validation: {', '.join(errors)}")
-    input_errors = validate_frozen_execution_inputs(plan, Path.cwd())
+    project_root = Path.cwd().resolve()
+    input_errors = validate_frozen_execution_inputs(plan, project_root)
     if input_errors:
         raise typer.BadParameter(
             "frozen execution input validation failed: " f"{', '.join(input_errors)}"
@@ -169,7 +194,7 @@ def run_plan(
         "provtrust_plan_sha256": plan_sha256,
         "provtrust_system_prompt_sha256": str(plan["system_prompt_sha256"]),
     }
-    constrained_command = list(command)
+    constrained_command = _resolve_task_resource_arguments(list(command), project_root)
     for key, value in metadata.items():
         constrained_command.extend(("--metadata", f"{key}={value}"))
     taskset = shutil.which("taskset")
@@ -180,7 +205,7 @@ def run_plan(
             ",".join(str(index) for index in reviewed.cpu_cores),
             *constrained_command,
         ]
-    subprocess.run(constrained_command, check=True, env=environment)
+    subprocess.run(constrained_command, check=True, env=environment, cwd=project_root)
 
 
 @app.command()
