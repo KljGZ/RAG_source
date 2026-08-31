@@ -130,7 +130,10 @@ def main() -> int:
         observed_families.add(family_id)
         observed_cells.add(cell_id)
 
-        score = sample.scores.get("structured_parse_scorer")
+        scores = sample.scores
+        if scores is None:
+            raise TypeError(f"sample scores missing: {sample_id}")
+        score = scores.get("structured_parse_scorer")
         if score is None:
             raise TypeError(f"structured score missing: {sample_id}")
         score_metadata = _as_dict(score.metadata, label=f"score metadata: {sample_id}")
@@ -160,8 +163,12 @@ def main() -> int:
         abstained_count += int(abstained)
         retry_count += _retry_count(sample.error_retries)
         sample_error_count += int(sample.error is not None)
-        turn_count += int(sample.turn_count)
-        sample_seconds += float(sample.total_time)
+        sample_turn_count = sample.turn_count
+        sample_total_time = sample.total_time
+        if sample_turn_count is None or sample_total_time is None:
+            raise TypeError(f"sample timing metadata missing: {sample_id}")
+        turn_count += sample_turn_count
+        sample_seconds += sample_total_time
 
         usages = list(sample.model_usage.values())
         if len(usages) != 1:
@@ -197,7 +204,7 @@ def main() -> int:
                 "correct": correct,
                 "posterior_abstained": abstained,
                 "error_retries": _retry_count(sample.error_retries),
-                "turn_count": int(sample.turn_count),
+                "turn_count": sample_turn_count,
                 "total_tokens": int(usage.total_tokens),
             }
         )
