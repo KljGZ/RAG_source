@@ -6,7 +6,6 @@ from typer.testing import CliRunner
 
 from provtrust.cli import app
 
-
 runner = CliRunner()
 
 
