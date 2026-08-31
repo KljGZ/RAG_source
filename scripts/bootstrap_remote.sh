@@ -34,6 +34,6 @@ else
   "$CONDA_BIN" env create --solver libmamba -f environment.yml
 fi
 
-"$CONDA_BIN" run -n "$ENV_NAME" python -m pip install --no-deps -e .
+"$CONDA_BIN" run -n "$ENV_NAME" python -m pip install --no-build-isolation --no-deps -e .
 "$CONDA_BIN" run -n "$ENV_NAME" python scripts/verify_environment.py
 bash scripts/export_environment_locks.sh
