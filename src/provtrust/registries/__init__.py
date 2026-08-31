@@ -9,8 +9,8 @@ from provtrust.registries.sources import SourceRegistry
 __all__ = [
     "DatasetEntry",
     "DatasetRegistry",
-    "ModelRegistry",
     "FrozenModelRegistration",
+    "ModelRegistry",
     "PromptEntry",
     "PromptRegistry",
     "RegisteredModel",
