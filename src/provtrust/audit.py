@@ -38,7 +38,7 @@ REQUIRED_PATHS = (
 )
 
 SECRET_PATTERN = re.compile(
-    r"(?i)(api[_-]?key|password|secret|authorization)\s*[:=]\s*['\"]?[A-Za-z0-9_./+-]{12,}"
+    r"(?i)(api[_-]?key|password|secret|authorization)[ \t]*[:=][ \t]*['\"]?[A-Za-z0-9_./+-]{12,}"
 )
 
 
