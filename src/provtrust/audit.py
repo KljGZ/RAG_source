@@ -12,6 +12,9 @@ from typing import Any
 import yaml
 from pydantic import BaseModel, ConfigDict
 
+from provtrust.execution.model_assets import ModelAssetManifest
+from provtrust.registries.models import FrozenModelRegistration
+
 
 class AuditReport(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
@@ -40,6 +43,8 @@ REQUIRED_PATHS = (
     "prompts/frozen/MANIFEST.json",
     "environments/locks/LOCKS.sha256",
     "configs/clusters/allocation.example.yaml",
+    "configs/models/qwen3-14b-v0.yaml",
+    "configs/models/assets/qwen3-14b-cc692f4.manifest.json",
     "configs/monitoring/remote.example.yaml",
     "src/provtrust/schemas/trial.py",
     "src/provtrust/defense/pavg_agent.py",
@@ -249,6 +254,36 @@ def _audit_resource_gates(root: Path) -> tuple[dict[str, bool], list[str]]:
     return checks, failures
 
 
+def _audit_frozen_model_registrations(root: Path) -> tuple[bool, list[str]]:
+    failures: list[str] = []
+    paths = sorted((root / "configs/models").glob("*-v0.yaml"))
+    if not paths:
+        return False, ["no frozen V0 model registration exists"]
+    for path in paths:
+        try:
+            registration = FrozenModelRegistration.model_validate(_load_yaml(path))
+            asset_path = _resolve_contained(root, registration.snapshot.asset_manifest)
+            prompt_path = _resolve_contained(root, registration.system_prompt.path)
+            manifest = ModelAssetManifest.model_validate(_load_json(asset_path))
+            if _sha256(asset_path) != registration.snapshot.asset_manifest_sha256:
+                failures.append(f"model asset manifest hash mismatch: {path.name}")
+            if manifest.root_sha256 != registration.snapshot.root_sha256:
+                failures.append(f"model root hash mismatch: {path.name}")
+            if manifest.file_count != registration.snapshot.file_count:
+                failures.append(f"model file count mismatch: {path.name}")
+            if manifest.total_bytes != registration.snapshot.total_bytes:
+                failures.append(f"model total bytes mismatch: {path.name}")
+            if manifest.model_id != registration.model_id:
+                failures.append(f"model identity mismatch: {path.name}")
+            if manifest.license != registration.license:
+                failures.append(f"model license mismatch: {path.name}")
+            if _sha256(prompt_path) != registration.system_prompt.sha256:
+                failures.append(f"model prompt hash mismatch: {path.name}")
+        except (OSError, TypeError, ValueError, json.JSONDecodeError, yaml.YAMLError) as error:
+            failures.append(f"invalid frozen model registration {path.name}: {error}")
+    return not failures, failures
+
+
 def _audit_monitor_template(root: Path) -> tuple[bool, list[str]]:
     value = _load_yaml(root / "configs/monitoring/remote.example.yaml")
     failures: list[str] = []
@@ -339,6 +374,13 @@ def audit_repository(root: Path) -> AuditReport:
         errors.extend(gate_failures)
     except (OSError, TypeError, ValueError, yaml.YAMLError) as error:
         errors.append(f"resource gate invalid: {error}")
+    try:
+        model_ok, model_failures = _audit_frozen_model_registrations(root)
+        checks["frozen_model_registrations"] = model_ok
+        errors.extend(model_failures)
+    except (OSError, TypeError, ValueError, json.JSONDecodeError, yaml.YAMLError) as error:
+        checks["frozen_model_registrations"] = False
+        errors.append(f"frozen model registration invalid: {error}")
     try:
         monitor_ok, monitor_failures = _audit_monitor_template(root)
         checks["monitor_allowlist_safe"] = monitor_ok

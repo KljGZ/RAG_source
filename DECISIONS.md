@@ -50,3 +50,26 @@
 - Version at auditable stage boundaries rather than after individual runs.
 - Never commit passwords, API keys, model caches, generated poison documents,
   or unrestricted raw run outputs.
+
+## 2026-08-31 — First open-weight compatibility pilot
+
+- Allocate physical CUDA index 2 only. The execution process masks it with
+  `CUDA_VISIBLE_DEVICES=2`, so Torch and Inspect correctly address it as logical
+  `cuda:0`; every probe and run record retains both identities.
+- Use `Qwen/Qwen3-14B` as the first moderate-size target model. It is an
+  Apache-2.0, 14.8B-parameter open-weight model that fits a single allocated
+  96-GiB GPU in BF16 with substantial safety headroom. It is a compatibility and
+  throughput pilot, not a representative multi-model result or a primary judge.
+- Acquire the snapshot from the official ModelScope repository because the
+  compute node cannot reach Hugging Face. Record ModelScope `master`, capture
+  time, every file's SHA-256, and the corresponding official Hugging Face commit
+  `cc692f40d59e239c60676c8947c5f9f75493e02b`; content hashes, rather than the
+  mutable ModelScope branch name, define the deployed snapshot.
+- Disable Qwen thinking mode for this benchmark so latent reasoning-token length
+  does not become an uncontrolled source condition. Use the model card's
+  non-thinking sampling settings (`temperature=0.7`, `top_p=0.8`, `top_k=20`)
+  with fixed seeds and record every parse failure.
+- Synchronize the runtime structured-output system prompt with its frozen text
+  before the first model call and enforce equality with a regression test. This
+  corrects a pre-execution manifest/runtime drift; no empirical outcome had been
+  generated under the earlier mismatch.
