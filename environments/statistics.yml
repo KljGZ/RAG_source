@@ -7,7 +7,6 @@ dependencies:
   - r-lme4
   - r-glmmtmb
   - r-emmeans
-  - r-clubsandwich
   - r-boot
   - r-toster
   - r-targets

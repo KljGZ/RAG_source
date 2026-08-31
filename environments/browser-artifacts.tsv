@@ -1,0 +1,3 @@
+# name	version	url	sha256	size
+chromium	125.0.6422.26	https://playwright.azureedge.net/builds/chromium/1117/chromium-linux.zip	4fbb5e26d4b085fecb22940c129e33a77132dd3fe9e18edd408ffb5465477641	164463489
+ffmpeg	1009	https://playwright.azureedge.net/builds/ffmpeg/1009/ffmpeg-linux.zip	864372d70183e4b82e7ac650435517cbf671c6c024c0a13c9103d791e7ad2556	2681339

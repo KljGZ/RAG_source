@@ -1,0 +1,4 @@
+browsergym-core==0.14.3
+lxml==5.4.0
+playwright==1.44.0
+trafilatura==2.0.0

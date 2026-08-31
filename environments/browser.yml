@@ -2,9 +2,9 @@ name: provtrust
 channels:
   - conda-forge
 dependencies:
-  - beautifulsoup4
-  - lxml
-  - playwright
+  - pip
   - pip:
       - browsergym-core==0.14.3
-      - trafilatura
+      - lxml==5.4.0
+      - playwright==1.44.0
+      - trafilatura==2.0.0

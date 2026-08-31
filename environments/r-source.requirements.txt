@@ -1,0 +1,3 @@
+# CRAN source package absent from the current conda-forge Linux index.
+# Format: package==version sha256=<lowercase SHA-256> url=<canonical HTTPS URL>
+clubSandwich==0.7.0 sha256=f3cd9cd5840022b8d1354dce3e7e4a820edcd47411b9f95bdd200c4e040032ed url=https://cloud.r-project.org/src/contrib/clubSandwich_0.7.0.tar.gz

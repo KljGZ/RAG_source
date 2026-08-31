@@ -2,8 +2,9 @@ name: provtrust
 channels:
   - conda-forge
 dependencies:
-  - tokenizers
-  - safetensors
+  - tokenizers>=0.22,<=0.23.0
+  - safetensors>=0.4.3
+  - huggingface_hub>=0.34,<1.0
   - sentencepiece
   - protobuf
   - pip:

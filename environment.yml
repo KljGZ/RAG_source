@@ -36,6 +36,6 @@ dependencies:
   - mypy
   - pre-commit
   - psutil
-  - uv
   - pip:
-      - inspect-ai
+      - inspect-ai==0.3.261
+      - uv==0.12.7
