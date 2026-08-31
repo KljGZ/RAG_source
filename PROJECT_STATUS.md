@@ -1,6 +1,6 @@
 # Project status
 
-Current stage: **V0 Qwen3-14B compatibility passed; one-sample Inspect pilot ready**
+Current stage: **V0 Qwen3-14B end-to-end compatibility passed; scientific V0 data pending**
 
 ## Deployment state
 
@@ -21,7 +21,11 @@ Current stage: **V0 Qwen3-14B compatibility passed; one-sample Inspect pilot rea
   29,619,356,672 peak allocated bytes in the smoke.
 - [x] Typed-answer posterior smoke passed with JSON boolean `true`; its unsupported
   `claimed_verified=true` report is retained as a false-assurance observation.
-- [x] Ruff passed, Mypy passed over 99 source files, and Pytest passed 51 tests.
+- [x] The frozen one-item/two-call Inspect pilot completed with 709 tokens, a 1.0
+  structured-parse score, and complete allocation/input hashes in the eval log.
+- [x] Inspect task resources are resolved from the project root after validation;
+  the initial pre-inference relative-path failure and its remediation are retained.
+- [x] Ruff passed, Mypy passed over 99 source files, and Pytest passed 52 tests.
 - [x] CPU-only `glmmTMB` synthetic recovery converged with a positive-definite
   Hessian and recovered all five predeclared positive directions.
 
@@ -47,7 +51,8 @@ Current stage: **V0 Qwen3-14B compatibility passed; one-sample Inspect pilot rea
 - [ ] V0 empirical experiments run.
 - [ ] V1 plan frozen or confirmatory outcomes inspected.
 
-No claim-bearing V0 experiment or API call has run. CUDA, direct-model loading, and
-typed posterior checks have passed. The next step is the one-item, two-call Inspect
-smoke. It cannot support an SDI, PGSD, or model-quality conclusion and is not a V1
-confirmatory run.
+No claim-bearing V0 experiment or paid API call has run. CUDA, direct-model loading,
+typed output, and the end-to-end Inspect fixture have passed. The deployment-only
+fixture cannot support an SDI, PGSD, or model-quality conclusion and is not a V1
+confirmatory run. The next scientific gates are licensed/validated datasets, frozen
+V0 claim families, and additional target/judge model registrations.
