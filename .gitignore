@@ -35,8 +35,8 @@ artifacts/analyses/
 artifacts/figures/
 artifacts/tables/
 artifacts/publication/
-models/
-data/
+/models/
+/data/
 *.parquet
 *.arrow
 *.safetensors

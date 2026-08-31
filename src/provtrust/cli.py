@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import json
+import os
+import shutil
 import subprocess
 from datetime import UTC, datetime
 from pathlib import Path
@@ -117,6 +119,11 @@ def run_plan(
     _json({"config": str(config), "dry_run": dry_run, "inspect_command": command})
     if dry_run:
         return
+    execution_status = plan.get("execution_status")
+    if execution_status != "ready":
+        raise typer.BadParameter(
+            "experiment plan is not execution-ready: " f"execution_status={execution_status!r}"
+        )
     if allocation is None or not allocation.is_file():
         raise typer.BadParameter(
             "actual execution requires a reviewed resource allocation manifest"
@@ -129,7 +136,24 @@ def run_plan(
     )
     if errors:
         raise typer.BadParameter(f"resource allocation failed validation: {', '.join(errors)}")
-    subprocess.run(command, check=True)
+    environment = os.environ.copy()
+    environment.update(
+        {
+            "CUDA_VISIBLE_DEVICES": ",".join(str(index) for index in reviewed.gpu_indices),
+            "OMP_NUM_THREADS": str(len(reviewed.cpu_cores)),
+            "PROVTRUST_ALLOCATION_ID": reviewed.allocation_id,
+        }
+    )
+    constrained_command = list(command)
+    taskset = shutil.which("taskset")
+    if taskset and reviewed.cpu_cores:
+        constrained_command = [
+            taskset,
+            "--cpu-list",
+            ",".join(str(index) for index in reviewed.cpu_cores),
+            *constrained_command,
+        ]
+    subprocess.run(constrained_command, check=True, env=environment)
 
 
 @app.command()

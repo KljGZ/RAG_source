@@ -1,6 +1,7 @@
 schema_version: "1.0.0"
 stage: v1
 status: blocked_until_experiment_plan_frozen
+execution_status: blocked_until_experiment_plan_frozen
 exploratory: false
 cluster_unit: family_id
 multiplicity: holm

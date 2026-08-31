@@ -1,5 +1,6 @@
 schema_version: "1.0.0"
 stage: v0
+execution_status: blocked_pending_resources_and_frozen_inputs
 exploratory: true
 track: static_factorial
 dataset_manifest: benchmark/manifests/v0_synthetic.yaml
