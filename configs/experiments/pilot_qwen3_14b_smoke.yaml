@@ -1,9 +1,10 @@
 schema_version: "1.0.0"
 stage: v0
-execution_status: blocked_pending_resources_and_frozen_inputs
+execution_status: ready
 exploratory: true
 scientific_claims_allowed: false
 purpose: single-model offline compatibility and throughput calibration
+activation_evidence: artifacts/system/QWEN3_14B_COMPATIBILITY.json
 track: static_factorial
 dataset_manifest: benchmark/manifests/smoke.yaml
 model_registration: configs/models/qwen3-14b-v0.yaml

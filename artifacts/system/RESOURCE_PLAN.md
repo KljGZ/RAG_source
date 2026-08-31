@@ -1,6 +1,23 @@
 # Resource allocation gate
 
-Status: **awaiting user allocation; no GPU work is authorized**
+Status: **minimum V0 sequential allocation approved; physical GPU index 2 authorized**
+
+## Current approved allocation
+
+The ignored machine-local allocation is `user-gpu2-open-source-v0-20260831`:
+
+| Resource | Approved allocation |
+|---|---:|
+| GPU | Physical index 2, NVIDIA RTX PRO 6000 Blackwell Server Edition, 95.5 GiB |
+| GPU access | Continuous; first-stage work limited to local open-weight models |
+| CPU | Logical cores 0–31 |
+| RAM | 192 GiB |
+| Storage | 1,200 GiB across `/home/jkl/provtrust_*` roots |
+| Paid API | USD 0; no provider enabled |
+
+The first compatibility target, Qwen3-14B BF16, peaked at 29,619,356,672 allocated
+bytes. The current allocation therefore satisfies the sequential compatibility pilot.
+Unrelated processes on GPU 2 are observed but never stopped or modified.
 
 ## Minimum allocation to start V0 sequentially
 
@@ -26,7 +43,7 @@ allocated until V0 design review and preregistration freeze.
 
 ## Allocation controls
 
-- The user must name exact GPU indices and an expiration/time window; the host is shared.
+- Physical GPU index 2 is the only currently authorized CUDA device; the host is shared.
 - Actual execution requires an ignored `configs/clusters/allocation.local.yaml` that
   validates against the experiment's minimums.
 - `provtrust run-plan --no-dry-run` sets `CUDA_VISIBLE_DEVICES` to only the approved

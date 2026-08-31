@@ -1,6 +1,6 @@
 # Project status
 
-Current stage: **V0 deployment accepted; empirical execution resource-gated**
+Current stage: **V0 Qwen3-14B compatibility passed; one-sample Inspect pilot ready**
 
 ## Deployment state
 
@@ -15,7 +15,11 @@ Current stage: **V0 deployment accepted; empirical execution resource-gated**
 - [x] Allowlisted monitor validated across repeated runs without duplicate processes.
 - [x] No-GPU deployment acceptance passed; Torch was inspected through package
   metadata only and was not imported.
-- [x] Ruff passed, Mypy passed over 97 source files, and Pytest passed 42 tests.
+- [x] Physical GPU 2 was uniquely masked to logical `cuda:0`; CUDA 13 / Blackwell
+  compute capability 12.0 BF16 probe passed without touching unrelated processes.
+- [x] Qwen3-14B loaded fully offline in BF16, generated valid structured JSON with
+  thinking disabled, and used 29,619,356,672 peak allocated bytes in the smoke.
+- [x] Ruff passed, Mypy passed over 99 source files, and Pytest passed 51 tests.
 - [x] CPU-only `glmmTMB` synthetic recovery converged with a positive-definite
   Hessian and recovered all five predeclared positive directions.
 
@@ -31,13 +35,17 @@ Current stage: **V0 deployment accepted; empirical execution resource-gated**
   tracks; L2D has a dedicated numeric two-stage solver/scorer.
 - [x] Deterministic 16-cell V0 fractional design, interventions, estimands, tool-trace
   diagnostics, PAVG constraints, checkpointing, retries, sharding, and cost gates implemented.
-- [ ] Licensed real datasets, real-source snapshots, and model weights acquired.
+- [ ] Licensed real datasets and real-source snapshots acquired.
+- [x] First target model weights acquired, transferred, and verified byte-for-byte:
+  Qwen3-14B, 19 files, 29,552,614,406 bytes.
 - [ ] V0 gold claim families annotated and frozen.
-- [ ] Exact model registry and any paid API budget approved.
-- [ ] GPU index/time window allocated by the user.
+- [x] First target model registry, prompt, dataset fixture, and generation settings frozen.
+- [x] Physical GPU index 2 allocated by the user for continuous use; CPU use approved.
+- [ ] Additional target/judge model registries and any paid API budget approved.
 - [ ] V0 empirical experiments run.
 - [ ] V1 plan frozen or confirmatory outcomes inspected.
 
-No model/API call, CUDA probe, GPU allocation, or empirical experiment has run. The
-next authorized step is resource assignment followed by a small compatibility/cost
-pilot; it is not a V1 confirmatory run.
+No claim-bearing V0 experiment or API call has run. CUDA and direct-model
+compatibility checks have passed. The next authorized step is a one-item, two-call
+Inspect orchestration pilot over the harmless smoke fixture; it cannot support an SDI,
+PGSD, or model-quality conclusion and is not a V1 confirmatory run.

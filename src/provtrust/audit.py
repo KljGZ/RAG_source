@@ -45,6 +45,7 @@ REQUIRED_PATHS = (
     "configs/clusters/allocation.example.yaml",
     "configs/models/qwen3-14b-v0.yaml",
     "configs/models/assets/qwen3-14b-cc692f4.manifest.json",
+    "artifacts/system/QWEN3_14B_COMPATIBILITY.json",
     "configs/monitoring/remote.example.yaml",
     "src/provtrust/schemas/trial.py",
     "src/provtrust/defense/pavg_agent.py",
@@ -208,6 +209,27 @@ def _audit_resource_gates(root: Path) -> tuple[dict[str, bool], list[str]]:
         }:
             requirements_valid = False
             failures.append(f"experiment has invalid execution_status: {path.name}")
+        if execution_status == "ready":
+            activation = value.get("activation_evidence")
+            if not isinstance(activation, str):
+                requirements_valid = False
+                failures.append(f"ready experiment lacks activation evidence: {path.name}")
+            else:
+                try:
+                    activation_path = _resolve_contained(root, activation)
+                except ValueError as error:
+                    requirements_valid = False
+                    failures.append(str(error))
+                else:
+                    if not activation_path.is_file():
+                        requirements_valid = False
+                        failures.append(f"activation evidence missing: {path.name}")
+            if (
+                path.name.startswith("pilot_")
+                and value.get("scientific_claims_allowed") is not False
+            ):
+                requirements_valid = False
+                failures.append(f"compatibility pilot permits scientific claims: {path.name}")
         minimum = value.get("minimum_resources")
         if not isinstance(minimum, dict):
             requirements_valid = False

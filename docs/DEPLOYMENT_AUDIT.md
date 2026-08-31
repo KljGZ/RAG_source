@@ -150,9 +150,10 @@ The following cannot be honestly marked complete before execution inputs exist:
 
 - licensed upstream datasets and real-source snapshots;
 - human/deterministically validated V0 gold claim families;
-- exact target/judge model revisions and provider access;
-- exact GPU indices, CPU affinity, time window, storage, and API budget;
+- additional target/judge model revisions and judge independence validation;
+- any paid provider access and a hard API budget (currently zero and disabled);
 - V0 outcomes, human agreement, and V1 preregistration freeze.
 
-These are enforced gates. They are not filled with generated placeholders, and no
-positive SDI or PAVG result is assumed in advance.
+The first target Qwen3-14B revision, physical GPU 2, CPU affinity, storage allocation,
+and zero-API policy are now frozen for the compatibility pilot. The remaining items
+are enforced gates; no positive SDI or PAVG result is assumed in advance.

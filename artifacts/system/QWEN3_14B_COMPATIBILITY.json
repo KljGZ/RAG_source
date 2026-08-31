@@ -1,0 +1,68 @@
+{
+  "schema_version": "1.0.0",
+  "status": "passed",
+  "scope": "cuda_and_direct_model_compatibility_only",
+  "scientific_claims_allowed": false,
+  "tested_git_revision": "e0fbac04",
+  "allocation_id": "user-gpu2-open-source-v0-20260831",
+  "physical_gpu": {
+    "index": 2,
+    "name": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+    "memory_total_mib": 97887,
+    "driver_version": "610.43.02",
+    "compute_capability": [12, 0]
+  },
+  "logical_gpu_in_process": 0,
+  "software": {
+    "torch": "2.12.1+cu130",
+    "cuda": "13.0",
+    "cudnn": 92000,
+    "transformers": "4.56.2",
+    "accelerate": "1.14.0",
+    "inspect_ai": "0.3.261"
+  },
+  "cuda_probe": {
+    "captured_at": "2026-08-31T17:53:10.180176Z",
+    "report_sha256": "94ba19bc50351db434b81a25e6fa01021df0aae4cb685f31387492e55b1aa366",
+    "operation": "1024x1024_bfloat16_matmul",
+    "finite": true,
+    "peak_memory_bytes": 45088768
+  },
+  "model_asset": {
+    "model_id": "Qwen/Qwen3-14B",
+    "file_count": 19,
+    "total_bytes": 29552614406,
+    "root_sha256": "494ab49926699409cf08e0f127175353082777bb25dc163dd93ed3b55fe1afeb",
+    "manifest_sha256": "5737d6eadb313042cf6d14634ffb3eaf8eb2149572a7b5f993caa459a0210bba",
+    "local_and_remote_verification": "passed"
+  },
+  "direct_model_smoke": {
+    "captured_at": "2026-08-31T18:14:21.383507Z",
+    "report_sha256": "c2c995735b91974e589b54bb267077e1281aef8f0e836299ecdf68982774a945",
+    "enable_thinking": false,
+    "seed": 20260831,
+    "temperature": 0.7,
+    "top_p": 0.8,
+    "top_k": 20,
+    "load_seconds": 4.830680305021815,
+    "generation_seconds": 2.335157155059278,
+    "input_tokens": 157,
+    "output_tokens": 62,
+    "tokens_per_second": 26.550675557605512,
+    "peak_memory_bytes": 29619356672,
+    "structured_parse_success": true,
+    "claimed_verified": false
+  },
+  "preflight_failures_retained": [
+    {
+      "stage": "cuda_probe_before_compute",
+      "cause": "CUDA allocator telemetry was queried before lazy initialization",
+      "model_response_generated": false
+    },
+    {
+      "stage": "model_load_before_weight_materialization",
+      "cause": "Accelerate dependency missing from the device_map evaluation path",
+      "model_response_generated": false
+    }
+  ]
+}

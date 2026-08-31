@@ -24,7 +24,7 @@ been supported.
 | Inspect AI orchestration | registered tasks, paired solver, structured scorer | every track builds without a model call | verified | no eval invoked |
 | R/Python confirmatory analysis | GLMM, contrasts, equivalence, bootstrap/randomization/power | `STATISTICS_RECOVERY.remote.json` | verified | V1 not frozen |
 | Atomic output, retries, costs, sharding | execution package and SQLite state machines | crash/state/budget tests | verified | no production run |
-| Resource authorization and isolation | reviewed allocation schema and CLI enforcement | allocation unit tests | verified | awaiting user allocation |
+| Resource authorization and isolation | reviewed allocation, physical-to-logical GPU mask, frozen-input CLI gate | allocation/input-tamper tests and CUDA probe | verified | GPU 2 allocated; compatibility passed |
 | Controlled private webpages/search | loopback FastAPI services | `BROWSER_SMOKE.remote.json` | deployed | only harmless fixture loaded |
 | Hourly process supervision | PID identity, allowlist, restart rate, lock/disk checks | repeated monitor report with stable PIDs | deployed | Codex heartbeat to be attached |
 | Reproducibility, ethics, threat model, cards | `docs/`, locks, prompt/dataset manifests | strict audit/tests | verified | publication artifacts pending |
@@ -46,6 +46,7 @@ or tested against an unapproved third party.
 
 The implementation is deployable, but full empirical completion cannot be generated
 by infrastructure alone. It still requires licensed upstream data, human/deterministic
-gold validation, frozen exact model revisions, an assigned GPU index/time window, and
-any paid API budget. These are represented as explicit gates rather than placeholders
-silently treated as completed work.
+gold validation, additional target/judge model revisions, and any paid API budget.
+The first target (Qwen3-14B) and physical GPU 2 are now frozen/allocated for a
+compatibility pilot. Remaining inputs are represented as explicit gates rather than
+placeholders silently treated as completed work.
