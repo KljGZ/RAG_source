@@ -447,7 +447,7 @@ dependencies:
   - r-timechange=0.4.0
   - r-timedate=4052.112
   - r-tinytex=0.60
-  - r-tmb=1.9.23
+  - r-tmb=1.9.19
   - r-tmvnsim=1.0_2
   - r-toster=0.8.6
   - r-tseries=0.10_63
