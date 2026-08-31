@@ -11,6 +11,8 @@ silently replace earlier outputs.
   audit summary without treating the fixture as a scientific result.
 - Resolve task resource paths before Inspect file-task loading and add a regression
   test after retaining the initial pre-inference failure.
+- Activate and accept the hourly allowlisted service heartbeat with explicit authority
+  boundaries that prevent it from starting or restarting scientific GPU evaluations.
 
 ## [0.1.0] - 2026-08-31
 

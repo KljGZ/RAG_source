@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0.0",
+  "status": "passed",
+  "captured_at": "2026-08-31T18:52:01.646825Z",
+  "automation": {
+    "id": "provenancetrustbench",
+    "name": "ProvenanceTrustBench 每小时远程守护",
+    "kind": "heartbeat",
+    "status": "ACTIVE",
+    "frequency": "hourly",
+    "interval": 1,
+    "notification_policy": "failed_runs_only"
+  },
+  "manual_acceptance_run": {
+    "healthy": true,
+    "git_clean": true,
+    "environment_locks_ok": true,
+    "free_disk_gib": 2463.044,
+    "minimum_free_disk_gib": 100.0,
+    "controlled_web": {
+      "healthy": true,
+      "action": "none"
+    },
+    "controlled_search": {
+      "healthy": true,
+      "action": "none"
+    },
+    "inspect_viewer": {
+      "enabled": false,
+      "action": "disabled"
+    }
+  },
+  "authority_boundary": {
+    "may_check": [
+      "repository cleanliness",
+      "environment lock hashes",
+      "free disk",
+      "controlled-web health",
+      "controlled-search health"
+    ],
+    "may_recover": [
+      "controlled-web within configured restart limits",
+      "controlled-search within configured restart limits"
+    ],
+    "must_not": [
+      "start or restart Inspect evaluations",
+      "start GPU workers or load models",
+      "import Torch or initialize CUDA",
+      "make paid API calls",
+      "modify experiment readiness or resource allocations",
+      "terminate or alter unrelated processes"
+    ]
+  },
+  "future_long_run_policy": "Attach a separate run-specific monitor only after a long scientific run starts; require an immutable run identity and explicit recovery contract."
+}

@@ -26,7 +26,7 @@ been supported.
 | Atomic output, retries, costs, sharding | execution package and SQLite state machines | crash/state/budget tests | verified | no production run |
 | Resource authorization and isolation | reviewed allocation, physical-to-logical GPU mask, frozen-input CLI gate | allocation/input-tamper tests and CUDA probe | verified | GPU 2 allocated; compatibility passed |
 | Controlled private webpages/search | loopback FastAPI services | `BROWSER_SMOKE.remote.json` | deployed | only harmless fixture loaded |
-| Hourly process supervision | PID identity, allowlist, restart rate, lock/disk checks | repeated monitor report with stable PIDs | deployed | Codex heartbeat to be attached |
+| Hourly process supervision | PID identity, allowlist, restart rate, lock/disk checks | active hourly heartbeat plus healthy manual acceptance run | deployed | service-only guardrail; run-specific GPU monitor deferred until a long run starts |
 | Reproducibility, ethics, threat model, cards | `docs/`, locks, prompt/dataset manifests | strict audit/tests | verified | publication artifacts pending |
 | Stage-level Git history | `docs/VERSIONING.md` | logical commits on `codex/v0` | active | V0 scientific checkpoint/tag deferred until datasets and the exploratory matrix finish |
 

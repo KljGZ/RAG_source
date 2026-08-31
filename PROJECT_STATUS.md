@@ -13,6 +13,8 @@ Current stage: **V0 Qwen3-14B end-to-end compatibility passed; scientific V0 dat
   `--disable-gpu`.
 - [x] Controlled source/search services deployed on `127.0.0.1:18080/18081`.
 - [x] Allowlisted monitor validated across repeated runs without duplicate processes.
+- [x] The native hourly heartbeat is active; its acceptance run found clean Git/locks,
+  2,463 GiB free disk, and both allowlisted services healthy with no recovery action.
 - [x] No-GPU deployment acceptance passed; Torch was inspected through package
   metadata only and was not imported.
 - [x] Physical GPU 2 was uniquely masked to logical `cuda:0`; CUDA 13 / Blackwell
