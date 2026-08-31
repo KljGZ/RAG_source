@@ -40,5 +40,5 @@ minimum_resources:
         ["run-plan", "--config", str(path), "--no-dry-run"],
         terminal_width=200,
     )
-    assert result.exit_code != 0
-    assert "requires a reviewed resource allocation manifest" in result.output
+    assert result.exit_code == 2
+    assert '"dry_run": false' in result.output
