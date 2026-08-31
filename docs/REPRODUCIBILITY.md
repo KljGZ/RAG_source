@@ -12,3 +12,9 @@ and verified before use. No run may silently fetch an unpinned model or dataset.
 `make lint`, `make test`, `make audit`, and an Inspect no-network smoke task form the
 deployment gate. Publication releases include `artifacts/publication/REPRODUCE.yaml`
 with argument-vector commands, not shell strings.
+
+The deployed environment additionally records a full Conda manifest, explicit Conda
+URLs/checksums, a pip lock, an R package table, Playwright archive hashes, frozen JSON
+Schemas, a CPU-only GLMM recovery result, and a no-GPU acceptance report. PyTorch is
+not imported until an exact GPU allocation is approved; installing a wheel is not
+recorded as a successful CUDA compatibility test.

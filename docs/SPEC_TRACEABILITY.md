@@ -1,42 +1,51 @@
 # Specification traceability
 
-This matrix is the implementation contract derived from the theoretical and
-deployment specifications. A row is complete only when code, tests, configuration,
-and an auditable artifact all exist. “Implemented” never means that an empirical
-claim has been established.
+This is the implementation contract derived from the theoretical and deployment
+specifications. “Verified” means that code, a deterministic test/configuration, and
+deployment evidence exist. It never means that an empirical hypothesis has already
+been supported.
 
-| Requirement | Implementation | Verification artifact | State |
-|---|---|---|---|
-| PGSD/SDI constructs and non-equivalences | `SCIENTIFIC_REGISTER.yaml` | schema audit | implemented |
-| Six normative variables vs. heuristic cues | schemas and factorial builder | counterfactual tests | in progress |
-| Eight normative axioms | scorers and PAVG constraints | axiom test report | in progress |
-| Claim/source/evidence/provenance/trial/run/tool schemas | `src/provtrust/schemas` | JSON-schema snapshots | in progress |
-| Group-safe split and leakage prevention | dataset split/validator | leakage audit | in progress |
-| Track A: Learn2Discern replication | dataset adapter and task | dry-run manifest | in progress |
-| Track B: static causal decomposition | interventions and task | paired-design audit | in progress |
-| Track C: authenticity and warrant | task/scorers | monotonicity audit | in progress |
-| Track D: independence/consensus laundering | provenance graph/task | root-count audit | in progress |
-| Track E: interactive verification | controlled tools/web environment | trace-replay test | in progress |
-| Track F: rationale causal faithfulness | rationale task/scorer | intervention agreement test | in progress |
-| Track G: PAVG defense | defense pipeline | non-amplification tests | in progress |
-| MIRAGE isolated stress adapter | manifest-only adapter | safety boundary test | in progress |
-| Real and synthetic dual tracks | builders and snapshot manifests | provenance/hash audit | in progress |
-| Inspect AI orchestration | task wrappers | no-network smoke evaluation | in progress |
-| R/Python confirmatory analysis | scripts and locked estimands | synthetic recovery test | in progress |
-| Atomic output, retries, costs, sharding | execution package | crash/restart tests | in progress |
-| Controlled private webpages/search | loopback FastAPI services | header/isolation tests | in progress |
-| Hourly process supervision | allowlisted monitor and heartbeat | monitor event log | in progress |
-| Reproducibility, ethics, threat model, cards | `docs/` | documentation audit | in progress |
-| Stage-level Git history | `docs/VERSIONING.md` | signed/annotated tags | active |
+| Requirement | Implementation | Deployment evidence | Implementation state | Empirical state |
+|---|---|---|---|---|
+| PGSD/SDI constructs and non-equivalences | `docs/THEORY.md`, `SCIENTIFIC_REGISTER.yaml` | repository audit | verified | untested |
+| Six normative variables vs. heuristic cues | Trial schema, explicit intervention vector, fractional builder | schema snapshots; property test | verified | untested |
+| Eight normative axioms | deterministic scorers and PAVG constraints | defense/scorer unit tests | verified | untested |
+| Claim/source/evidence/provenance/trial/run/tool schemas | `src/provtrust/schemas` | `benchmark/schemas/MANIFEST.json` | verified | not applicable |
+| Group-safe split and leakage prevention | connected-component splitter/validator | leakage tests | verified | no final dataset |
+| Track A: Learn2Discern replication | adapter, two-stage solver, numeric update scorer | build/parser tests | verified | upstream data/model runs pending |
+| Track B: static causal decomposition | 16-cell deterministic fractional design and paired task | fractional-design and all-track build tests | verified | gold V0 families pending |
+| Track C: authenticity and warrant | interventions, tasks, gaps/monotonicity scorers | counterfactual/scorer tests | verified | untested |
+| Track D: independence/consensus laundering | provenance graphs, idempotent aggregation, task/scorers | root and non-amplification tests | verified | untested |
+| Track E: interactive verification | controlled tools, prior/posterior solver, trace diagnostics | loopback service and browser smoke | verified | model runs pending |
+| Track F: rationale causal faithfulness | declared-factor output plus counterfactual consistency scorer | scorer test | verified | model runs pending |
+| Track G: PAVG defense | risk gate, attribution/warrant/root aggregation, abstention, tool protocol | defense tests and task build | verified | baseline comparison pending |
+| MIRAGE isolated stress adapter | safety-gated manifest reader and task | harmless safety manifest build test | verified | upstream/license/resource gated |
+| Real and synthetic dual tracks | content-addressed real-source manifests and synthetic builder | snapshot/hash tests | partial: machinery verified | licensed real corpus and annotations pending |
+| Inspect AI orchestration | registered tasks, paired solver, structured scorer | every track builds without a model call | verified | no eval invoked |
+| R/Python confirmatory analysis | GLMM, contrasts, equivalence, bootstrap/randomization/power | `STATISTICS_RECOVERY.remote.json` | verified | V1 not frozen |
+| Atomic output, retries, costs, sharding | execution package and SQLite state machines | crash/state/budget tests | verified | no production run |
+| Resource authorization and isolation | reviewed allocation schema and CLI enforcement | allocation unit tests | verified | awaiting user allocation |
+| Controlled private webpages/search | loopback FastAPI services | `BROWSER_SMOKE.remote.json` | deployed | only harmless fixture loaded |
+| Hourly process supervision | PID identity, allowlist, restart rate, lock/disk checks | repeated monitor report with stable PIDs | deployed | Codex heartbeat to be attached |
+| Reproducibility, ethics, threat model, cards | `docs/`, locks, prompt/dataset manifests | strict audit/tests | verified | publication artifacts pending |
+| Stage-level Git history | `docs/VERSIONING.md` | logical commits on `codex/v0` | active | V0 tag deferred until the exploratory pilot finishes |
 
 ## Scientific boundary
 
 The benchmark tests whether observable behavior is causally controlled by verified
-source properties and verification actions. It does not claim to identify
-consciousness, internal understanding, or a privileged hidden belief state.
+source properties and verification actions. It does not identify consciousness,
+internal understanding, or a privileged hidden belief state.
 
 ## Safety boundary
 
 Fabricated sources and poisoned documents remain on loopback-only services or in
 offline snapshots. They are never published, indexed, injected into public corpora,
 or tested against an unapproved third party.
+
+## Honest remaining gates
+
+The implementation is deployable, but full empirical completion cannot be generated
+by infrastructure alone. It still requires licensed upstream data, human/deterministic
+gold validation, frozen exact model revisions, an assigned GPU index/time window, and
+any paid API budget. These are represented as explicit gates rather than placeholders
+silently treated as completed work.

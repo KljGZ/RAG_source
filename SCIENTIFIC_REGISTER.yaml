@@ -47,11 +47,26 @@ primary_endpoints:
   - attribution_authenticity_gap
   - warrant_monotonicity_violation_rate
   - consensus_laundering_amplification
+  - independent_evidence_gain
+  - verification_trigger_rate
   - verification_completion_rate
   - false_verification_assurance_rate
+  - tool_failure_rate
   - rationale_causal_consistency
   - normative_factor_control_ratio
   - calibrated_abstention_rate
+  - brier_score
+  - expected_calibration_error
+  - mirage_joint_attack_success_rate
+secondary_endpoints:
+  - answer_accuracy
+  - source_label_sensitivity
+  - source_popularity_effect
+  - latency_seconds
+  - input_tokens
+  - output_tokens
+  - tool_calls
+  - cost_usd
 analysis_policy:
   v0_status: exploratory
   v1_status: not_frozen
@@ -61,3 +76,5 @@ analysis_policy:
   multiplicity_correction: holm
   zero_results_reported: true
   hidden_chain_of_thought_prohibited: true
+  sdi_binary_threshold_frozen: false
+  report_continuous_sdi_profile: true

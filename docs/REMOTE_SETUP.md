@@ -27,8 +27,9 @@ The default path mapping is:
 | Model cache | untracked local cache | `/home/REMOTE_USER/provtrust_cache` |
 | Run outputs | downloaded on demand | `/home/REMOTE_USER/provtrust_runs` |
 
-Hugging Face access must be tested before a run. When unavailable, download
-artifacts on an accessible machine, verify their hashes, upload them, and set
+Remote outbound HTTPS is currently treated as unavailable. Download Hugging Face and
+other external artifacts on an accessible machine, verify their declared size and
+SHA-256, upload them, re-verify them remotely, and set
 `HF_HUB_OFFLINE=1` plus an explicit local model path during the experiment.
 
 The bootstrap script reads `configs/conda/mainland.yml` through `CONDARC`.
@@ -36,10 +37,10 @@ The checked-in profile uses the USTC conda-forge mirror because it provided the
 best measured throughput from the target node. Override it without editing the
 tracked file by setting `PROVTRUST_CONDARC` to another YAML configuration.
 
-The node's IPv6 route stalls during sustained HTTPS transfers. Remote bootstrap
-therefore scopes an IPv4-only Python resolver shim to the Conda/Pip process tree.
-It does not modify host networking. Set `PROVTRUST_FORCE_IPV4=0` to disable the
-shim after the route has been repaired.
+An IPv4-only resolver shim was sufficient during the initial bootstrap, but later
+outbound HTTPS was unavailable altogether. The shim remains process-scoped and does
+not modify host networking; it is not a substitute for the verified offline transfer
+workflow.
 
 ## Web-service decision
 

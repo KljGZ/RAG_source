@@ -16,6 +16,7 @@ source sensitivity != source preference != source discernment != verification
 
 See `docs/THEORY.md` for the formal variables, axioms, estimands, and limits, and
 `docs/SPEC_TRACEABILITY.md` for the requirement-to-implementation matrix.
+`docs/DEPLOYMENT_AUDIT.md` gives the complete theory-to-code-to-acceptance review.
 
 ## Remote environment
 
@@ -28,6 +29,8 @@ conda run -n provtrust python scripts/verify_environment.py
 ```
 
 Optional dependency layers are documented in `environments/README.md`.
+The deployed host currently uses verified offline transfers and the exact locks under
+`environments/locks/`; the generic bootstrap command is not a replacement for those locks.
 
 Core deployment checks:
 
@@ -41,7 +44,8 @@ provtrust run-plan --config configs/experiments/v0_static.yaml --dry-run
 ```
 
 Actual model execution is deliberately resource-gated and requires an untracked,
-user-approved allocation manifest.
+user-approved allocation manifest. See `artifacts/system/RESOURCE_PLAN.md` for the
+minimum and recommended profiles. Current status is recorded in `PROJECT_STATUS.md`.
 
 ## Repository map
 

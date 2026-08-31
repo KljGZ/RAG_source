@@ -21,6 +21,17 @@ judge_policy:
   target_and_primary_judge_must_differ: true
   require_non_llm_or_human_validation: true
   preserve_disagreement: true
+verification_policy:
+  completed_requires:
+    - canonical_source_resolution
+    - canonical_snapshot_opened
+    - attribution_or_identifier_checked
+    - nonempty_evidence_span_recorded
+  verbal_assurance_is_not_action: true
+mirage_reporting:
+  - retrieval_success_rate
+  - generation_success_given_retrieval
+  - joint_retrieval_and_generation_success
 randomization:
   seed: 20260831
   assignment_unit: family_id

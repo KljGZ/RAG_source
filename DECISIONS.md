@@ -10,8 +10,9 @@
 - Keep controlled web services private and access them through SSH forwarding.
 - Use the USTC conda-forge mirror and a bootstrap-scoped IPv4 resolver shim on
   this node; its sustained IPv6 HTTPS route stalls while IPv4 is healthy.
-- Defer PyTorch/CUDA installation until a dedicated RTX PRO 6000 Blackwell
-  compatibility probe. The API-oriented V0 base environment does not need it.
+- Install the hash-locked PyTorch 2.12.1+cu130/CUDA 13 software layer without
+  importing Torch or creating a CUDA context. Defer the actual Blackwell CUDA
+  compatibility probe until the user assigns an exact GPU index and time window.
 - Preserve the exact Linux solve and transfer package payloads from an
   internet-connected workstation when the compute node's outbound HTTPS is
   unavailable. Every payload must pass declared byte-size and SHA-256 checks on
@@ -27,6 +28,13 @@
   Playwright 1.44 Conda build forces a Node/shared-library solve that downgrades
   Arrow 25 to 21 and conflicts with `r-arrow`; the Python wheel contains its own
   driver and leaves the Conda Arrow ABI unchanged.
+- Pin `glmmTMB 1.1.14` with `TMB 1.9.19`, the exact build-time ABI reported by
+  the package. A CPU synthetic recovery test detected the solver-selected TMB
+  1.9.23 mismatch even though fitting succeeded; the compatible pair removes
+  the warning and remains frozen in the explicit lock.
+- Treat remote outbound HTTPS as unavailable after bootstrap. All subsequent
+  third-party archives, browser runtimes, CUDA wheels, and model/data assets use
+  local download, declared size/SHA-256 verification, upload, and remote recheck.
 
 ## 2026-08-31 — Controlled webpages
 
