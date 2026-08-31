@@ -7,7 +7,7 @@ import importlib.metadata
 import json
 import platform
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -72,7 +72,7 @@ def main() -> int:
     pip = pip_records()
     report = {
         "schema_version": "1.0.0",
-        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "generated_at": datetime.now(UTC).isoformat(),
         "prefix_name": args.prefix.name,
         "python": sys.version,
         "platform": platform.platform(),
