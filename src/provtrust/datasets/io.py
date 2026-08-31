@@ -16,7 +16,7 @@ def read_jsonl(path: Path) -> Iterator[dict[str, Any]]:
                 continue
             value = json.loads(line)
             if not isinstance(value, dict):
-                raise ValueError(f"{path}:{line_number}: expected a JSON object")
+                raise TypeError(f"{path}:{line_number}: expected a JSON object")
             yield value
 
 

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from enum import StrEnum
 from typing import Any
 
@@ -24,7 +24,7 @@ class ToolEvent(BaseModel):
     event_id: str = Field(min_length=1)
     trial_item_id: str = Field(min_length=1)
     sequence: int = Field(ge=0)
-    timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    timestamp: datetime = Field(default_factory=lambda: datetime.now(UTC))
     tool_name: str = Field(min_length=1)
     arguments: dict[str, Any]
     status: ToolEventStatus

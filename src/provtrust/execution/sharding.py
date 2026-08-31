@@ -8,7 +8,7 @@ import hashlib
 def shard_for_item(item_id: str, shard_count: int, *, seed: int = 0) -> int:
     if shard_count < 1:
         raise ValueError("shard count must be positive")
-    digest = hashlib.sha256(f"{seed}:{item_id}".encode("utf-8")).digest()
+    digest = hashlib.sha256(f"{seed}:{item_id}".encode()).digest()
     return int.from_bytes(digest[:8], "big") % shard_count
 
 

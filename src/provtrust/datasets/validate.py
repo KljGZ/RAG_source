@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from collections import Counter, defaultdict
+
 from pydantic import BaseModel, ConfigDict
 
 from provtrust.datasets.split import SplitAssignment

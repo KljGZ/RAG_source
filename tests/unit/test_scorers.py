@@ -2,12 +2,12 @@ from __future__ import annotations
 
 import pytest
 
+from provtrust.schemas.evidence import WarrantLevel
 from provtrust.scorers.belief_update import normalized_claim_adoption
 from provtrust.scorers.independence import consensus_laundering_amplification
 from provtrust.scorers.rationale import rationale_causal_consistency
 from provtrust.scorers.source_sensitivity import normative_factor_control_ratio
 from provtrust.scorers.warrant import warrant_monotonicity_violation_rate
-from provtrust.schemas.evidence import WarrantLevel
 
 
 def test_normalized_adoption_is_not_clipped() -> None:

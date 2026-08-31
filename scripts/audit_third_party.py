@@ -14,7 +14,7 @@ import yaml
 def load_manifest(path: Path) -> dict[str, Any]:
     data = yaml.safe_load(path.read_text(encoding="utf-8"))
     if not isinstance(data, dict) or not isinstance(data.get("resources"), list):
-        raise ValueError("invalid third-party manifest")
+        raise TypeError("invalid third-party manifest")
     return data
 
 

@@ -4,12 +4,13 @@ from __future__ import annotations
 
 import hashlib
 import itertools
+
 from pydantic import BaseModel, ConfigDict, Field
 
 from provtrust.schemas.claim import Claim
 from provtrust.schemas.evidence import Evidence, Stance, WarrantLevel
 from provtrust.schemas.provenance import EdgeType, ProvenanceEdge, ProvenanceGraph
-from provtrust.schemas.source import SourceEntity, SourceRole
+from provtrust.schemas.source import SourceEntity
 from provtrust.schemas.trial import Trial
 
 

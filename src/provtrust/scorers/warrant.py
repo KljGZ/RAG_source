@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
+from itertools import pairwise
 
 from provtrust.schemas.evidence import WarrantLevel
 
@@ -18,7 +19,7 @@ WARRANT_ORDER = (
 def warrant_monotonicity_violations(adoption: Mapping[WarrantLevel, float]) -> tuple[str, ...]:
     violations: list[str] = []
     present = [level for level in WARRANT_ORDER if level in adoption]
-    for lower, higher in zip(present, present[1:]):
+    for lower, higher in pairwise(present):
         if adoption[higher] < adoption[lower]:
             violations.append(f"{lower.value}>{higher.value}")
     return tuple(violations)

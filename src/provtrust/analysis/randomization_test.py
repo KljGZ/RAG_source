@@ -3,8 +3,9 @@
 from __future__ import annotations
 
 import itertools
-from pydantic import BaseModel, ConfigDict
+
 import numpy as np
+from pydantic import BaseModel, ConfigDict
 
 
 class RandomizationResult(BaseModel):

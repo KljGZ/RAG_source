@@ -32,7 +32,7 @@ class _UnionFind:
 
 
 def _bucket(component: str, seed: int) -> float:
-    digest = hashlib.sha256(f"{seed}:{component}".encode("utf-8")).digest()
+    digest = hashlib.sha256(f"{seed}:{component}".encode()).digest()
     return int.from_bytes(digest[:8], "big") / float(2**64)
 
 

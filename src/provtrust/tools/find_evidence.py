@@ -4,8 +4,9 @@ from __future__ import annotations
 
 import json
 import re
-from pydantic import BaseModel, ConfigDict, Field
+
 from inspect_ai.tool import Tool, tool
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class EvidenceMatch(BaseModel):

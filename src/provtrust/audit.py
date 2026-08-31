@@ -45,7 +45,7 @@ SECRET_PATTERN = re.compile(
 def _load_yaml(path: Path) -> dict[str, Any]:
     value = yaml.safe_load(path.read_text(encoding="utf-8"))
     if not isinstance(value, dict):
-        raise ValueError(f"expected YAML object: {path}")
+        raise TypeError(f"expected YAML object: {path}")
     return value
 
 
@@ -76,7 +76,7 @@ def audit_repository(root: Path) -> AuditReport:
         checks["eight_axioms"] = isinstance(axioms, dict) and len(axioms) == 8
         if not checks["eight_axioms"]:
             errors.append("scientific register must contain eight normative axioms")
-    except (OSError, ValueError, yaml.YAMLError) as error:
+    except (OSError, TypeError, ValueError, yaml.YAMLError) as error:
         errors.append(f"scientific register invalid: {error}")
     try:
         third_party = _load_yaml(root / "third_party/THIRD_PARTY_MANIFEST.yaml")
@@ -88,7 +88,7 @@ def audit_repository(root: Path) -> AuditReport:
         checks["unlicensed_code_not_copied"] = not unsafe_copy
         if unsafe_copy:
             errors.append(f"unlicensed repositories marked for code copying: {unsafe_copy}")
-    except (OSError, ValueError, yaml.YAMLError) as error:
+    except (OSError, TypeError, ValueError, yaml.YAMLError) as error:
         errors.append(f"third-party manifest invalid: {error}")
     try:
         tracked = subprocess.run(

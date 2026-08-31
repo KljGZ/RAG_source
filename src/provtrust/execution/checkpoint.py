@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import sqlite3
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from enum import StrEnum
 from pathlib import Path
 
@@ -50,7 +50,7 @@ class CheckpointStore:
         return connection
 
     def initialize(self, item_ids: tuple[str, ...]) -> None:
-        now = datetime.now(timezone.utc).isoformat()
+        now = datetime.now(UTC).isoformat()
         with self._connect() as connection:
             connection.executemany(
                 "insert or ignore into items(item_id,state,updated_at) values(?,?,?)",
@@ -72,7 +72,7 @@ class CheckpointStore:
         error_type: str | None = None,
         output_path: str | None = None,
     ) -> None:
-        now = datetime.now(timezone.utc).isoformat()
+        now = datetime.now(UTC).isoformat()
         with self._connect() as connection:
             connection.execute("begin immediate")
             row = connection.execute(
@@ -100,7 +100,7 @@ class CheckpointStore:
                 "update items set state=?,updated_at=? where state=?",
                 (
                     ItemState.PENDING.value,
-                    datetime.now(timezone.utc).isoformat(),
+                    datetime.now(UTC).isoformat(),
                     ItemState.RUNNING.value,
                 ),
             )

@@ -6,7 +6,7 @@ import json
 import os
 import subprocess
 import time
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Literal
 
@@ -195,7 +195,7 @@ class Monitor:
             )
         report = {
             "schema_version": "1.0.0",
-            "checked_at": datetime.now(timezone.utc).isoformat(),
+            "checked_at": datetime.now(UTC).isoformat(),
             "healthy": all((not row["enabled"]) or row["healthy"] for row in records),
             "processes": records,
         }

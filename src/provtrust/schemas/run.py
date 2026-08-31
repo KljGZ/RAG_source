@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from enum import StrEnum
 from typing import Any
 
@@ -95,7 +95,7 @@ class RunManifest(BaseModel):
 
     schema_version: str = "1.0.0"
     run_id: str
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
     git_commit: str = Field(pattern=r"^[0-9a-f]{40}$")
     experiment_plan_hash: str = Field(pattern=r"^[0-9a-f]{64}$")
     dataset_manifest_hash: str = Field(pattern=r"^[0-9a-f]{64}$")
