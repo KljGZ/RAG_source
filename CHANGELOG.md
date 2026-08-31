@@ -17,6 +17,10 @@ silently replace earlier outputs.
   with an exact 15-cell paired design and freeze 16 closed-world families (240 trials).
 - Add recursive stimulus no-collapse/no-leakage checks, deterministic Qwen3-14B
   registration, V2 frozen-input hashes, and deterministic eval-result extraction.
+- Complete and machine-validate the exact one-family/15-cell deterministic preflight;
+  freeze its raw-log hash and activation evidence without outcome-based gating.
+- Activate the 240-sample Qwen3-14B V0 static plan and remove redundant sampling CLI
+  flags that Transformers ignores when deterministic decoding is enabled.
 
 ## [0.1.0] - 2026-08-31
 

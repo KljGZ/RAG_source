@@ -2,19 +2,24 @@
 
 This file distinguishes an implementation dependency from a scientific decision.
 
-## Resource-allocation gate
+## First local-model resource gate — satisfied
 
-No GPU or paid-API experiment may start until the user allocates resources after
-deployment acceptance. Installation and CPU-only deterministic tests are allowed.
+The user assigned physical GPU index 2 for continuous use, allowed direct CPU use,
+authorized project-selected storage, and requested an open-weight first tranche. The
+frozen Qwen3-14B V0 static plan therefore has the following accepted allocation:
 
-To open the gate, the user must provide:
+- physical GPU 2 only (mapped by the process to logical `cuda:0`), with at least
+  35 GiB usable VRAM;
+- 16 CPU cores, 64 GiB RAM, and 100 GiB writable run storage minimum;
+- zero paid API budget and no external provider calls;
+- frozen local model, dataset, prompt, activation evidence, and plan hashes.
 
-- one or more exact GPU indices and an allocation expiry/time window;
-- at least 24 logical CPU cores, 128 GiB RAM, and 1 TiB writable storage for the
-  minimum sequential V0 profile;
-- confirmation of whether the first tranche is local-model-only or may use named
-  API providers, plus a hard USD budget for every enabled provider;
-- approval of the exact model revisions after the compatibility probe plan is reviewed.
+The actual machine-local allocation reserves CPU 0–31, 192 GiB RAM, and 1,200 GiB
+storage, exceeding the run minimum. Existing unrelated GPU processes are outside this
+project's authority and must never be terminated or restarted.
+
+Additional GPUs/models, paid APIs, a primary judge, or a broader empirical matrix
+remain separately gated and are not implied by this first-tranche authorization.
 
 ## External artifacts
 

@@ -1,7 +1,7 @@
 schema_version: "1.0.0"
 input_contract_version: 2
 stage: v0
-execution_status: blocked_pending_resources_and_frozen_inputs
+execution_status: ready
 exploratory: true
 scientific_claims_allowed: true
 scope: single open-weight target on closed-world paired synthetic claims
@@ -16,7 +16,7 @@ model_args: configs/models/qwen3-14b-static.local.yaml
 system_prompt: prompts/frozen/answer-system-v0.txt
 system_prompt_sha256: 450e6eaa85df17643f17fab17840d4b8cb99dc349fb181e3d2d2ed91fb2c14dc
 activation_evidence: artifacts/system/V0_QWEN3_14B_PREFLIGHT.json
-activation_evidence_sha256: PENDING_REMOTE_PREFLIGHT
+activation_evidence_sha256: 2ee1f9cc3ad3e735c363fc8ee51b6337f3d90d250aeb6d0da534f397644744e6
 seed: 20260831
 epochs: 1
 sample_count: 240
@@ -47,12 +47,6 @@ inspect_command:
   - hf/Qwen/Qwen3-14B
   - --model-config
   - configs/models/qwen3-14b-static.local.yaml
-  - --temperature
-  - "0"
-  - --top-p
-  - "1"
-  - --top-k
-  - "1"
   - --max-tokens
   - "256"
   - --seed

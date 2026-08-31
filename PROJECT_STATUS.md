@@ -1,6 +1,6 @@
 # Project status
 
-Current stage: **V0 paired corpus frozen; deterministic Qwen3-14B remote preflight pending**
+Current stage: **Qwen3-14B deterministic preflight passed; 240-sample V0 static run ready**
 
 ## Deployment state
 
@@ -25,6 +25,11 @@ Current stage: **V0 paired corpus frozen; deterministic Qwen3-14B remote preflig
   `claimed_verified=true` report is retained as a false-assurance observation.
 - [x] The frozen one-item/two-call Inspect pilot completed with 709 tokens, a 1.0
   structured-parse score, and complete allocation/input hashes in the eval log.
+- [x] The exact 15-cell/one-family deterministic preflight completed on physical GPU 2:
+  15/15 samples, 30 model calls, zero errors/retries, and all frozen-input,
+  structured-output, answer-type, citation, and design-coverage gates passed.
+- [x] The preflight's 13/15 unsupported verification claims are retained as descriptive
+  observations; neither that rate nor answer accuracy was used as an activation gate.
 - [x] Inspect task resources are resolved from the project root after validation;
   the initial pre-inference relative-path failure and its remediation are retained.
 - [x] Ruff passed, strict checks pass on all changed sources, and Pytest passed 57 tests;
@@ -57,11 +62,12 @@ Current stage: **V0 paired corpus frozen; deterministic Qwen3-14B remote preflig
   fixture/corpus, and generation settings are independently frozen.
 - [x] Physical GPU index 2 allocated by the user for continuous use; CPU use approved.
 - [ ] Additional target/judge model registries and any paid API budget approved.
-- [ ] V0 empirical experiments run.
+- [ ] Full 16-family/240-sample V0 static experiment run (preflight passed; plan ready).
 - [ ] V1 plan frozen or confirmatory outcomes inspected.
 
-No claim-bearing V0 experiment or paid API call has run. CUDA, direct-model loading,
-typed output, and the end-to-end Inspect fixture have passed. The deployment-only
-fixture cannot support an SDI, PGSD, or model-quality conclusion and is not a V1
-confirmatory run. The next scientific gates are the deterministic static-run remote
-preflight, licensed/validated real datasets, and additional target/judge registrations.
+No full claim-bearing V0 experiment or paid API call has run. CUDA, direct-model
+loading, typed output, the end-to-end Inspect fixture, and the exact one-family static
+preflight have passed. The preflight cannot support a general SDI, PGSD, or model-
+quality conclusion and is not a V1 confirmatory run. The next scientific gates are the
+ready 240-sample static run, licensed/validated real datasets, and additional
+target/judge registrations.

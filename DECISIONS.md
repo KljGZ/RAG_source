@@ -80,3 +80,21 @@
   JSON but encoded a yes/no answer as string `"Yes"`. Freeze an explicit
   boolean/number/null answer-type contract and rerun the smoke before activation;
   otherwise a formatting mismatch would be counted as substantive model error.
+
+## 2026-08-31 — Deterministic paired V0 activation
+
+- Treat the earlier model-card sampling configuration as compatibility-only. For the
+  exact paired static estimand, use deterministic greedy decoding (`do_sample=false`,
+  `temperature=0`, fixed seed) so within-model sampling noise does not obscure paired
+  stimulus effects.
+- Require a one-family preflight covering all 15 exact cells before the 16-family run.
+  Activation gates cover execution integrity, frozen inputs, coverage, parse/type/
+  citation validity, and error-free completion. Accuracy and hypothesis-favorable
+  behavior are explicitly excluded from the gate.
+- The preflight passed all gates on physical GPU 2. Preserve the observed 13/15 false
+  verification-assurance cases as data; they neither prove SDI nor authorize a general
+  model claim.
+- Keep the preflight plan and its log immutable. The full-run command omits redundant
+  temperature/top-p/top-k CLI flags because Transformers reports them as ignored when
+  sampling is disabled; the frozen registration and plan still record their canonical
+  deterministic values.
