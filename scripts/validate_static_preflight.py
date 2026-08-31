@@ -74,6 +74,8 @@ def main() -> int:
     parser.add_argument("--expected-families", type=int, default=1)
     parser.add_argument("--expected-model-calls", type=int, default=30)
     parser.add_argument("--expected-seed", type=int, default=20260831)
+    parser.add_argument("--run-kind", choices=("preflight", "exploratory_v0"), default="preflight")
+    parser.add_argument("--expected-git-revision")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
@@ -230,10 +232,13 @@ def main() -> int:
     )
     revision = log.eval.revision
     results = log.results
+    temperature = generate_config.get("temperature")
     gates = {
         "eval_status_success": log.status == "success",
         "eval_not_invalidated": log.invalidated is False,
         "clean_git_revision": revision is not None and revision.dirty is False,
+        "expected_git_revision": args.expected_git_revision is None
+        or (revision is not None and revision.commit == args.expected_git_revision),
         "expected_model": log.eval.model == args.expected_model,
         "expected_plan_hash": eval_metadata.get("provtrust_plan_sha256")
         == args.expected_plan_sha256,
@@ -261,7 +266,7 @@ def main() -> int:
         "token_usage_reconciles": sample_input_tokens == aggregate_tokens["input"]
         and sample_output_tokens == aggregate_tokens["output"]
         and sample_total_tokens == aggregate_tokens["total"],
-        "deterministic_temperature": float(generate_config.get("temperature", -1.0)) == 0.0,
+        "deterministic_temperature": temperature is None or float(temperature) == 0.0,
         "deterministic_seed": int(generate_config.get("seed", -1)) == args.expected_seed,
         "single_connection": int(generate_config.get("max_connections", -1)) == 1,
         "sampling_disabled": model_args.get("do_sample") is False,
@@ -273,15 +278,60 @@ def main() -> int:
     status = "passed" if not failures else "failed"
     started_at = str(log.stats.started_at)
     completed_at = str(log.stats.completed_at)
+    is_preflight = args.run_kind == "preflight"
+    purpose = (
+        "deterministic one-family runtime acceptance for audited_static_v1"
+        if is_preflight
+        else "exploratory 16-family V0 runtime acceptance for audited_static_v1"
+    )
+    interpretation_boundary = (
+        "This preflight validates execution and observability only. Accuracy and false "
+        "verification assurance are descriptive observations and were not activation gates."
+        if is_preflight
+        else "This acceptance validates execution integrity, not a general or confirmatory "
+        "SDI/PGSD claim. Scientific interpretation remains limited to one open-weight model "
+        "and a closed-world synthetic corpus."
+    )
+    warnings = (
+        [
+            (
+                "Transformers reported temperature/top-k generation flags as ignored while "
+                "do_sample=false. Deterministic decoding was active; the full-run command "
+                "omits these redundant CLI flags."
+            ),
+            (
+                "The legacy Inspect headline scorer value is answer correctness despite the "
+                "structured_parse_scorer name. Parse acceptance is computed from each score's "
+                "parse_success metadata, not from the headline mean."
+            ),
+        ]
+        if is_preflight
+        else [
+            (
+                "Inspect's Hugging Face adapter reported default temperature/top-p/top-k flags "
+                "as ignored even though the full-run CLI omitted them. The frozen runtime used "
+                "do_sample=false, disabled thinking, a fixed seed, and one connection."
+            ),
+            (
+                "The legacy Inspect headline scorer value is answer correctness despite the "
+                "structured_parse_scorer name. Parse acceptance is computed from each score's "
+                "parse_success metadata, not from the headline mean."
+            ),
+            (
+                "An unrelated pre-existing GPU process shared physical GPU 2. Memory headroom "
+                "remained above 55 GiB and no error or retry occurred; throughput is therefore "
+                "not treated as an isolated performance benchmark."
+            ),
+        ]
+    )
     report = {
         "schema_version": "1.0.0",
         "status": status,
-        "scientific_claims_allowed": False,
-        "purpose": "deterministic one-family runtime acceptance for audited_static_v1",
-        "interpretation_boundary": (
-            "This preflight validates execution and observability only. Accuracy and false "
-            "verification assurance are descriptive observations and were not activation gates."
-        ),
+        "run_kind": args.run_kind,
+        "scientific_claims_allowed": not is_preflight,
+        "confirmatory": False,
+        "purpose": purpose,
+        "interpretation_boundary": interpretation_boundary,
         "model": {
             "inspect_id": args.expected_model,
             "registration_path": args.model_registration.as_posix(),
@@ -359,18 +409,7 @@ def main() -> int:
             "summed_sample_seconds": round(sample_seconds, 6),
         },
         "samples": sorted(sample_rows, key=lambda row: str(row["design_cell_id"])),
-        "warnings": [
-            (
-                "Transformers reported temperature/top-k generation flags as ignored while "
-                "do_sample=false. Deterministic decoding was active; the full-run command "
-                "omits these redundant CLI flags."
-            ),
-            (
-                "The legacy Inspect headline scorer value is answer correctness despite the "
-                "structured_parse_scorer name. Parse acceptance is computed from each score's "
-                "parse_success metadata, not from the headline mean."
-            ),
-        ],
+        "warnings": warnings,
     }
     artifact_sha256 = atomic_write_json(args.output, report)
     print(

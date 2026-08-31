@@ -1,6 +1,6 @@
 # Project status
 
-Current stage: **Qwen3-14B deterministic preflight passed; 240-sample V0 static run ready**
+Current stage: **Qwen3-14B 240-sample static V0 complete and integrity-accepted**
 
 ## Deployment state
 
@@ -30,6 +30,11 @@ Current stage: **Qwen3-14B deterministic preflight passed; 240-sample V0 static 
   structured-output, answer-type, citation, and design-coverage gates passed.
 - [x] The preflight's 13/15 unsupported verification claims are retained as descriptive
   observations; neither that rate nor answer accuracy was used as an activation gate.
+- [x] The full deterministic static run completed with 240/240 samples, 480 calls,
+  zero errors/retries, 296,090 tokens, and exact 16-family × 15-cell coverage.
+- [x] Raw-log acceptance and the 224-effect analysis publication gates passed; the raw
+  eval, observations, paired effects, summary, and manifests agree by SHA-256 on the
+  workstation and compute node.
 - [x] Inspect task resources are resolved from the project root after validation;
   the initial pre-inference relative-path failure and its remediation are retained.
 - [x] Ruff passed, strict checks pass on all changed sources, and Pytest passed 57 tests;
@@ -62,12 +67,14 @@ Current stage: **Qwen3-14B deterministic preflight passed; 240-sample V0 static 
   fixture/corpus, and generation settings are independently frozen.
 - [x] Physical GPU index 2 allocated by the user for continuous use; CPU use approved.
 - [ ] Additional target/judge model registries and any paid API budget approved.
-- [ ] Full 16-family/240-sample V0 static experiment run (preflight passed; plan ready).
+- [x] First full 16-family/240-sample V0 static experiment run and reported.
+- [ ] Multi-model static replication and interactive-verification/PAVG experiments run.
 - [ ] V1 plan frozen or confirmatory outcomes inspected.
 
-No full claim-bearing V0 experiment or paid API call has run. CUDA, direct-model
-loading, typed output, the end-to-end Inspect fixture, and the exact one-family static
-preflight have passed. The preflight cannot support a general SDI, PGSD, or model-
-quality conclusion and is not a V1 confirmatory run. The next scientific gates are the
-ready 240-sample static run, licensed/validated real datasets, and additional
-target/judge registrations.
+The first exploratory static V0 experiment has run; no paid API call or V1
+confirmatory experiment has run. Qwen3-14B showed zero adoption effects for 12/14
+contrasts, a -0.5 raw adoption effect for each weaker-warrant contrast, and a 90%
+false-verification-assurance rate. Neither warrant contrast survived the registered
+14-test Holm correction. These results cannot support a general SDI, PGSD, or model-
+quality conclusion. Next gates are multi-model replication, interactive verification,
+PAVG baselines, licensed/validated real data, and independent target/judge registries.

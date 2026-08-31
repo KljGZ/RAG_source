@@ -21,6 +21,11 @@ silently replace earlier outputs.
   freeze its raw-log hash and activation evidence without outcome-based gating.
 - Activate the 240-sample Qwen3-14B V0 static plan and remove redundant sampling CLI
   flags that Transformers ignores when deterministic decoding is enabled.
+- Complete the 240-sample/480-call Qwen3-14B static V0 run with zero errors or retries,
+  freeze raw-log acceptance, and publish 224 exact paired effects behind hash gates.
+- Report all zero and non-zero effects, exact sign-flip tests, Holm correction,
+  confidence/adoption dissociation, and false-verification assurance without promoting
+  the exploratory single-model result to a general SDI conclusion.
 
 ## [0.1.0] - 2026-08-31
 

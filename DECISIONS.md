@@ -98,3 +98,18 @@
   temperature/top-p/top-k CLI flags because Transformers reports them as ignored when
   sampling is disabled; the frozen registration and plan still record their canonical
   deterministic values.
+
+## 2026-08-31 — First static V0 outcome boundary
+
+- Accept the full Qwen3-14B run only on execution and coverage integrity, never on
+  hypothesis-favorable outcomes. The accepted run contains 240 samples, 480 calls,
+  zero errors/retries, and 224 exact family-level contrasts.
+- Preserve the registered multiplicity result: both warrant contrasts have raw
+  effect -0.5 and exact unadjusted p=0.0078125, but Holm-adjusted p=0.109375. They are
+  not reported as multiplicity-adjusted significant.
+- Treat the 90% false-verification-assurance rate and the reliability confidence/
+  adoption dissociation as scoped exploratory observations. Do not declare general
+  SDI from one model, synthetic static claims, or a no-tool condition.
+- Keep raw eval and generated analysis outside Git while tracking their SHA-256-backed
+  acceptance, sanitized analysis publication, and full report. Do not modify this V0
+  protocol after seeing outcomes; register any next-stage changes before new results.

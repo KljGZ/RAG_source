@@ -13,7 +13,7 @@ been supported.
 | Claim/source/evidence/provenance/trial/run/tool schemas | `src/provtrust/schemas` | `benchmark/schemas/MANIFEST.json` | verified | not applicable |
 | Group-safe split and leakage prevention | connected-component splitter/validator | leakage tests | verified | no final dataset |
 | Track A: Learn2Discern replication | adapter, two-stage solver, numeric update scorer | build/parser tests | verified | upstream data/model runs pending |
-| Track B: static causal decomposition | 15-cell exact paired design and paired task | 16-family/240-item frozen corpus; no-collapse/no-leakage audit; exact one-family preflight passed | verified | 240-sample Qwen3-14B run ready |
+| Track B: static causal decomposition | 15-cell exact paired design and paired task | frozen corpus/audits; 240-sample Qwen3-14B run; 224 paired effects and integrity manifests | verified | first exploratory model complete; multi-model replication pending |
 | Track C: authenticity and warrant | interventions, tasks, gaps/monotonicity scorers | counterfactual/scorer tests | verified | untested |
 | Track D: independence/consensus laundering | provenance graphs, idempotent aggregation, task/scorers | root and non-amplification tests | verified | untested |
 | Track E: interactive verification | controlled tools, prior/posterior solver, trace diagnostics | loopback service and browser smoke | verified | model runs pending |
@@ -21,7 +21,7 @@ been supported.
 | Track G: PAVG defense | risk gate, attribution/warrant/root aggregation, abstention, tool protocol | defense tests and task build | verified | baseline comparison pending |
 | MIRAGE isolated stress adapter | safety-gated manifest reader and task | harmless safety manifest build test | verified | upstream/license/resource gated |
 | Real and synthetic dual tracks | content-addressed real-source manifests and synthetic builder | snapshot/hash tests | partial: machinery verified | licensed real corpus and annotations pending |
-| Inspect AI orchestration | registered tasks, paired solver, structured scorer | every track builds; compatibility fixture and exact 15-sample/30-call static preflight passed | verified | full exploratory static run pending |
+| Inspect AI orchestration | registered tasks, paired solver, structured scorer | every track builds; compatibility fixture, preflight, and 240-sample static run passed | verified | remaining empirical tracks pending |
 | R/Python confirmatory analysis | GLMM, contrasts, equivalence, bootstrap/randomization/power | `STATISTICS_RECOVERY.remote.json` | verified | V1 not frozen |
 | Atomic output, retries, costs, sharding | execution package and SQLite state machines | crash/state/budget tests | verified | no production run |
 | Resource authorization and isolation | reviewed allocation, physical-to-logical GPU mask, frozen-input CLI gate | allocation/input-tamper tests and CUDA probe | verified | GPU 2 allocated; compatibility passed |
@@ -48,6 +48,7 @@ The implementation is deployable, but full empirical completion cannot be genera
 by infrastructure alone. It still requires licensed upstream data, human/deterministic
 gold validation, additional target/judge model revisions, and any paid API budget.
 The first target (Qwen3-14B) and physical GPU 2 are frozen/allocated, and the exact
-one-family deterministic preflight passed. The 240-sample single-model synthetic run
-is ready; additional models, judges, licensed real data, and confirmatory V1 remain
-explicit gates rather than placeholders silently treated as completed work.
+one-family preflight plus 240-sample single-model synthetic run passed their integrity
+gates. Additional models, judges, interactive verification/PAVG runs, licensed real
+data, and confirmatory V1 remain explicit gates rather than placeholders silently
+treated as completed work.
