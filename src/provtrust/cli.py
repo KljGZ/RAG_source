@@ -19,6 +19,8 @@ from provtrust.datasets.io import read_jsonl
 from provtrust.datasets.split import assign_grouped_splits
 from provtrust.datasets.validate import validate_trials
 from provtrust.execution.allocation import ResourceAllocation, ResourceRequirements
+from provtrust.execution.atomic_io import sha256_file
+from provtrust.execution.input_gate import validate_frozen_execution_inputs
 from provtrust.monitoring import Monitor, load_monitor_config
 from provtrust.schemas.trial import Trial
 from provtrust.web import create_app, ensure_loopback_bind
@@ -136,15 +138,40 @@ def run_plan(
     )
     if errors:
         raise typer.BadParameter(f"resource allocation failed validation: {', '.join(errors)}")
+    input_errors = validate_frozen_execution_inputs(plan, Path.cwd())
+    if input_errors:
+        raise typer.BadParameter(
+            "frozen execution input validation failed: " f"{', '.join(input_errors)}"
+        )
     environment = os.environ.copy()
+    plan_sha256 = sha256_file(config)
     environment.update(
         {
             "CUDA_VISIBLE_DEVICES": ",".join(str(index) for index in reviewed.gpu_indices),
+            "HF_HUB_DISABLE_TELEMETRY": "1",
+            "HF_HUB_OFFLINE": "1",
             "OMP_NUM_THREADS": str(len(reviewed.cpu_cores)),
             "PROVTRUST_ALLOCATION_ID": reviewed.allocation_id,
+            "PROVTRUST_PLAN_SHA256": plan_sha256,
+            "TOKENIZERS_PARALLELISM": "false",
+            "TRANSFORMERS_OFFLINE": "1",
         }
     )
+    registration_value = _load_object(Path(str(plan["model_registration"])))
+    snapshot = registration_value.get("snapshot", {})
+    root_sha256 = snapshot.get("root_sha256") if isinstance(snapshot, dict) else None
+    metadata = {
+        "provtrust_allocation_id": reviewed.allocation_id,
+        "provtrust_dataset_manifest": str(plan["dataset_manifest"]),
+        "provtrust_gpu_indices": ",".join(str(index) for index in reviewed.gpu_indices),
+        "provtrust_model_registration": str(plan["model_registration"]),
+        "provtrust_model_root_sha256": str(root_sha256),
+        "provtrust_plan_sha256": plan_sha256,
+        "provtrust_system_prompt_sha256": str(plan["system_prompt_sha256"]),
+    }
     constrained_command = list(command)
+    for key, value in metadata.items():
+        constrained_command.extend(("--metadata", f"{key}={value}"))
     taskset = shutil.which("taskset")
     if taskset and reviewed.cpu_cores:
         constrained_command = [

@@ -93,7 +93,7 @@ def main() -> int:
     model = AutoModelForCausalLM.from_pretrained(
         args.model_root,
         device_map="cuda:0",
-        torch_dtype="auto",
+        dtype="auto",
         local_files_only=True,
         trust_remote_code=False,
         low_cpu_mem_usage=True,

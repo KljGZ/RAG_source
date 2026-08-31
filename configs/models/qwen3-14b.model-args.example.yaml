@@ -2,7 +2,7 @@
 model_path: /home/REMOTE_USER/provtrust_cache/models/Qwen3-14B_cc692f4
 tokenizer_path: /home/REMOTE_USER/provtrust_cache/models/Qwen3-14B_cc692f4
 device: cuda:0
-torch_dtype: auto
+dtype: auto
 local_files_only: true
 trust_remote_code: false
 low_cpu_mem_usage: true
