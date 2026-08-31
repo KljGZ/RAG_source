@@ -1,0 +1,7 @@
+schema_version: "1.0.0"
+isolated: true
+public_indexing_disabled: true
+authorized_corpus: true
+upstream_commit: 5e71fa0d20173010ac765622a8bb51e3e514b25a
+corpus_path: web_env/source_snapshots
+result_path: artifacts/runs/mirage-smoke
