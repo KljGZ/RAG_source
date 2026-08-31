@@ -3,6 +3,9 @@ project_root: /home/REMOTE_USER/projects/RAG_source
 state_dir: /home/REMOTE_USER/provtrust_runs/.monitor
 report_path: /home/REMOTE_USER/provtrust_runs/.monitor/latest.json
 event_log_path: /home/REMOTE_USER/provtrust_runs/.monitor/events.jsonl
+minimum_free_disk_gib: 100
+require_clean_git: true
+lock_manifest: /home/REMOTE_USER/projects/RAG_source/environments/locks/LOCKS.sha256
 processes:
   - name: controlled-web
     enabled: true
@@ -18,7 +21,51 @@ processes:
       HF_HUB_OFFLINE: "1"
     restart_policy: on-failure
     max_restarts_per_hour: 3
+    startup_grace_seconds: 15
+    stop_grace_seconds: 10
     health:
       kind: http
       url: http://127.0.0.1:18080/healthz
+      timeout_seconds: 5
+  - name: controlled-search
+    enabled: true
+    command:
+      - /home/REMOTE_USER/miniforge3/envs/provtrust/bin/provtrust
+      - serve
+      - --host
+      - 127.0.0.1
+      - --port
+      - "18081"
+    cwd: /home/REMOTE_USER/projects/RAG_source
+    environment:
+      HF_HUB_OFFLINE: "1"
+    restart_policy: on-failure
+    max_restarts_per_hour: 3
+    startup_grace_seconds: 15
+    stop_grace_seconds: 10
+    health:
+      kind: http
+      url: http://127.0.0.1:18081/healthz
+      timeout_seconds: 5
+  - name: inspect-viewer
+    enabled: false
+    command:
+      - /home/REMOTE_USER/miniforge3/envs/provtrust/bin/inspect
+      - view
+      - --host
+      - 127.0.0.1
+      - --port
+      - "17500"
+      - --log-dir
+      - /home/REMOTE_USER/provtrust_runs/inspect-logs
+    cwd: /home/REMOTE_USER/projects/RAG_source
+    environment:
+      HF_HUB_OFFLINE: "1"
+    restart_policy: on-failure
+    max_restarts_per_hour: 3
+    startup_grace_seconds: 15
+    stop_grace_seconds: 10
+    health:
+      kind: http
+      url: http://127.0.0.1:17500
       timeout_seconds: 5

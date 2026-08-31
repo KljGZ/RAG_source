@@ -6,6 +6,14 @@ cluster_unit: family_id
 multiplicity: holm
 minimum_reporting: [effect_size, confidence_interval, adjusted_p_value]
 resource_allocation_required: true
+minimum_resources:
+  cpu_cores: 48
+  ram_gib: 256
+  storage_gib: 1500
+  gpu_count: 2
+  minimum_gpu_memory_gib: 90
+  estimated_gpu_hours: 400
+  api_budget_usd: 0
 inspect_command:
   - inspect
   - eval-set

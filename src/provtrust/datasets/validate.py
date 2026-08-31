@@ -38,12 +38,54 @@ def validate_trials(
     if duplicates:
         errors.append(f"duplicate item_id values: {duplicates[:10]}")
     family_conditions: dict[str, set[str]] = defaultdict(set)
+    family_trials: dict[str, list[Trial]] = defaultdict(list)
     condition_counts: Counter[str] = Counter()
     for trial in trials:
         family_conditions[trial.family_id].add(trial.intervention)
+        family_trials[trial.family_id].append(trial)
         condition_counts[trial.intervention] += 1
         if trial.claim_conditioned_reliability is None:
             warnings.append(f"{trial.item_id}: claim-conditioned reliability is unknown")
+        if not trial.intervention_vector and trial.intervention != "smoke":
+            errors.append(f"{trial.item_id}: intervention vector is missing")
+        allowed_sources = {
+            trial.actual_source.source_id,
+            trial.displayed_source.source_id,
+        }
+        unknown_sources = sorted(
+            evidence.source_id
+            for evidence in trial.evidence
+            if evidence.source_id not in allowed_sources
+        )
+        if unknown_sources:
+            errors.append(
+                f"{trial.item_id}: evidence references unknown sources: {unknown_sources}"
+            )
+        if any(
+            evidence.identity_authentic != trial.identity_authentic for evidence in trial.evidence
+        ):
+            errors.append(f"{trial.item_id}: evidence/trial identity authenticity mismatch")
+        if any(
+            evidence.attribution_authentic != trial.attribution_authentic
+            for evidence in trial.evidence
+        ):
+            errors.append(f"{trial.item_id}: evidence/trial attribution authenticity mismatch")
+        if any(evidence.warrant_level != trial.warrant_level for evidence in trial.evidence):
+            errors.append(f"{trial.item_id}: evidence/trial warrant mismatch")
+    for family_id, members in family_trials.items():
+        questions = {member.question for member in members}
+        gold_answers = {str(member.gold_answer) for member in members}
+        candidate_claims = {member.candidate_claim for member in members}
+        candidate_answers = {str(member.candidate_answer) for member in members}
+        root_claims = {member.root_claim_id for member in members}
+        if len(questions) != 1:
+            errors.append(f"{family_id}: counterfactual family changes the question")
+        if len(gold_answers) != 1:
+            errors.append(f"{family_id}: counterfactual family changes the gold answer")
+        if len(candidate_claims) != 1 or len(candidate_answers) != 1:
+            errors.append(f"{family_id}: counterfactual family changes the candidate claim")
+        if len(root_claims) != 1:
+            errors.append(f"{family_id}: counterfactual family changes root_claim_id")
     if assignments is not None:
         assignment_map = {entry.item_id: entry.split for entry in assignments}
         if set(assignment_map) != set(ids):

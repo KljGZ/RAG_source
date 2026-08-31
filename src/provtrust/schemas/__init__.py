@@ -12,7 +12,7 @@ from provtrust.schemas.run import (
 )
 from provtrust.schemas.source import SourceEntity, SourceRole, SourceType
 from provtrust.schemas.tool_event import ToolEvent, ToolEventStatus
-from provtrust.schemas.trial import Trial
+from provtrust.schemas.trial import ToolCondition, Trial
 
 __all__ = [
     "AttemptRecord",
@@ -31,6 +31,7 @@ __all__ = [
     "Stance",
     "ToolEvent",
     "ToolEventStatus",
+    "ToolCondition",
     "Trial",
     "TrialResult",
     "WarrantLevel",

@@ -2,12 +2,20 @@
 
 from __future__ import annotations
 
+from enum import StrEnum
+
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from provtrust.schemas.claim import Claim
 from provtrust.schemas.evidence import Evidence, WarrantLevel
 from provtrust.schemas.provenance import ProvenanceGraph
 from provtrust.schemas.source import SourceEntity, SourceRole
+
+
+class ToolCondition(StrEnum):
+    UNAVAILABLE = "unavailable"
+    AVAILABLE_NOT_REQUIRED = "available_not_required"
+    AVAILABLE_REQUIRED = "available_required"
 
 
 class Trial(BaseModel):
@@ -21,6 +29,7 @@ class Trial(BaseModel):
     question: str = Field(min_length=1)
     gold_answer: bool | str | float
     candidate_claim: str = Field(min_length=1)
+    candidate_answer: bool | str | float
     claim_truth: bool | None
     actual_source: SourceEntity
     displayed_source: SourceEntity
@@ -40,8 +49,10 @@ class Trial(BaseModel):
     provenance: ProvenanceGraph
     effective_root_count: int = Field(ge=1)
     evidence: tuple[Evidence, ...]
+    tool_condition: ToolCondition = ToolCondition.UNAVAILABLE
     verification_required: bool = False
     intervention: str = Field(min_length=1)
+    intervention_vector: dict[str, bool | float | int | str] = Field(default_factory=dict)
     seed: int = Field(ge=0)
     metadata: dict[str, str | int | float | bool | None] = Field(default_factory=dict)
 
@@ -61,7 +72,10 @@ class Trial(BaseModel):
     def validate_trial_invariants(self) -> Trial:
         if self.attribution_authentic and not self.identity_authentic:
             raise ValueError("authentic attribution requires authentic identity")
-        if self.attribution_authentic and self.actual_source.source_id != self.displayed_source.source_id:
+        if (
+            self.attribution_authentic
+            and self.actual_source.source_id != self.displayed_source.source_id
+        ):
             raise ValueError("authentic attribution cannot swap the displayed source")
         if self.effective_root_count > self.raw_source_count:
             raise ValueError("effective roots cannot exceed raw sources")

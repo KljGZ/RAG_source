@@ -8,6 +8,14 @@ service_urls:
   source: http://127.0.0.1:18080
   search: http://127.0.0.1:18080/api/search
 resource_allocation_required: true
+minimum_resources:
+  cpu_cores: 16
+  ram_gib: 64
+  storage_gib: 250
+  gpu_count: 1
+  minimum_gpu_memory_gib: 90
+  estimated_gpu_hours: 40
+  api_budget_usd: 0
 inspect_command:
   - inspect
   - eval

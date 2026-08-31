@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import subprocess
@@ -45,6 +46,8 @@ class ManagedProcess(BaseModel):
     restart_policy: Literal["never", "on-failure"] = "on-failure"
     health: HealthCheck = HealthCheck()
     max_restarts_per_hour: int = Field(default=3, ge=0, le=10)
+    startup_grace_seconds: float = Field(default=10.0, ge=0.0, le=60.0)
+    stop_grace_seconds: float = Field(default=10.0, ge=0.0, le=60.0)
 
     @model_validator(mode="after")
     def require_command(self) -> ManagedProcess:
@@ -61,6 +64,9 @@ class MonitorConfig(BaseModel):
     state_dir: Path
     report_path: Path
     event_log_path: Path
+    minimum_free_disk_gib: float = Field(default=10.0, ge=0.0)
+    require_clean_git: bool = True
+    lock_manifest: Path | None = None
     processes: tuple[ManagedProcess, ...]
 
 
@@ -72,6 +78,10 @@ def load_monitor_config(path: Path) -> MonitorConfig:
         cwd = process.cwd.resolve()
         if cwd != project_root and project_root not in cwd.parents:
             raise ValueError(f"managed process cwd escapes project root: {process.name}")
+    if config.lock_manifest is not None:
+        lock_manifest = config.lock_manifest.resolve()
+        if lock_manifest != project_root and project_root not in lock_manifest.parents:
+            raise ValueError("lock manifest escapes project root")
     return config
 
 
@@ -97,12 +107,17 @@ class Monitor:
             candidate = psutil.Process(pid)
             if abs(candidate.create_time() - expected_create_time) > 1e-3:
                 return None
-            expected_executable = Path(process.command[0]).name.casefold()
-            actual_executable = Path(candidate.exe()).name.casefold()
-            if expected_executable != actual_executable:
+            configured_command = tuple(str(part) for part in value["configured_command"])
+            if configured_command != process.command:
+                return None
+            if candidate.exe() != str(value["actual_executable"]):
+                return None
+            if tuple(candidate.cmdline()) != tuple(str(part) for part in value["actual_cmdline"]):
+                return None
+            if candidate.cwd() != str(process.cwd.resolve()):
                 return None
             return pid if candidate.is_running() else None
-        except (OSError, ValueError, KeyError, json.JSONDecodeError, psutil.Error):
+        except (OSError, TypeError, ValueError, KeyError, json.JSONDecodeError, psutil.Error):
             return None
 
     def _healthy(self, process: ManagedProcess, pid: int) -> tuple[bool, str | None]:
@@ -112,7 +127,9 @@ class Monitor:
                 return False, "process_not_running"
             if process.health.kind == "http":
                 response = httpx.get(
-                    str(process.health.url), timeout=process.health.timeout_seconds, follow_redirects=False
+                    str(process.health.url),
+                    timeout=process.health.timeout_seconds,
+                    follow_redirects=False,
                 )
                 if response.status_code != 200:
                     return False, f"health_http_{response.status_code}"
@@ -134,6 +151,15 @@ class Monitor:
                 continue
         return count
 
+    def _wait_healthy(self, process: ManagedProcess, pid: int) -> tuple[bool, str | None]:
+        deadline = time.monotonic() + process.startup_grace_seconds
+        last_error: str | None = None
+        while True:
+            healthy, last_error = self._healthy(process, pid)
+            if healthy or time.monotonic() >= deadline:
+                return healthy, last_error
+            time.sleep(0.25)
+
     def _start(self, process: ManagedProcess) -> int:
         if self._recent_restart_count(process) >= process.max_restarts_per_hour:
             raise RuntimeError("restart_rate_limit")
@@ -143,25 +169,104 @@ class Monitor:
         stderr = (logs / f"{process.name}.stderr.log").open("ab")
         environment = os.environ.copy()
         environment.update(process.environment)
-        candidate = subprocess.Popen(
-            list(process.command),
-            cwd=process.cwd,
-            env=environment,
-            stdin=subprocess.DEVNULL,
-            stdout=stdout,
-            stderr=stderr,
-            start_new_session=True,
-        )
-        create_time = psutil.Process(candidate.pid).create_time()
+        try:
+            candidate = subprocess.Popen(
+                list(process.command),
+                cwd=process.cwd,
+                env=environment,
+                stdin=subprocess.DEVNULL,
+                stdout=stdout,
+                stderr=stderr,
+                start_new_session=True,
+            )
+        finally:
+            stdout.close()
+            stderr.close()
+        managed = psutil.Process(candidate.pid)
+        create_time = managed.create_time()
         atomic_write_json(
             self._pid_path(process),
-            {"pid": candidate.pid, "create_time": create_time, "command": list(process.command)},
+            {
+                "pid": candidate.pid,
+                "create_time": create_time,
+                "configured_command": list(process.command),
+                "actual_executable": managed.exe(),
+                "actual_cmdline": managed.cmdline(),
+            },
         )
         append_jsonl(
             self._restart_path(process),
             {"unix_time": time.time(), "pid": candidate.pid, "reason": "monitor_start"},
         )
         return candidate.pid
+
+    def _stop(self, process: ManagedProcess, pid: int) -> None:
+        """Stop only the exact process whose persisted identity still validates."""
+
+        if self._read_managed_pid(process) != pid:
+            raise RuntimeError("managed_process_identity_changed")
+        candidate = psutil.Process(pid)
+        candidate.terminate()
+        try:
+            candidate.wait(timeout=process.stop_grace_seconds)
+        except psutil.TimeoutExpired:
+            candidate.kill()
+            candidate.wait(timeout=max(process.stop_grace_seconds, 1.0))
+
+    def _verify_lock_manifest(self) -> tuple[bool, str | None]:
+        manifest = self.config.lock_manifest
+        if manifest is None:
+            return True, None
+        try:
+            manifest = manifest.resolve()
+            for line_number, line in enumerate(
+                manifest.read_text(encoding="utf-8").splitlines(), start=1
+            ):
+                if not line.strip():
+                    continue
+                digest, separator, relative = line.partition("  ")
+                if not separator or len(digest) != 64:
+                    return False, f"invalid_lock_line:{line_number}"
+                target = (manifest.parent / relative).resolve()
+                if manifest.parent not in target.parents or not target.is_file():
+                    return False, f"lock_target_missing:{relative}"
+                observed = hashlib.sha256(target.read_bytes()).hexdigest()
+                if observed != digest:
+                    return False, f"lock_hash_mismatch:{relative}"
+            return True, None
+        except OSError as error:
+            return False, type(error).__name__
+
+    def _system_checks(self) -> dict[str, object]:
+        disk = os.statvfs(self.config.state_dir)
+        free_gib = disk.f_bavail * disk.f_frsize / (1024**3)
+        disk_ok = free_gib >= self.config.minimum_free_disk_gib
+        git_clean = True
+        git_error: str | None = None
+        if self.config.require_clean_git:
+            try:
+                result = subprocess.run(
+                    ["git", "status", "--porcelain"],
+                    cwd=self.config.project_root,
+                    check=True,
+                    capture_output=True,
+                    text=True,
+                )
+                git_clean = not result.stdout.strip()
+            except (OSError, subprocess.SubprocessError) as error:
+                git_clean = False
+                git_error = type(error).__name__
+        locks_ok, lock_error = self._verify_lock_manifest()
+        return {
+            "healthy": disk_ok and git_clean and locks_ok,
+            "free_disk_gib": round(free_gib, 3),
+            "minimum_free_disk_gib": self.config.minimum_free_disk_gib,
+            "disk_ok": disk_ok,
+            "git_clean": git_clean,
+            "git_error": git_error,
+            "locks_ok": locks_ok,
+            "lock_error": lock_error,
+        }
 
     def run_once(self) -> dict[str, object]:
         records: list[dict[str, object]] = []
@@ -175,10 +280,18 @@ class Monitor:
             if process.enabled and (pid is None or not healthy):
                 if process.restart_policy == "on-failure":
                     try:
+                        was_running = pid is not None
+                        if pid is not None:
+                            self._stop(process, pid)
                         pid = self._start(process)
-                        healthy, error = self._healthy(process, pid)
-                        action = "started"
-                    except (OSError, RuntimeError, psutil.Error) as start_error:
+                        healthy, error = self._wait_healthy(process, pid)
+                        action = "restarted" if was_running else "started"
+                    except (
+                        OSError,
+                        RuntimeError,
+                        psutil.Error,
+                        psutil.TimeoutExpired,
+                    ) as start_error:
                         error = str(start_error)
                         action = "start_failed"
             elif not process.enabled:
@@ -193,10 +306,13 @@ class Monitor:
                     "error": error,
                 }
             )
+        system_checks = self._system_checks()
         report = {
             "schema_version": "1.0.0",
             "checked_at": datetime.now(UTC).isoformat(),
-            "healthy": all((not row["enabled"]) or row["healthy"] for row in records),
+            "healthy": bool(system_checks["healthy"])
+            and all((not row["enabled"]) or row["healthy"] for row in records),
+            "system_checks": system_checks,
             "processes": records,
         }
         atomic_write_json(self.config.report_path, report)

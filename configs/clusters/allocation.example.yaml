@@ -1,0 +1,18 @@
+schema_version: "1.0.0"
+allocation_id: replace-with-reviewed-allocation-id
+approved: false
+approved_by: replace-with-reviewer
+approved_at: "2026-08-31T00:00:00Z"
+expires_at: "2026-09-07T00:00:00Z"
+stage: v0
+host: 10.249.184.179
+cpu_cores: []
+ram_gib: 1
+storage_gib: 1
+gpu_indices: []
+gpu_model: null
+gpu_memory_gib_each: 0
+gpu_hours: 0
+api_budget_usd: 0
+api_providers: []
+notes: Do not set approved true until the user assigns exact resources.

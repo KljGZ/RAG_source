@@ -79,6 +79,7 @@ class TrialResult(BaseModel):
     cited_evidence_ids: tuple[str, ...] = ()
     tool_trace: tuple[ToolEvent, ...] = ()
     abstained: bool = False
+    claimed_verified: bool = False
 
     @model_validator(mode="after")
     def validate_selection(self) -> TrialResult:

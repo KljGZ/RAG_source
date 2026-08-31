@@ -17,3 +17,11 @@ inspect_command:
   - --epochs
   - "1"
 resource_allocation_required: true
+minimum_resources:
+  cpu_cores: 24
+  ram_gib: 128
+  storage_gib: 1000
+  gpu_count: 1
+  minimum_gpu_memory_gib: 90
+  estimated_gpu_hours: 100
+  api_budget_usd: 0

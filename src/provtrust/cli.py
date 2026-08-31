@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import subprocess
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Annotated, Any
 
@@ -15,6 +16,7 @@ from provtrust.audit import audit_repository
 from provtrust.datasets.io import read_jsonl
 from provtrust.datasets.split import assign_grouped_splits
 from provtrust.datasets.validate import validate_trials
+from provtrust.execution.allocation import ResourceAllocation, ResourceRequirements
 from provtrust.monitoring import Monitor, load_monitor_config
 from provtrust.schemas.trial import Trial
 from provtrust.web import create_app, ensure_loopback_bind
@@ -116,10 +118,17 @@ def run_plan(
     if dry_run:
         return
     if allocation is None or not allocation.is_file():
-        raise typer.BadParameter("actual execution requires a reviewed resource allocation manifest")
+        raise typer.BadParameter(
+            "actual execution requires a reviewed resource allocation manifest"
+        )
     allocation_value = _load_object(allocation)
-    if allocation_value.get("approved") is not True:
-        raise typer.BadParameter("resource allocation is not approved")
+    reviewed = ResourceAllocation.model_validate(allocation_value)
+    requirements = ResourceRequirements.model_validate(plan.get("minimum_resources", {}))
+    errors = reviewed.validate_for(
+        requirements, stage=str(plan.get("stage", "")), now=datetime.now(UTC)
+    )
+    if errors:
+        raise typer.BadParameter(f"resource allocation failed validation: {', '.join(errors)}")
     subprocess.run(command, check=True)
 
 

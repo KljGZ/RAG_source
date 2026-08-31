@@ -1,5 +1,6 @@
 """Crash-safe experiment execution primitives."""
 
+from provtrust.execution.allocation import ResourceAllocation, ResourceRequirements
 from provtrust.execution.checkpoint import CheckpointStore, ItemState
 from provtrust.execution.cost_ledger import BudgetExceeded, CostLedger
 from provtrust.execution.run_ids import create_run_id
@@ -10,6 +11,8 @@ __all__ = [
     "CheckpointStore",
     "CostLedger",
     "ItemState",
+    "ResourceAllocation",
+    "ResourceRequirements",
     "create_run_id",
     "shard_for_item",
 ]

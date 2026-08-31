@@ -18,5 +18,12 @@ def derived_item_id(trial: Trial, name: str, parameters: dict[str, Any]) -> str:
 def update_trial(trial: Trial, name: str, **changes: Any) -> Trial:
     item_id = derived_item_id(trial, name, changes)
     payload = trial.model_dump(mode="python")
-    payload.update({"item_id": item_id, "intervention": name, **changes})
+    vector = dict(trial.intervention_vector)
+    vector["intervention"] = name
+    for key, value in changes.items():
+        if isinstance(value, (bool, float, int, str)):
+            vector[key] = value
+    payload.update(
+        {"item_id": item_id, "intervention": name, "intervention_vector": vector, **changes}
+    )
     return Trial.model_validate(payload)
