@@ -133,6 +133,9 @@ def main() -> int:
         raise RuntimeError(
             "the reviewed single-device mask must expose exactly one CUDA device to Torch"
         )
+    torch.cuda.set_device(0)
+    # CUDA 13 initializes allocator statistics lazily; create one bounded allocation first.
+    torch.empty(1, device="cuda:0", dtype=torch.bfloat16)
     torch.manual_seed(20260831)
     torch.cuda.manual_seed_all(20260831)
     torch.cuda.reset_peak_memory_stats(0)

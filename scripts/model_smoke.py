@@ -79,6 +79,9 @@ def main() -> int:
 
     if not torch.cuda.is_available() or torch.cuda.device_count() != 1:
         raise RuntimeError("exactly one masked CUDA device must be visible")
+    torch.cuda.set_device(0)
+    # CUDA 13 initializes allocator statistics lazily; create one bounded allocation first.
+    torch.empty(1, device="cuda:0", dtype=torch.bfloat16)
     set_seed(args.seed)
     torch.cuda.reset_peak_memory_stats(0)
     started = time.monotonic()
