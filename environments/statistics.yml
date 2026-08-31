@@ -4,8 +4,10 @@ channels:
 dependencies:
   - r-base>=4.3
   - r-renv
-  - r-lme4
-  - r-glmmtmb
+  - r-lme4=2.0_6
+  # glmmTMB 1.1.14 was compiled against TMB 1.9.19; keep the ABI pair exact.
+  - r-glmmtmb=1.1.14
+  - r-tmb=1.9.19
   - r-emmeans
   - r-boot
   - r-toster

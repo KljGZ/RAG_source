@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0.0",
+  "purpose": "CPU-only synthetic GLMM deployment recovery; not empirical evidence",
+  "seed": 20260831,
+  "rows": 1920,
+  "families": 120,
+  "converged_positive_definite_hessian": true,
+  "required_positive_effects": {
+    "reliability": 1.58146425405348,
+    "attribution_authentic": 0.866074005472528,
+    "warrant_score": 0.999231553604233,
+    "source_independence": 0.250807331928572,
+    "verification_completed": 0.424828615260384
+  },
+  "effect_directions_recovered": true,
+  "passed": true
+}
