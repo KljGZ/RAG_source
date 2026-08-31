@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Verify every file named by an offline TSV manifest."""
 
 from __future__ import annotations

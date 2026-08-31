@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Verify a filename/SHA-256/size TSV without trusting external URLs."""
 
 from __future__ import annotations

@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Build a filename/SHA-256/size TSV for files already downloaded locally."""
 
 from __future__ import annotations

@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Download an HTTPS TSV manifest with deterministic integrity checks.
 
 Each non-comment line has ``url<TAB>sha256<TAB>size``. Duplicate filenames are
@@ -98,11 +97,13 @@ def download(entry: Entry, destination: Path, retries: int, timeout: int) -> Res
     for attempt in range(1, retries + 2):
         try:
             request = urllib.request.Request(entry.url, headers={"User-Agent": "provtrust-offline/0.1"})
-            with urllib.request.urlopen(request, timeout=timeout, context=context) as response:
-                with part_path.open("wb") as output:
-                    shutil.copyfileobj(response, output, length=1024 * 1024)
-                    output.flush()
-                    os.fsync(output.fileno())
+            with (
+                urllib.request.urlopen(request, timeout=timeout, context=context) as response,
+                part_path.open("wb") as output,
+            ):
+                shutil.copyfileobj(response, output, length=1024 * 1024)
+                output.flush()
+                os.fsync(output.fileno())
             if not validate(part_path, entry):
                 actual_hash, actual_size = digest(part_path)
                 raise ValueError(
@@ -152,7 +153,7 @@ def main() -> int:
                 result = future.result()
                 results.append(result)
                 print(f"{result.status:10s} {result.filename}", flush=True)
-            except BaseException as exc:  # report every independent transfer failure
+            except Exception as exc:  # report every independent transfer failure
                 message = f"{entry.filename}: {exc}"
                 failures.append(message)
                 print(f"FAILED     {message}", file=sys.stderr, flush=True)
