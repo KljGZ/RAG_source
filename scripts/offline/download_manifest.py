@@ -153,7 +153,7 @@ def main() -> int:
                 result = future.result()
                 results.append(result)
                 print(f"{result.status:10s} {result.filename}", flush=True)
-            except Exception as exc:  # report every independent transfer failure
+            except RuntimeError as exc:
                 message = f"{entry.filename}: {exc}"
                 failures.append(message)
                 print(f"FAILED     {message}", file=sys.stderr, flush=True)
