@@ -71,7 +71,7 @@ class FrozenGenerationConfig(BaseModel):
 
     enable_thinking: bool
     do_sample: bool
-    temperature: float = Field(gt=0.0)
+    temperature: float = Field(ge=0.0)
     top_p: float = Field(gt=0.0, le=1.0)
     top_k: int = Field(gt=0)
     max_tokens: int = Field(gt=0)
@@ -83,6 +83,14 @@ class FrozenGenerationConfig(BaseModel):
         if not value or len(value) != len(set(value)):
             raise ValueError("generation seeds must be nonempty and unique")
         return value
+
+    @model_validator(mode="after")
+    def validate_sampling_contract(self) -> FrozenGenerationConfig:
+        if self.do_sample and self.temperature <= 0.0:
+            raise ValueError("sampling requires a positive temperature")
+        if not self.do_sample and self.temperature != 0.0:
+            raise ValueError("deterministic decoding requires temperature zero")
+        return self
 
 
 class FrozenModelRegistration(BaseModel):

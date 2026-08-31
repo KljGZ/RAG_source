@@ -128,13 +128,18 @@ def _frozen_fixture(root: Path) -> dict[str, Any]:
         encoding="utf-8",
     )
     return {
+        "input_contract_version": 2,
         "model_registration": "configs/models/qwen-fixture-v0.yaml",
+        "model_registration_sha256": _sha256(registration_path),
         "model_asset_manifest": "configs/models/assets/qwen-fixture.manifest.json",
+        "model_asset_manifest_sha256": _sha256(manifest_path),
         "model_args": "configs/models/qwen-fixture.local.yaml",
         "system_prompt": "prompts/frozen/answer.txt",
         "system_prompt_sha256": _sha256(prompt_path),
         "dataset_manifest": "benchmark/manifests/smoke.yaml",
+        "dataset_manifest_sha256": _sha256(dataset_manifest_path),
         "activation_evidence": "artifacts/system/compatibility.json",
+        "activation_evidence_sha256": _sha256(activation_path),
         "temperature": 0.7,
         "top_p": 0.8,
         "top_k": 20,
@@ -175,5 +180,17 @@ def test_frozen_execution_gate_rejects_online_model_args(tmp_path: Path) -> None
     model_args["local_files_only"] = False
     _write_yaml(args_path, model_args)
     assert "unsafe_or_mismatched_model_arg:local_files_only" in (
+        validate_frozen_execution_inputs(plan, tmp_path)
+    )
+
+
+def test_v2_frozen_execution_gate_rejects_manifest_rewrite(tmp_path: Path) -> None:
+    plan = _frozen_fixture(tmp_path)
+    manifest_path = tmp_path / "benchmark/manifests/smoke.yaml"
+    manifest = yaml.safe_load(manifest_path.read_text(encoding="utf-8"))
+    manifest["new_unfrozen_field"] = True
+    _write_yaml(manifest_path, manifest)
+
+    assert "frozen_file_hash_mismatch:dataset_manifest" in (
         validate_frozen_execution_inputs(plan, tmp_path)
     )

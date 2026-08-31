@@ -78,3 +78,12 @@ analysis_policy:
   hidden_chain_of_thought_prohibited: true
   sdi_binary_threshold_frozen: false
   report_continuous_sdi_profile: true
+v0_static_identification:
+  protocol: audited_static_v1
+  correction_timing: before_scientific_model_output
+  families: 16
+  cells_per_family: 15
+  contrasts_per_family: 14
+  exact_matched_controls: true
+  completed_verification_in_static_track: false
+  recursive_visible_path_audit: required

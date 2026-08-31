@@ -8,12 +8,12 @@ been supported.
 | Requirement | Implementation | Deployment evidence | Implementation state | Empirical state |
 |---|---|---|---|---|
 | PGSD/SDI constructs and non-equivalences | `docs/THEORY.md`, `SCIENTIFIC_REGISTER.yaml` | repository audit | verified | untested |
-| Six normative variables vs. heuristic cues | Trial schema, explicit intervention vector, fractional builder | schema snapshots; property test | verified | untested |
+| Six normative variables vs. heuristic cues | Trial schema, exact paired intervention vector, audited visible channels | schema snapshots; recursive stimulus audit | verified | untested |
 | Eight normative axioms | deterministic scorers and PAVG constraints | defense/scorer unit tests | verified | untested |
 | Claim/source/evidence/provenance/trial/run/tool schemas | `src/provtrust/schemas` | `benchmark/schemas/MANIFEST.json` | verified | not applicable |
 | Group-safe split and leakage prevention | connected-component splitter/validator | leakage tests | verified | no final dataset |
 | Track A: Learn2Discern replication | adapter, two-stage solver, numeric update scorer | build/parser tests | verified | upstream data/model runs pending |
-| Track B: static causal decomposition | 16-cell deterministic fractional design and paired task | fractional-design and all-track build tests | verified | gold V0 families pending |
+| Track B: static causal decomposition | 15-cell exact paired design and paired task | 16-family/240-item frozen corpus; no-collapse/no-leakage audit | verified | Qwen3-14B run preflight pending |
 | Track C: authenticity and warrant | interventions, tasks, gaps/monotonicity scorers | counterfactual/scorer tests | verified | untested |
 | Track D: independence/consensus laundering | provenance graphs, idempotent aggregation, task/scorers | root and non-amplification tests | verified | untested |
 | Track E: interactive verification | controlled tools, prior/posterior solver, trace diagnostics | loopback service and browser smoke | verified | model runs pending |

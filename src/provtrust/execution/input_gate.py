@@ -61,6 +61,18 @@ def validate_frozen_execution_inputs(plan: dict[str, Any], root: Path) -> tuple[
     if errors:
         return tuple(sorted(set(errors)))
 
+    if plan.get("input_contract_version") == 2:
+        frozen_hash_fields = {
+            "model_registration": "model_registration_sha256",
+            "model_asset_manifest": "model_asset_manifest_sha256",
+            "dataset_manifest": "dataset_manifest_sha256",
+            "activation_evidence": "activation_evidence_sha256",
+        }
+        for resolved_field, plan_field in frozen_hash_fields.items():
+            expected = plan.get(plan_field)
+            if not isinstance(expected, str) or expected != sha256_file(resolved[resolved_field]):
+                errors.append(f"frozen_file_hash_mismatch:{resolved_field}")
+
     try:
         registration = FrozenModelRegistration.model_validate(
             _load_yaml(resolved["model_registration"])
@@ -114,6 +126,38 @@ def validate_frozen_execution_inputs(plan: dict[str, Any], root: Path) -> tuple[
         errors.append(dataset_error)
     elif dataset_path is not None and dataset_manifest.get("sha256") != sha256_file(dataset_path):
         errors.append("dataset_hash_mismatch")
+    for path_field, hash_field in (
+        ("config_path", "config_sha256"),
+        ("splits_path", "splits_sha256"),
+        ("audit_path", "audit_sha256"),
+    ):
+        if path_field not in dataset_manifest and hash_field not in dataset_manifest:
+            continue
+        support_path, support_error = _project_path(
+            root, dataset_manifest.get(path_field), label=f"dataset_{path_field}"
+        )
+        if support_error:
+            errors.append(support_error)
+        elif support_path is not None and dataset_manifest.get(hash_field) != sha256_file(
+            support_path
+        ):
+            errors.append(f"dataset_{path_field}_hash_mismatch")
+    source_hashes = dataset_manifest.get("source_code_sha256")
+    if source_hashes is not None:
+        if not isinstance(source_hashes, dict) or not source_hashes:
+            errors.append("dataset_source_code_hashes_invalid")
+        else:
+            for relative, expected in source_hashes.items():
+                source_path, source_error = _project_path(
+                    root, relative, label="dataset_source_code"
+                )
+                if source_error:
+                    errors.append(source_error)
+                elif (
+                    source_path is not None
+                    and (not isinstance(expected, str) or sha256_file(source_path) != expected)
+                ):
+                    errors.append("dataset_source_code_hash_mismatch")
 
     model_root_value = model_args.get("model_path")
     tokenizer_root_value = model_args.get("tokenizer_path")

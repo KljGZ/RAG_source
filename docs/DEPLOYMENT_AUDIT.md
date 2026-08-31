@@ -73,9 +73,12 @@ observable reports, not internal belief.
 1. **L2D replication.** A dedicated two-stage numeric solver records prior and
    posterior responses, absolute update, directed/normalized uptake, truth
    improvement, candidate advantage, reliability, popularity, and parse failures.
-2. **Static causal decomposition.** The default V0 builder chooses 16 deterministic,
-   level-balanced, maximin cells from the valid constrained factorial pool rather
-   than evaluating an uncontrolled Cartesian explosion.
+2. **Static causal decomposition.** Before any scientific model output, the initial
+   16-cell maximin scaffold was rejected because it did not guarantee exact matched
+   controls and several metadata factors were not model-visible. V0 now uses a
+   deterministic 15-cell paired design: one baseline, fourteen contrasts, and chain
+   anchors for identity/attribution and copies/independent roots. A recursive stimulus
+   audit proves factor-vector and visible-path isolation for every pair.
 3. **Identity, attribution, and warrant.** Separate interventions and estimands avoid
    equating a genuine page, a genuine attribution, and actual support for the claim.
 4. **Consensus laundering.** Provenance DAGs distinguish raw documents from verified

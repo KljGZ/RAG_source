@@ -30,3 +30,15 @@ def test_qwen_v0_registration_matches_frozen_assets_and_prompt() -> None:
     assert _sha256(Path(registration.system_prompt.path)) == registration.system_prompt.sha256
     assert registration.generation.enable_thinking is False
     assert registration.primary_judge_eligible is False
+
+
+def test_static_qwen_registration_uses_deterministic_decoding() -> None:
+    raw = yaml.safe_load(
+        Path("configs/models/qwen3-14b-static-v0.yaml").read_text(encoding="utf-8")
+    )
+    registration = FrozenModelRegistration.model_validate(raw)
+    assert registration.generation.do_sample is False
+    assert registration.generation.temperature == 0.0
+    assert registration.system_prompt.sha256 == (
+        "450e6eaa85df17643f17fab17840d4b8cb99dc349fb181e3d2d2ed91fb2c14dc"
+    )

@@ -1,5 +1,8 @@
 schema_version: "1.0.0"
-builder: synthetic_factorial
+status: superseded_before_model_execution
+superseded_by: benchmark/manifests/v0-paired-v1.yaml
+reason: maximin cells did not guarantee exact matched contrasts or visible interventions
+builder: paired_static_v1
 seed: 20260831
 split_group_keys: [family_id, event_id, root_claim_id]
 factors:

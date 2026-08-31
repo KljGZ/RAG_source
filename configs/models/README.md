@@ -13,3 +13,8 @@ Copy `qwen3-14b.model-args.example.yaml` to `qwen3-14b.local.yaml` on each execu
 the ignored local file contains only the machine-specific offline model path. It
 must keep `local_files_only: true`, `trust_remote_code: false`, and
 `enable_thinking: false` for this registered pilot.
+
+`qwen3-14b-static-v0.yaml` reuses the same verified snapshot but independently
+freezes deterministic decoding (`do_sample=false`, temperature zero) for the paired
+static V0 run. Compatibility sampling and scientific deterministic decoding are not
+silently conflated.

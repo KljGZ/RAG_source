@@ -40,6 +40,8 @@ REQUIRED_PATHS = (
     "artifacts/system/RESOURCE_PLAN.md",
     "benchmark/schemas/MANIFEST.json",
     "benchmark/manifests/smoke.yaml",
+    "benchmark/manifests/v0-paired-v1.yaml",
+    "artifacts/system/V0_PAIRED_DATASET_AUDIT.json",
     "prompts/frozen/MANIFEST.json",
     "environments/locks/LOCKS.sha256",
     "configs/clusters/allocation.example.yaml",
@@ -189,6 +191,55 @@ def _audit_frozen_manifests(root: Path) -> tuple[dict[str, bool], list[str]]:
     checks["smoke_dataset_hash"] = smoke_ok
     if not smoke_ok:
         failures.append("smoke dataset manifest hash mismatch")
+
+    v0 = _load_yaml(root / "benchmark/manifests/v0-paired-v1.yaml")
+    v0_ok = True
+    for path_field, hash_field in (
+        ("path", "sha256"),
+        ("config_path", "config_sha256"),
+        ("splits_path", "splits_sha256"),
+        ("audit_path", "audit_sha256"),
+    ):
+        relative = v0.get(path_field)
+        expected = v0.get(hash_field)
+        if not isinstance(relative, str) or not isinstance(expected, str):
+            v0_ok = False
+            failures.append(f"V0 paired manifest lacks {path_field}/{hash_field}")
+            continue
+        target = _resolve_contained(root, relative)
+        if not target.is_file() or _sha256(target) != expected:
+            v0_ok = False
+            failures.append(f"V0 paired manifest hash mismatch: {relative}")
+    source_hashes = v0.get("source_code_sha256")
+    if not isinstance(source_hashes, dict) or not source_hashes:
+        v0_ok = False
+        failures.append("V0 paired manifest lacks source-code hashes")
+    else:
+        for relative, expected in source_hashes.items():
+            if not isinstance(relative, str) or not isinstance(expected, str):
+                v0_ok = False
+                failures.append("V0 paired manifest has an invalid source-code hash entry")
+                continue
+            target = _resolve_contained(root, relative)
+            if not target.is_file() or _sha256(target) != expected:
+                v0_ok = False
+                failures.append(f"V0 paired source-code hash mismatch: {relative}")
+    audit_path = v0.get("audit_path")
+    if isinstance(audit_path, str):
+        audit_value = _load_json(_resolve_contained(root, audit_path))
+        stimulus = audit_value.get("stimulus_audit")
+        audit_valid = (
+            audit_value.get("status") == "passed"
+            and audit_value.get("dataset_sha256") == v0.get("sha256")
+            and isinstance(stimulus, dict)
+            and stimulus.get("errors") == []
+            and stimulus.get("gold_leakage_detected") is False
+            and stimulus.get("item_count") == v0.get("item_count")
+        )
+        if not audit_valid:
+            v0_ok = False
+            failures.append("V0 paired identification audit is invalid")
+    checks["v0_paired_dataset_hashes"] = v0_ok
     return checks, failures
 
 

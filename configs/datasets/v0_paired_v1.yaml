@@ -1,0 +1,43 @@
+schema_version: "1.0.0"
+dataset_id: provtrust-v0-paired-synthetic-v1
+builder_version: paired-static-v1
+purpose: exploratory causal identification on closed-world synthetic claims
+license: Apache-2.0
+redistributable: true
+contains_real_world_claims: false
+seed: 20260831
+world_name: Aster Attribute Registry
+canonical_source_name: Aster Canonical Registry
+alternate_source_name: Unverified Aster Replica
+design:
+  design: paired
+  variants_per_family: 15
+  reliability: [0.2, 0.8]
+  identity_authenticity: [false, true]
+  attribution_authenticity: [false, true]
+  warrants: [direct_support, related_only, contradiction]
+  authority_styles: [low, high]
+  popularity_levels: [low, high]
+  familiarity_levels: [low, high]
+  precision_details: [low, high]
+  user_endorsements: [false, true]
+  dependency_conditions: [single, duplicate, independent]
+  document_positions: [1, 3]
+  document_length_tokens: [64, 128]
+families:
+  - {family_id: v0-family-001, subject: Aster module A01, attribute: amber seal, gold_answer: true, candidate_answer: true}
+  - {family_id: v0-family-002, subject: Aster module B02, attribute: cobalt band, gold_answer: false, candidate_answer: true}
+  - {family_id: v0-family-003, subject: Aster module C03, attribute: delta marker, gold_answer: false, candidate_answer: false}
+  - {family_id: v0-family-004, subject: Aster module D04, attribute: elm code, gold_answer: true, candidate_answer: false}
+  - {family_id: v0-family-005, subject: Aster module E05, attribute: frost seal, gold_answer: true, candidate_answer: true}
+  - {family_id: v0-family-006, subject: Aster module F06, attribute: garnet band, gold_answer: false, candidate_answer: true}
+  - {family_id: v0-family-007, subject: Aster module G07, attribute: harbor marker, gold_answer: false, candidate_answer: false}
+  - {family_id: v0-family-008, subject: Aster module H08, attribute: ivory code, gold_answer: true, candidate_answer: false}
+  - {family_id: v0-family-009, subject: Aster module I09, attribute: juniper seal, gold_answer: true, candidate_answer: true}
+  - {family_id: v0-family-010, subject: Aster module J10, attribute: kelp band, gold_answer: false, candidate_answer: true}
+  - {family_id: v0-family-011, subject: Aster module K11, attribute: lunar marker, gold_answer: false, candidate_answer: false}
+  - {family_id: v0-family-012, subject: Aster module L12, attribute: maple code, gold_answer: true, candidate_answer: false}
+  - {family_id: v0-family-013, subject: Aster module M13, attribute: nickel seal, gold_answer: true, candidate_answer: true}
+  - {family_id: v0-family-014, subject: Aster module N14, attribute: opal band, gold_answer: false, candidate_answer: true}
+  - {family_id: v0-family-015, subject: Aster module O15, attribute: pine marker, gold_answer: false, candidate_answer: false}
+  - {family_id: v0-family-016, subject: Aster module P16, attribute: quartz code, gold_answer: true, candidate_answer: false}

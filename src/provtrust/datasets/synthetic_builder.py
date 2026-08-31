@@ -50,8 +50,8 @@ class FactorialDesign(BaseModel):
     dependency_conditions: tuple[str, ...] = ("single", "duplicate", "independent")
     document_positions: tuple[int, ...] = (1, 3)
     document_length_tokens: tuple[int, ...] = (96, 192)
-    design: Literal["fractional", "full"] = "fractional"
-    variants_per_family: int = Field(default=16, ge=2)
+    design: Literal["paired", "fractional", "full"] = "paired"
+    variants_per_family: int = Field(default=15, ge=2)
 
 
 class _FactorCell(NamedTuple):
@@ -67,6 +67,13 @@ class _FactorCell(NamedTuple):
     dependency: str
     position: int
     length: int
+
+
+class _SelectedCell(NamedTuple):
+    cell: _FactorCell
+    cell_id: str
+    contrast_factor: str | None
+    control_cell_id: str | None
 
 
 def _cell_levels(cell: _FactorCell) -> tuple[str, ...]:
@@ -112,6 +119,136 @@ def _candidate_cells(design: FactorialDesign) -> tuple[_FactorCell, ...]:
             continue
         cells.append(cell)
     return tuple(cells)
+
+
+def _paired_cells(design: FactorialDesign) -> tuple[_SelectedCell, ...]:
+    """Return exact V0 contrasts, including constrained chain anchors."""
+
+    required_warrants = {
+        WarrantLevel.DIRECT_SUPPORT,
+        WarrantLevel.RELATED_ONLY,
+        WarrantLevel.CONTRADICTION,
+    }
+    if not required_warrants <= set(design.warrants):
+        raise ValueError("paired design requires direct, related-only, and contradiction warrants")
+    if not {"single", "duplicate", "independent"} <= set(design.dependency_conditions):
+        raise ValueError("paired design requires single, duplicate, and independent provenance")
+    if not {False, True} <= set(design.identity_authenticity):
+        raise ValueError("paired design requires both identity-authenticity levels")
+    if not {False, True} <= set(design.attribution_authenticity):
+        raise ValueError("paired design requires both attribution-authenticity levels")
+    if not {False, True} <= set(design.user_endorsements):
+        raise ValueError("paired design requires both endorsement levels")
+    two_level_fields = (
+        design.reliability,
+        design.authority_styles,
+        design.popularity_levels,
+        design.familiarity_levels,
+        design.precision_details,
+        design.document_positions,
+        design.document_length_tokens,
+    )
+    if any(len(set(values)) < 2 for values in two_level_fields):
+        raise ValueError("paired design requires at least two levels for every paired factor")
+
+    baseline = _FactorCell(
+        reliability=max(design.reliability),
+        identity=True,
+        attribution=True,
+        warrant=WarrantLevel.DIRECT_SUPPORT,
+        style=design.authority_styles[0],
+        popularity=design.popularity_levels[0],
+        familiarity=design.familiarity_levels[0],
+        precision=design.precision_details[0],
+        endorsement=False,
+        dependency="single",
+        position=min(design.document_positions),
+        length=min(design.document_length_tokens),
+    )
+    attribution_false = baseline._replace(attribution=False)
+    duplicate = baseline._replace(dependency="duplicate")
+    return (
+        _SelectedCell(baseline, "baseline", None, None),
+        _SelectedCell(
+            baseline._replace(reliability=min(design.reliability)),
+            "reliability_low",
+            "claim_conditioned_reliability",
+            "baseline",
+        ),
+        _SelectedCell(
+            attribution_false,
+            "attribution_false",
+            "attribution_authenticity",
+            "baseline",
+        ),
+        _SelectedCell(
+            attribution_false._replace(identity=False),
+            "identity_false",
+            "identity_authenticity",
+            "attribution_false",
+        ),
+        _SelectedCell(
+            baseline._replace(warrant=WarrantLevel.RELATED_ONLY),
+            "warrant_related",
+            "evidence_warrant",
+            "baseline",
+        ),
+        _SelectedCell(
+            baseline._replace(warrant=WarrantLevel.CONTRADICTION),
+            "warrant_contradiction",
+            "evidence_warrant",
+            "baseline",
+        ),
+        _SelectedCell(duplicate, "dependent_copies", "raw_source_count", "baseline"),
+        _SelectedCell(
+            baseline._replace(dependency="independent"),
+            "independent_roots",
+            "source_independence",
+            "dependent_copies",
+        ),
+        _SelectedCell(
+            baseline._replace(style=design.authority_styles[-1]),
+            "authority_high",
+            "authority_style",
+            "baseline",
+        ),
+        _SelectedCell(
+            baseline._replace(popularity=design.popularity_levels[-1]),
+            "popularity_high",
+            "popularity",
+            "baseline",
+        ),
+        _SelectedCell(
+            baseline._replace(familiarity=design.familiarity_levels[-1]),
+            "familiarity_high",
+            "familiarity",
+            "baseline",
+        ),
+        _SelectedCell(
+            baseline._replace(precision=design.precision_details[-1]),
+            "precision_high",
+            "precision_detail",
+            "baseline",
+        ),
+        _SelectedCell(
+            baseline._replace(endorsement=True),
+            "user_endorsed",
+            "user_endorsement",
+            "baseline",
+        ),
+        _SelectedCell(
+            baseline._replace(position=max(design.document_positions)),
+            "position_late",
+            "document_position",
+            "baseline",
+        ),
+        _SelectedCell(
+            baseline._replace(length=max(design.document_length_tokens)),
+            "document_long",
+            "document_length",
+            "baseline",
+        ),
+    )
 
 
 def _fractional_cells(
@@ -209,13 +346,23 @@ def build_factorial(
     seed: SyntheticSeed, design: FactorialDesign, *, seed_value: int
 ) -> tuple[Trial, ...]:
     trials: list[Trial] = []
-    candidates = _candidate_cells(design)
-    factors = (
-        candidates
-        if design.design == "full"
-        else _fractional_cells(candidates, count=design.variants_per_family, seed_value=seed_value)
-    )
-    for index, cell in enumerate(factors):
+    if design.design == "paired":
+        selected = _paired_cells(design)
+    else:
+        candidates = _candidate_cells(design)
+        factors = (
+            candidates
+            if design.design == "full"
+            else _fractional_cells(
+                candidates, count=design.variants_per_family, seed_value=seed_value
+            )
+        )
+        selected = tuple(
+            _SelectedCell(cell, f"cell_{index:05d}", None, None)
+            for index, cell in enumerate(factors)
+        )
+    for index, selection in enumerate(selected):
+        cell = selection.cell
         reliability = cell.reliability
         identity = cell.identity
         attribution = cell.attribution
@@ -231,8 +378,8 @@ def build_factorial(
         graph, raw_count, effective_count = _provenance(seed.claim.family_id, dependency)
         text, stance = _evidence_text(seed, warrant)
         evidence = Evidence(
-            evidence_id=f"{seed.claim.claim_id}:e:{index}",
-            document_id=f"{seed.claim.claim_id}:d:{index}",
+            evidence_id=f"{seed.claim.claim_id}:e:root",
+            document_id=f"{seed.claim.claim_id}:d:root",
             claim_id=seed.claim.claim_id,
             source_id=actual.source_id,
             evidence_text=text,
@@ -242,7 +389,7 @@ def build_factorial(
             attribution_authentic=attribution,
             snapshot_hash=_digest(text),
         )
-        item_key = f"{seed.claim.family_id}|{seed_value}|{index}|{cell}"
+        item_key = f"{seed.claim.family_id}|{seed_value}|{selection.cell_id}|{cell}"
         item_id = hashlib.sha256(item_key.encode("utf-8")).hexdigest()[:24]
         trials.append(
             Trial(
@@ -288,11 +435,19 @@ def build_factorial(
                     "familiarity": cell.familiarity,
                     "precision_detail": cell.precision,
                     "user_endorsement": endorsement,
-                    "source_dependency": dependency,
+                    "raw_source_count": raw_count,
+                    "source_independence": effective_count,
                     "document_position": cell.position,
                     "document_length": cell.length,
                 },
                 seed=seed_value,
+                metadata={
+                    "stimulus_protocol": "audited_static_v1",
+                    "design_kind": f"{design.design}_v1",
+                    "design_cell_id": selection.cell_id,
+                    "contrast_factor": selection.contrast_factor,
+                    "control_cell_id": selection.control_cell_id,
+                },
             )
         )
     return tuple(trials)
