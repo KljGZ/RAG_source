@@ -1,0 +1,105 @@
+{
+  "$defs": {
+    "ToolEventStatus": {
+      "enum": [
+        "started",
+        "succeeded",
+        "failed",
+        "denied",
+        "timed_out"
+      ],
+      "title": "ToolEventStatus",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "arguments": {
+      "additionalProperties": true,
+      "title": "Arguments",
+      "type": "object"
+    },
+    "error_type": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Error Type"
+    },
+    "event_id": {
+      "minLength": 1,
+      "title": "Event Id",
+      "type": "string"
+    },
+    "evidence_ids": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Evidence Ids",
+      "type": "array"
+    },
+    "latency_ms": {
+      "minimum": 0.0,
+      "title": "Latency Ms",
+      "type": "number"
+    },
+    "output_digest": {
+      "anyOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Output Digest"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "sequence": {
+      "minimum": 0,
+      "title": "Sequence",
+      "type": "integer"
+    },
+    "status": {
+      "$ref": "#/$defs/ToolEventStatus"
+    },
+    "timestamp": {
+      "format": "date-time",
+      "title": "Timestamp",
+      "type": "string"
+    },
+    "tool_name": {
+      "minLength": 1,
+      "title": "Tool Name",
+      "type": "string"
+    },
+    "trial_item_id": {
+      "minLength": 1,
+      "title": "Trial Item Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "event_id",
+    "trial_item_id",
+    "sequence",
+    "tool_name",
+    "arguments",
+    "status",
+    "latency_ms"
+  ],
+  "title": "ToolEvent",
+  "type": "object"
+}

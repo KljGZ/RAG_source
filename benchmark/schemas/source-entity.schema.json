@@ -1,0 +1,161 @@
+{
+  "$defs": {
+    "SourceRole": {
+      "enum": [
+        "primary_regulator",
+        "primary_data_owner",
+        "primary_author",
+        "newswire",
+        "secondary_reporter",
+        "aggregator",
+        "commentator",
+        "unknown"
+      ],
+      "title": "SourceRole",
+      "type": "string"
+    },
+    "SourceType": {
+      "enum": [
+        "primary",
+        "secondary",
+        "aggregator",
+        "social",
+        "synthetic",
+        "unknown"
+      ],
+      "title": "SourceType",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Canonical source identity separated from its displayed identity.",
+  "properties": {
+    "actual_publisher": {
+      "minLength": 1,
+      "title": "Actual Publisher",
+      "type": "string"
+    },
+    "canonical_name": {
+      "minLength": 1,
+      "title": "Canonical Name",
+      "type": "string"
+    },
+    "displayed_name": {
+      "minLength": 1,
+      "title": "Displayed Name",
+      "type": "string"
+    },
+    "domain": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Domain"
+    },
+    "familiarity_bucket": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Familiarity Bucket"
+    },
+    "global_reliability": {
+      "anyOf": [
+        {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Global Reliability"
+    },
+    "popularity": {
+      "anyOf": [
+        {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Popularity"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_id": {
+      "minLength": 1,
+      "title": "Source Id",
+      "type": "string"
+    },
+    "source_role": {
+      "$ref": "#/$defs/SourceRole",
+      "default": "unknown"
+    },
+    "source_type": {
+      "$ref": "#/$defs/SourceType"
+    },
+    "subject_domains": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Subject Domains",
+      "type": "array"
+    },
+    "valid_from": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Valid From"
+    },
+    "valid_to": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Valid To"
+    }
+  },
+  "required": [
+    "source_id",
+    "canonical_name",
+    "displayed_name",
+    "actual_publisher",
+    "source_type"
+  ],
+  "title": "SourceEntity",
+  "type": "object"
+}

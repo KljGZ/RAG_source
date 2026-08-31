@@ -1,0 +1,60 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "max_tokens": {
+      "exclusiveMinimum": 0,
+      "title": "Max Tokens",
+      "type": "integer"
+    },
+    "model": {
+      "title": "Model",
+      "type": "string"
+    },
+    "model_revision": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Model Revision"
+    },
+    "observed_at": {
+      "format": "date-time",
+      "title": "Observed At",
+      "type": "string"
+    },
+    "provider": {
+      "title": "Provider",
+      "type": "string"
+    },
+    "role": {
+      "title": "Role",
+      "type": "string"
+    },
+    "system_prompt_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "System Prompt Hash",
+      "type": "string"
+    },
+    "temperature": {
+      "minimum": 0.0,
+      "title": "Temperature",
+      "type": "number"
+    }
+  },
+  "required": [
+    "provider",
+    "model",
+    "observed_at",
+    "temperature",
+    "max_tokens",
+    "system_prompt_hash",
+    "role"
+  ],
+  "title": "ModelSpec",
+  "type": "object"
+}

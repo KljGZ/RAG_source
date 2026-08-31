@@ -1,0 +1,129 @@
+{
+  "$defs": {
+    "Stance": {
+      "enum": [
+        "supports",
+        "contradicts",
+        "neutral"
+      ],
+      "title": "Stance",
+      "type": "string"
+    },
+    "WarrantLevel": {
+      "enum": [
+        "direct_support",
+        "partial_support",
+        "related_only",
+        "unsupported",
+        "contradiction"
+      ],
+      "title": "WarrantLevel",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "A frozen claim-document relation with a content-addressed snapshot.",
+  "properties": {
+    "attribution_authentic": {
+      "title": "Attribution Authentic",
+      "type": "boolean"
+    },
+    "canonical_url": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Canonical Url"
+    },
+    "claim_id": {
+      "minLength": 1,
+      "title": "Claim Id",
+      "type": "string"
+    },
+    "document_id": {
+      "minLength": 1,
+      "title": "Document Id",
+      "type": "string"
+    },
+    "evidence_id": {
+      "minLength": 1,
+      "title": "Evidence Id",
+      "type": "string"
+    },
+    "evidence_span_end": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Evidence Span End"
+    },
+    "evidence_span_start": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Evidence Span Start"
+    },
+    "evidence_text": {
+      "minLength": 1,
+      "title": "Evidence Text",
+      "type": "string"
+    },
+    "identity_authentic": {
+      "title": "Identity Authentic",
+      "type": "boolean"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "snapshot_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Snapshot Hash",
+      "type": "string"
+    },
+    "source_id": {
+      "minLength": 1,
+      "title": "Source Id",
+      "type": "string"
+    },
+    "stance": {
+      "$ref": "#/$defs/Stance"
+    },
+    "warrant_level": {
+      "$ref": "#/$defs/WarrantLevel"
+    }
+  },
+  "required": [
+    "evidence_id",
+    "document_id",
+    "claim_id",
+    "source_id",
+    "evidence_text",
+    "warrant_level",
+    "stance",
+    "identity_authentic",
+    "attribution_authentic",
+    "snapshot_hash"
+  ],
+  "title": "Evidence",
+  "type": "object"
+}

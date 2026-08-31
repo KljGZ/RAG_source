@@ -1,0 +1,64 @@
+{
+  "$defs": {
+    "EdgeType": {
+      "enum": [
+        "published_by",
+        "cites",
+        "copied_from",
+        "derived_from",
+        "paraphrased_from",
+        "supports",
+        "contradicts",
+        "updates"
+      ],
+      "title": "EdgeType",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "dst_node_id": {
+      "minLength": 1,
+      "title": "Dst Node Id",
+      "type": "string"
+    },
+    "edge_id": {
+      "minLength": 1,
+      "title": "Edge Id",
+      "type": "string"
+    },
+    "edge_type": {
+      "$ref": "#/$defs/EdgeType"
+    },
+    "evidence": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Evidence"
+    },
+    "src_node_id": {
+      "minLength": 1,
+      "title": "Src Node Id",
+      "type": "string"
+    },
+    "verified": {
+      "title": "Verified",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "edge_id",
+    "src_node_id",
+    "dst_node_id",
+    "edge_type",
+    "verified"
+  ],
+  "title": "ProvenanceEdge",
+  "type": "object"
+}

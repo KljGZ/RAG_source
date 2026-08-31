@@ -1,0 +1,108 @@
+{
+  "$defs": {
+    "ParseStatus": {
+      "enum": [
+        "success",
+        "failed",
+        "partial"
+      ],
+      "title": "ParseStatus",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "attempt": {
+      "minimum": 0,
+      "title": "Attempt",
+      "type": "integer"
+    },
+    "completed_at": {
+      "format": "date-time",
+      "title": "Completed At",
+      "type": "string"
+    },
+    "cost_usd": {
+      "default": 0.0,
+      "minimum": 0.0,
+      "title": "Cost Usd",
+      "type": "number"
+    },
+    "error_type": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Error Type"
+    },
+    "input_tokens": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Input Tokens",
+      "type": "integer"
+    },
+    "output_tokens": {
+      "default": 0,
+      "minimum": 0,
+      "title": "Output Tokens",
+      "type": "integer"
+    },
+    "parse_status": {
+      "$ref": "#/$defs/ParseStatus"
+    },
+    "parsed": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Parsed"
+    },
+    "raw_output_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Raw Output Hash",
+      "type": "string"
+    },
+    "raw_output_path": {
+      "title": "Raw Output Path",
+      "type": "string"
+    },
+    "retry_reason": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Retry Reason"
+    },
+    "started_at": {
+      "format": "date-time",
+      "title": "Started At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "attempt",
+    "started_at",
+    "completed_at",
+    "raw_output_path",
+    "raw_output_hash",
+    "parse_status"
+  ],
+  "title": "AttemptRecord",
+  "type": "object"
+}

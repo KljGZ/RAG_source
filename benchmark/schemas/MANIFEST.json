@@ -1,0 +1,62 @@
+{
+  "generator": "scripts/export_schemas.py",
+  "manifest_content_sha256": "58d484f4d3100aad8212ae834554e291ddce606ea361c3605a0b15bed13bdc35",
+  "schema_version": "1.0.0",
+  "schemas": [
+    {
+      "name": "attempt-record",
+      "path": "attempt-record.schema.json",
+      "sha256": "a59c364be49ad269b5cd93c5c798627a2d199daebea134246a4deb1f47b07247"
+    },
+    {
+      "name": "claim",
+      "path": "claim.schema.json",
+      "sha256": "059660cf9dee28c4565ab5a4dad6827dfddead43051b57489c5c7e55f3c7b4e2"
+    },
+    {
+      "name": "evidence",
+      "path": "evidence.schema.json",
+      "sha256": "177e04499539d0a30b11af07bc81be6c8f927c94229b73c220e2499f7447a5d7"
+    },
+    {
+      "name": "model-spec",
+      "path": "model-spec.schema.json",
+      "sha256": "78b149407e074116b3650310cbc3d87355c6f9019609f9699e73fb0b4376e2bf"
+    },
+    {
+      "name": "provenance-edge",
+      "path": "provenance-edge.schema.json",
+      "sha256": "c49662f516ae95dc167694b0792cafcf355ab226c4648b89fcd9c91964d3ee19"
+    },
+    {
+      "name": "provenance-graph",
+      "path": "provenance-graph.schema.json",
+      "sha256": "c795e813d293ca5f1f34f0f4b44a5ebff9bab13518f1d8747808544bc6ed0100"
+    },
+    {
+      "name": "run-manifest",
+      "path": "run-manifest.schema.json",
+      "sha256": "dc2c92c7936d2d8070bbff0668d5ef668c199fb1e6daf50b6bacb8c99f686be6"
+    },
+    {
+      "name": "source-entity",
+      "path": "source-entity.schema.json",
+      "sha256": "d180809cbfaebba013f4b590153306fb16eff54191c28c7d3155f155f549e0e8"
+    },
+    {
+      "name": "tool-event",
+      "path": "tool-event.schema.json",
+      "sha256": "7ebdca0ea4323c661e2869f552fc3bec05de0f8a2be82bf92e4db706c35a0a6c"
+    },
+    {
+      "name": "trial",
+      "path": "trial.schema.json",
+      "sha256": "77de741c9de7768347078f32a20393ef22ef205d2c04113ff7ab984cfcea52d6"
+    },
+    {
+      "name": "trial-result",
+      "path": "trial-result.schema.json",
+      "sha256": "09e173034e239d918a5408ac6ace88ba9345e22192743458994b02b6cf16631c"
+    }
+  ]
+}

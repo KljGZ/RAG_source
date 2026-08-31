@@ -1,0 +1,749 @@
+{
+  "$defs": {
+    "Claim": {
+      "additionalProperties": false,
+      "description": "An atomic proposition whose evidence can be independently checked.",
+      "properties": {
+        "claim_id": {
+          "minLength": 1,
+          "title": "Claim Id",
+          "type": "string"
+        },
+        "claim_text": {
+          "minLength": 1,
+          "title": "Claim Text",
+          "type": "string"
+        },
+        "domain": {
+          "minLength": 1,
+          "title": "Domain",
+          "type": "string"
+        },
+        "event_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Event Id"
+        },
+        "family_id": {
+          "minLength": 1,
+          "title": "Family Id",
+          "type": "string"
+        },
+        "gold_label": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Gold Label"
+        },
+        "risk_level": {
+          "$ref": "#/$defs/RiskLevel"
+        },
+        "root_claim_id": {
+          "minLength": 1,
+          "title": "Root Claim Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "source_role_required": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Role Required"
+        },
+        "time_scope": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Time Scope"
+        }
+      },
+      "required": [
+        "claim_id",
+        "root_claim_id",
+        "family_id",
+        "claim_text",
+        "gold_label",
+        "domain",
+        "risk_level"
+      ],
+      "title": "Claim",
+      "type": "object"
+    },
+    "EdgeType": {
+      "enum": [
+        "published_by",
+        "cites",
+        "copied_from",
+        "derived_from",
+        "paraphrased_from",
+        "supports",
+        "contradicts",
+        "updates"
+      ],
+      "title": "EdgeType",
+      "type": "string"
+    },
+    "Evidence": {
+      "additionalProperties": false,
+      "description": "A frozen claim-document relation with a content-addressed snapshot.",
+      "properties": {
+        "attribution_authentic": {
+          "title": "Attribution Authentic",
+          "type": "boolean"
+        },
+        "canonical_url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Canonical Url"
+        },
+        "claim_id": {
+          "minLength": 1,
+          "title": "Claim Id",
+          "type": "string"
+        },
+        "document_id": {
+          "minLength": 1,
+          "title": "Document Id",
+          "type": "string"
+        },
+        "evidence_id": {
+          "minLength": 1,
+          "title": "Evidence Id",
+          "type": "string"
+        },
+        "evidence_span_end": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Evidence Span End"
+        },
+        "evidence_span_start": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Evidence Span Start"
+        },
+        "evidence_text": {
+          "minLength": 1,
+          "title": "Evidence Text",
+          "type": "string"
+        },
+        "identity_authentic": {
+          "title": "Identity Authentic",
+          "type": "boolean"
+        },
+        "schema_version": {
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "snapshot_hash": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Snapshot Hash",
+          "type": "string"
+        },
+        "source_id": {
+          "minLength": 1,
+          "title": "Source Id",
+          "type": "string"
+        },
+        "stance": {
+          "$ref": "#/$defs/Stance"
+        },
+        "warrant_level": {
+          "$ref": "#/$defs/WarrantLevel"
+        }
+      },
+      "required": [
+        "evidence_id",
+        "document_id",
+        "claim_id",
+        "source_id",
+        "evidence_text",
+        "warrant_level",
+        "stance",
+        "identity_authentic",
+        "attribution_authentic",
+        "snapshot_hash"
+      ],
+      "title": "Evidence",
+      "type": "object"
+    },
+    "ProvenanceEdge": {
+      "additionalProperties": false,
+      "properties": {
+        "dst_node_id": {
+          "minLength": 1,
+          "title": "Dst Node Id",
+          "type": "string"
+        },
+        "edge_id": {
+          "minLength": 1,
+          "title": "Edge Id",
+          "type": "string"
+        },
+        "edge_type": {
+          "$ref": "#/$defs/EdgeType"
+        },
+        "evidence": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Evidence"
+        },
+        "src_node_id": {
+          "minLength": 1,
+          "title": "Src Node Id",
+          "type": "string"
+        },
+        "verified": {
+          "title": "Verified",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "edge_id",
+        "src_node_id",
+        "dst_node_id",
+        "edge_type",
+        "verified"
+      ],
+      "title": "ProvenanceEdge",
+      "type": "object"
+    },
+    "ProvenanceGraph": {
+      "additionalProperties": false,
+      "properties": {
+        "edges": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/ProvenanceEdge"
+          },
+          "title": "Edges",
+          "type": "array"
+        },
+        "graph_id": {
+          "minLength": 1,
+          "title": "Graph Id",
+          "type": "string"
+        },
+        "node_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Node Ids",
+          "type": "array"
+        },
+        "schema_version": {
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "graph_id",
+        "node_ids"
+      ],
+      "title": "ProvenanceGraph",
+      "type": "object"
+    },
+    "RiskLevel": {
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "title": "RiskLevel",
+      "type": "string"
+    },
+    "SourceEntity": {
+      "additionalProperties": false,
+      "description": "Canonical source identity separated from its displayed identity.",
+      "properties": {
+        "actual_publisher": {
+          "minLength": 1,
+          "title": "Actual Publisher",
+          "type": "string"
+        },
+        "canonical_name": {
+          "minLength": 1,
+          "title": "Canonical Name",
+          "type": "string"
+        },
+        "displayed_name": {
+          "minLength": 1,
+          "title": "Displayed Name",
+          "type": "string"
+        },
+        "domain": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Domain"
+        },
+        "familiarity_bucket": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Familiarity Bucket"
+        },
+        "global_reliability": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Global Reliability"
+        },
+        "popularity": {
+          "anyOf": [
+            {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Popularity"
+        },
+        "schema_version": {
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "source_id": {
+          "minLength": 1,
+          "title": "Source Id",
+          "type": "string"
+        },
+        "source_role": {
+          "$ref": "#/$defs/SourceRole",
+          "default": "unknown"
+        },
+        "source_type": {
+          "$ref": "#/$defs/SourceType"
+        },
+        "subject_domains": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Subject Domains",
+          "type": "array"
+        },
+        "valid_from": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Valid From"
+        },
+        "valid_to": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Valid To"
+        }
+      },
+      "required": [
+        "source_id",
+        "canonical_name",
+        "displayed_name",
+        "actual_publisher",
+        "source_type"
+      ],
+      "title": "SourceEntity",
+      "type": "object"
+    },
+    "SourceRole": {
+      "enum": [
+        "primary_regulator",
+        "primary_data_owner",
+        "primary_author",
+        "newswire",
+        "secondary_reporter",
+        "aggregator",
+        "commentator",
+        "unknown"
+      ],
+      "title": "SourceRole",
+      "type": "string"
+    },
+    "SourceType": {
+      "enum": [
+        "primary",
+        "secondary",
+        "aggregator",
+        "social",
+        "synthetic",
+        "unknown"
+      ],
+      "title": "SourceType",
+      "type": "string"
+    },
+    "Stance": {
+      "enum": [
+        "supports",
+        "contradicts",
+        "neutral"
+      ],
+      "title": "Stance",
+      "type": "string"
+    },
+    "ToolCondition": {
+      "enum": [
+        "unavailable",
+        "available_not_required",
+        "available_required"
+      ],
+      "title": "ToolCondition",
+      "type": "string"
+    },
+    "WarrantLevel": {
+      "enum": [
+        "direct_support",
+        "partial_support",
+        "related_only",
+        "unsupported",
+        "contradiction"
+      ],
+      "title": "WarrantLevel",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "One counterfactual variant; variants share a family_id.",
+  "properties": {
+    "actual_source": {
+      "$ref": "#/$defs/SourceEntity"
+    },
+    "attribution_authentic": {
+      "title": "Attribution Authentic",
+      "type": "boolean"
+    },
+    "authority_style": {
+      "title": "Authority Style",
+      "type": "string"
+    },
+    "candidate_answer": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "number"
+        }
+      ],
+      "title": "Candidate Answer"
+    },
+    "candidate_claim": {
+      "minLength": 1,
+      "title": "Candidate Claim",
+      "type": "string"
+    },
+    "claim": {
+      "$ref": "#/$defs/Claim"
+    },
+    "claim_conditioned_reliability": {
+      "anyOf": [
+        {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Claim Conditioned Reliability"
+    },
+    "claim_truth": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Claim Truth"
+    },
+    "displayed_source": {
+      "$ref": "#/$defs/SourceEntity"
+    },
+    "document_length_tokens": {
+      "minimum": 1,
+      "title": "Document Length Tokens",
+      "type": "integer"
+    },
+    "document_position": {
+      "minimum": 1,
+      "title": "Document Position",
+      "type": "integer"
+    },
+    "effective_root_count": {
+      "minimum": 1,
+      "title": "Effective Root Count",
+      "type": "integer"
+    },
+    "evidence": {
+      "items": {
+        "$ref": "#/$defs/Evidence"
+      },
+      "title": "Evidence",
+      "type": "array"
+    },
+    "familiarity_level": {
+      "default": "matched",
+      "title": "Familiarity Level",
+      "type": "string"
+    },
+    "gold_answer": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "number"
+        }
+      ],
+      "title": "Gold Answer"
+    },
+    "identity_authentic": {
+      "title": "Identity Authentic",
+      "type": "boolean"
+    },
+    "intervention": {
+      "minLength": 1,
+      "title": "Intervention",
+      "type": "string"
+    },
+    "intervention_vector": {
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "number"
+          },
+          {
+            "type": "integer"
+          },
+          {
+            "type": "string"
+          }
+        ]
+      },
+      "title": "Intervention Vector",
+      "type": "object"
+    },
+    "item_id": {
+      "minLength": 1,
+      "title": "Item Id",
+      "type": "string"
+    },
+    "metadata": {
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "integer"
+          },
+          {
+            "type": "number"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "title": "Metadata",
+      "type": "object"
+    },
+    "popularity_level": {
+      "title": "Popularity Level",
+      "type": "string"
+    },
+    "precision_detail": {
+      "default": "matched",
+      "title": "Precision Detail",
+      "type": "string"
+    },
+    "provenance": {
+      "$ref": "#/$defs/ProvenanceGraph"
+    },
+    "question": {
+      "minLength": 1,
+      "title": "Question",
+      "type": "string"
+    },
+    "raw_source_count": {
+      "default": 1,
+      "minimum": 1,
+      "title": "Raw Source Count",
+      "type": "integer"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "seed": {
+      "minimum": 0,
+      "title": "Seed",
+      "type": "integer"
+    },
+    "source_role": {
+      "$ref": "#/$defs/SourceRole"
+    },
+    "tool_condition": {
+      "$ref": "#/$defs/ToolCondition",
+      "default": "unavailable"
+    },
+    "user_endorsement": {
+      "title": "User Endorsement",
+      "type": "boolean"
+    },
+    "verification_required": {
+      "default": false,
+      "title": "Verification Required",
+      "type": "boolean"
+    },
+    "warrant_level": {
+      "$ref": "#/$defs/WarrantLevel"
+    }
+  },
+  "required": [
+    "item_id",
+    "claim",
+    "question",
+    "gold_answer",
+    "candidate_claim",
+    "candidate_answer",
+    "claim_truth",
+    "actual_source",
+    "displayed_source",
+    "source_role",
+    "identity_authentic",
+    "attribution_authentic",
+    "warrant_level",
+    "authority_style",
+    "popularity_level",
+    "user_endorsement",
+    "document_position",
+    "document_length_tokens",
+    "provenance",
+    "effective_root_count",
+    "evidence",
+    "intervention",
+    "seed"
+  ],
+  "title": "Trial",
+  "type": "object"
+}

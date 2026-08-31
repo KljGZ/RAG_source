@@ -1,0 +1,384 @@
+{
+  "$defs": {
+    "AttemptRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "attempt": {
+          "minimum": 0,
+          "title": "Attempt",
+          "type": "integer"
+        },
+        "completed_at": {
+          "format": "date-time",
+          "title": "Completed At",
+          "type": "string"
+        },
+        "cost_usd": {
+          "default": 0.0,
+          "minimum": 0.0,
+          "title": "Cost Usd",
+          "type": "number"
+        },
+        "error_type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Error Type"
+        },
+        "input_tokens": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Input Tokens",
+          "type": "integer"
+        },
+        "output_tokens": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Output Tokens",
+          "type": "integer"
+        },
+        "parse_status": {
+          "$ref": "#/$defs/ParseStatus"
+        },
+        "parsed": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Parsed"
+        },
+        "raw_output_hash": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Raw Output Hash",
+          "type": "string"
+        },
+        "raw_output_path": {
+          "title": "Raw Output Path",
+          "type": "string"
+        },
+        "retry_reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Retry Reason"
+        },
+        "started_at": {
+          "format": "date-time",
+          "title": "Started At",
+          "type": "string"
+        }
+      },
+      "required": [
+        "attempt",
+        "started_at",
+        "completed_at",
+        "raw_output_path",
+        "raw_output_hash",
+        "parse_status"
+      ],
+      "title": "AttemptRecord",
+      "type": "object"
+    },
+    "ModelSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "max_tokens": {
+          "exclusiveMinimum": 0,
+          "title": "Max Tokens",
+          "type": "integer"
+        },
+        "model": {
+          "title": "Model",
+          "type": "string"
+        },
+        "model_revision": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model Revision"
+        },
+        "observed_at": {
+          "format": "date-time",
+          "title": "Observed At",
+          "type": "string"
+        },
+        "provider": {
+          "title": "Provider",
+          "type": "string"
+        },
+        "role": {
+          "title": "Role",
+          "type": "string"
+        },
+        "system_prompt_hash": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "System Prompt Hash",
+          "type": "string"
+        },
+        "temperature": {
+          "minimum": 0.0,
+          "title": "Temperature",
+          "type": "number"
+        }
+      },
+      "required": [
+        "provider",
+        "model",
+        "observed_at",
+        "temperature",
+        "max_tokens",
+        "system_prompt_hash",
+        "role"
+      ],
+      "title": "ModelSpec",
+      "type": "object"
+    },
+    "ParseStatus": {
+      "enum": [
+        "success",
+        "failed",
+        "partial"
+      ],
+      "title": "ParseStatus",
+      "type": "string"
+    },
+    "ToolEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "arguments": {
+          "additionalProperties": true,
+          "title": "Arguments",
+          "type": "object"
+        },
+        "error_type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Error Type"
+        },
+        "event_id": {
+          "minLength": 1,
+          "title": "Event Id",
+          "type": "string"
+        },
+        "evidence_ids": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "latency_ms": {
+          "minimum": 0.0,
+          "title": "Latency Ms",
+          "type": "number"
+        },
+        "output_digest": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Output Digest"
+        },
+        "schema_version": {
+          "default": "1.0.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "sequence": {
+          "minimum": 0,
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "status": {
+          "$ref": "#/$defs/ToolEventStatus"
+        },
+        "timestamp": {
+          "format": "date-time",
+          "title": "Timestamp",
+          "type": "string"
+        },
+        "tool_name": {
+          "minLength": 1,
+          "title": "Tool Name",
+          "type": "string"
+        },
+        "trial_item_id": {
+          "minLength": 1,
+          "title": "Trial Item Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "event_id",
+        "trial_item_id",
+        "sequence",
+        "tool_name",
+        "arguments",
+        "status",
+        "latency_ms"
+      ],
+      "title": "ToolEvent",
+      "type": "object"
+    },
+    "ToolEventStatus": {
+      "enum": [
+        "started",
+        "succeeded",
+        "failed",
+        "denied",
+        "timed_out"
+      ],
+      "title": "ToolEventStatus",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "abstained": {
+      "default": false,
+      "title": "Abstained",
+      "type": "boolean"
+    },
+    "answer": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Answer"
+    },
+    "attempts": {
+      "items": {
+        "$ref": "#/$defs/AttemptRecord"
+      },
+      "title": "Attempts",
+      "type": "array"
+    },
+    "cited_evidence_ids": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Cited Evidence Ids",
+      "type": "array"
+    },
+    "claimed_verified": {
+      "default": false,
+      "title": "Claimed Verified",
+      "type": "boolean"
+    },
+    "confidence": {
+      "anyOf": [
+        {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Confidence"
+    },
+    "declared_factors": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "title": "Declared Factors",
+      "type": "object"
+    },
+    "item_id": {
+      "title": "Item Id",
+      "type": "string"
+    },
+    "model": {
+      "$ref": "#/$defs/ModelSpec"
+    },
+    "run_id": {
+      "title": "Run Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "default": "1.0.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "selected_attempt": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Selected Attempt"
+    },
+    "tool_trace": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ToolEvent"
+      },
+      "title": "Tool Trace",
+      "type": "array"
+    }
+  },
+  "required": [
+    "run_id",
+    "item_id",
+    "model",
+    "attempts",
+    "selected_attempt",
+    "answer"
+  ],
+  "title": "TrialResult",
+  "type": "object"
+}
