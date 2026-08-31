@@ -35,6 +35,10 @@ minimum_resources:
 """,
         encoding="utf-8",
     )
-    result = runner.invoke(app, ["run-plan", "--config", str(path), "--no-dry-run"])
+    result = runner.invoke(
+        app,
+        ["run-plan", "--config", str(path), "--no-dry-run"],
+        terminal_width=200,
+    )
     assert result.exit_code != 0
     assert "requires a reviewed resource allocation manifest" in result.output
