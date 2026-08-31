@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "status": "passed",
+  "status": "typed_prompt_retest_pending",
   "scope": "cuda_and_direct_model_compatibility_only",
   "scientific_claims_allowed": false,
   "tested_git_revision": "e0fbac04",
@@ -39,6 +39,7 @@
   "direct_model_smoke": {
     "captured_at": "2026-08-31T18:14:21.383507Z",
     "report_sha256": "c2c995735b91974e589b54bb267077e1281aef8f0e836299ecdf68982774a945",
+    "system_prompt_sha256": "5f76d3ff07aa37ad49d2245ce6f6544d3b89f815af8fa88554fd87b5cefb22a8",
     "enable_thinking": false,
     "seed": 20260831,
     "temperature": 0.7,
@@ -51,6 +52,9 @@
     "tokens_per_second": 26.550675557605512,
     "peak_memory_bytes": 29619356672,
     "structured_parse_success": true,
+    "scorer_type_compatible": false,
+    "observed_answer_type": "string",
+    "required_answer_type": "boolean",
     "claimed_verified": false
   },
   "preflight_failures_retained": [

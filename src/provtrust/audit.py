@@ -224,6 +224,18 @@ def _audit_resource_gates(root: Path) -> tuple[dict[str, bool], list[str]]:
                     if not activation_path.is_file():
                         requirements_valid = False
                         failures.append(f"activation evidence missing: {path.name}")
+                    else:
+                        try:
+                            activation_value = _load_json(activation_path)
+                        except (OSError, TypeError, ValueError, json.JSONDecodeError) as error:
+                            requirements_valid = False
+                            failures.append(f"activation evidence invalid: {path.name}: {error}")
+                        else:
+                            if activation_value.get("status") != "passed":
+                                requirements_valid = False
+                                failures.append(
+                                    f"activation evidence has not passed: {path.name}"
+                                )
             if (
                 path.name.startswith("pilot_")
                 and value.get("scientific_claims_allowed") is not False

@@ -4,7 +4,7 @@
   "prompts": [
     {
       "path": "prompts/frozen/answer-system-v0.txt",
-      "sha256": "5f76d3ff07aa37ad49d2245ce6f6544d3b89f815af8fa88554fd87b5cefb22a8",
+      "sha256": "450e6eaa85df17643f17fab17840d4b8cb99dc349fb181e3d2d2ed91fb2c14dc",
       "purpose": "answer system prompt"
     },
     {

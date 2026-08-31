@@ -1,6 +1,6 @@
 # Project status
 
-Current stage: **V0 Qwen3-14B compatibility passed; one-sample Inspect pilot ready**
+Current stage: **V0 Qwen3-14B load passed; typed-output prompt revalidation in progress**
 
 ## Deployment state
 
@@ -17,8 +17,10 @@ Current stage: **V0 Qwen3-14B compatibility passed; one-sample Inspect pilot rea
   metadata only and was not imported.
 - [x] Physical GPU 2 was uniquely masked to logical `cuda:0`; CUDA 13 / Blackwell
   compute capability 12.0 BF16 probe passed without touching unrelated processes.
-- [x] Qwen3-14B loaded fully offline in BF16, generated valid structured JSON with
-  thinking disabled, and used 29,619,356,672 peak allocated bytes in the smoke.
+- [x] Qwen3-14B loaded fully offline in BF16 with thinking disabled and used
+  29,619,356,672 peak allocated bytes in the smoke.
+- [ ] Typed-answer smoke revalidation pending: the first structurally valid response
+  used string `"Yes"` where the boolean scorer requires JSON `true`.
 - [x] Ruff passed, Mypy passed over 99 source files, and Pytest passed 51 tests.
 - [x] CPU-only `glmmTMB` synthetic recovery converged with a positive-definite
   Hessian and recovered all five predeclared positive directions.
@@ -45,7 +47,7 @@ Current stage: **V0 Qwen3-14B compatibility passed; one-sample Inspect pilot rea
 - [ ] V0 empirical experiments run.
 - [ ] V1 plan frozen or confirmatory outcomes inspected.
 
-No claim-bearing V0 experiment or API call has run. CUDA and direct-model
-compatibility checks have passed. The next authorized step is a one-item, two-call
-Inspect orchestration pilot over the harmless smoke fixture; it cannot support an SDI,
-PGSD, or model-quality conclusion and is not a V1 confirmatory run.
+No claim-bearing V0 experiment or API call has run. CUDA and direct-model loading
+checks have passed; the pilot was re-blocked before Inspect execution while the
+answer-type prompt is revalidated. The eventual one-item, two-call smoke cannot
+support an SDI, PGSD, or model-quality conclusion and is not a V1 confirmatory run.

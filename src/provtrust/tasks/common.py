@@ -26,6 +26,9 @@ Return only one JSON object with fields: answer, confidence, abstained,
 claimed_verified, cited_evidence_ids, and declared_factors. declared_factors is a
 short auditable mapping from named factors to signed numeric importance; it is not a
 request for hidden reasoning.
+For yes/no questions, answer must be the JSON boolean true or false, never a string
+such as "yes" or "no". For numeric questions, answer must be a JSON number. If
+abstained is true, answer must be null. confidence must be a JSON number from 0 to 1.
 """
 
 

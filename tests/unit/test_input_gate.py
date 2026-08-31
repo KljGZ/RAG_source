@@ -115,6 +115,18 @@ def _frozen_fixture(root: Path) -> dict[str, Any]:
             "batch_size": 1,
         },
     )
+    activation_path = root / "artifacts/system/compatibility.json"
+    activation_path.parent.mkdir(parents=True)
+    activation_path.write_text(
+        json.dumps(
+            {
+                "status": "passed",
+                "model_asset": {"root_sha256": manifest.root_sha256},
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
     return {
         "model_registration": "configs/models/qwen-fixture-v0.yaml",
         "model_asset_manifest": "configs/models/assets/qwen-fixture.manifest.json",
@@ -122,6 +134,7 @@ def _frozen_fixture(root: Path) -> dict[str, Any]:
         "system_prompt": "prompts/frozen/answer.txt",
         "system_prompt_sha256": _sha256(prompt_path),
         "dataset_manifest": "benchmark/manifests/smoke.yaml",
+        "activation_evidence": "artifacts/system/compatibility.json",
         "temperature": 0.7,
         "top_p": 0.8,
         "top_k": 20,

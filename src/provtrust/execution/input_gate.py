@@ -51,6 +51,7 @@ def validate_frozen_execution_inputs(plan: dict[str, Any], root: Path) -> tuple[
         "model_args",
         "system_prompt",
         "dataset_manifest",
+        "activation_evidence",
     ):
         path, error = _project_path(root, plan.get(field), label=field)
         if error:
@@ -69,6 +70,11 @@ def validate_frozen_execution_inputs(plan: dict[str, Any], root: Path) -> tuple[
         )
         model_args = _load_yaml(resolved["model_args"])
         dataset_manifest = _load_yaml(resolved["dataset_manifest"])
+        activation_evidence = json.loads(
+            resolved["activation_evidence"].read_text(encoding="utf-8")
+        )
+        if not isinstance(activation_evidence, dict):
+            raise TypeError("activation evidence must contain a JSON object")
     except (OSError, TypeError, ValueError, json.JSONDecodeError, yaml.YAMLError):
         return ("frozen_input_parse_failure",)
 
@@ -85,6 +91,13 @@ def validate_frozen_execution_inputs(plan: dict[str, Any], root: Path) -> tuple[
         errors.append("model_file_count_registration_mismatch")
     if manifest.total_bytes != registration.snapshot.total_bytes:
         errors.append("model_total_bytes_registration_mismatch")
+    if activation_evidence.get("status") != "passed":
+        errors.append("activation_evidence_not_passed")
+    activation_asset = activation_evidence.get("model_asset")
+    if not isinstance(activation_asset, dict) or activation_asset.get("root_sha256") != (
+        manifest.root_sha256
+    ):
+        errors.append("activation_model_root_hash_mismatch")
 
     expected_prompt_relative = resolved["system_prompt"].relative_to(root).as_posix()
     observed_prompt_hash = sha256_file(resolved["system_prompt"])

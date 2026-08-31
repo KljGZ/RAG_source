@@ -76,3 +76,7 @@
 - Pin Accelerate 1.14.0 in the evaluation layer. The first guarded load exposed
   that Inspect's Hugging Face `device_map` path requires Accelerate; the failed
   attempt stopped before weights were loaded or a model response was generated.
+- Re-block the Inspect pilot after the direct smoke returned structurally valid
+  JSON but encoded a yes/no answer as string `"Yes"`. Freeze an explicit
+  boolean/number/null answer-type contract and rerun the smoke before activation;
+  otherwise a formatting mismatch would be counted as substantive model error.
