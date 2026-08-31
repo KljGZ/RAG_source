@@ -8,6 +8,8 @@ from typing import Any
 
 from pydantic import BaseModel, ConfigDict
 
+FactorLevel = bool | float | str
+
 
 class Observation(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
@@ -37,7 +39,7 @@ class FactorObservation(BaseModel):
     item_id: str
     family_id: str
     model_id: str
-    factors: dict[str, bool | float | int | str]
+    factors: dict[str, FactorLevel]
     value: float
 
 
@@ -47,8 +49,8 @@ class MatchedFactorEffect(BaseModel):
     family_id: str
     model_id: str
     factor: str
-    treated_level: bool | float | int | str
-    control_level: bool | float | int | str
+    treated_level: FactorLevel
+    control_level: FactorLevel
     stratum: str
     treated_mean: float
     control_mean: float
@@ -85,12 +87,12 @@ def matched_factor_effects(
     observations: tuple[FactorObservation, ...],
     *,
     factor: str,
-    treated: bool | float | int | str,
-    control: bool | float | int | str,
+    treated: FactorLevel,
+    control: FactorLevel,
 ) -> tuple[MatchedFactorEffect, ...]:
     """Compute exact matched contrasts while holding all other factors fixed."""
 
-    grouped: dict[tuple[str, str, str], dict[bool | float | int | str, list[float]]] = defaultdict(
+    grouped: dict[tuple[str, str, str], dict[FactorLevel, list[float]]] = defaultdict(
         lambda: defaultdict(list)
     )
     for observation in observations:
