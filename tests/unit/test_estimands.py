@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import pytest
+
 from provtrust.analysis.estimands import FactorObservation, matched_factor_effects
 
 
@@ -31,4 +33,4 @@ def test_matched_factor_effect_holds_other_factors_fixed() -> None:
         observations, factor="attribution", treated=True, control=False
     )
     assert len(effects) == 1
-    assert effects[0].effect == 0.6
+    assert effects[0].effect == pytest.approx(0.6)
