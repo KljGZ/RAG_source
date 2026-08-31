@@ -13,6 +13,9 @@ def portable_conda_url(record: dict[str, Any]) -> str:
     channel = str(record.get("channel") or "")
     filename = str(record.get("fn") or "")
     subdir = str(record.get("subdir") or "")
-    if filename and subdir and (url.startswith("file:") or channel == "<unknown>" or not url):
+    conda_forge = channel == "conda-forge" or "/conda-forge/" in url
+    if filename and subdir and (
+        url.startswith("file:") or channel == "<unknown>" or not url or conda_forge
+    ):
         return f"{CONDA_FORGE_BASE}/{subdir}/{filename}"
     return url

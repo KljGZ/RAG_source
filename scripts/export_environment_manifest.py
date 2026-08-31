@@ -58,6 +58,7 @@ def main() -> int:
     parser.add_argument("--prefix", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--pip-lock", type=Path, required=True)
+    parser.add_argument("--conda-explicit", type=Path, required=True)
     args = parser.parse_args()
     conda = conda_records(args.prefix)
     pip = pip_records()
@@ -77,6 +78,13 @@ def main() -> int:
         "".join(f"{record['name']}=={record['version']}\n" for record in pip),
         encoding="utf-8",
     )
+    explicit_lines = ["# platform: linux-64", "# generated-by: ProvenanceTrustBench", "@EXPLICIT"]
+    for record in conda:
+        url = record["url"]
+        md5 = record["md5"]
+        suffix = f"#{md5}" if md5 else ""
+        explicit_lines.append(f"{url}{suffix}")
+    args.conda_explicit.write_text("\n".join(explicit_lines) + "\n", encoding="utf-8")
     return 0
 
 

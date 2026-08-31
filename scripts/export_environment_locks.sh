@@ -10,16 +10,14 @@ ENV_PREFIX="$($CONDA_BIN info --base)/envs/$ENV_NAME"
 mkdir -p "$LOCK_DIR"
 
 "$CONDA_BIN" env export -n "$ENV_NAME" --no-builds \
-  | sed '/^prefix:/d' \
+  | sed -e '/^  - pip:/,$d' -e '/^prefix:/d' \
   > "$LOCK_DIR/conda-linux-64.yml"
-
-"$CONDA_BIN" list -n "$ENV_NAME" --explicit \
-  > "$LOCK_DIR/conda-linux-64.explicit.txt"
 
 "$ENV_PREFIX/bin/python" "$PROJECT_ROOT/scripts/export_environment_manifest.py" \
   --prefix "$ENV_PREFIX" \
   --output "$LOCK_DIR/environment-linux-64.json" \
-  --pip-lock "$LOCK_DIR/pip-linux-64.txt"
+  --pip-lock "$LOCK_DIR/pip-linux-64.txt" \
+  --conda-explicit "$LOCK_DIR/conda-linux-64.explicit.txt"
 
 "$ENV_PREFIX/bin/Rscript" -e '
   output <- commandArgs(trailingOnly = TRUE)[1]

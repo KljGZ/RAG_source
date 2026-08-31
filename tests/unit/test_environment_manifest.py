@@ -23,3 +23,15 @@ def test_existing_remote_url_is_preserved() -> None:
         "fn": "pkg.conda",
     }
     assert portable_conda_url(record) == record["url"]
+
+
+def test_conda_forge_mirror_is_normalized() -> None:
+    record = {
+        "channel": "conda-forge",
+        "url": "https://mirror.example.test/conda-forge/noarch/pkg.conda",
+        "subdir": "noarch",
+        "fn": "pkg.conda",
+    }
+    assert portable_conda_url(record) == (
+        "https://conda.anaconda.org/conda-forge/noarch/pkg.conda"
+    )
