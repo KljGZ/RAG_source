@@ -73,6 +73,21 @@ direct-load diagnostic using the already frozen scientific decoding is permitted
 does not replace or discard the failed artifact; if it also fails exact parsing, the
 scientific task remains blocked pending a versioned cross-model parser policy.
 
+Parser-v2 amendment before benchmark access: the deterministic diagnostic failed for
+the same sole reason and is retained as
+`artifacts/system/PHI4_COMPATIBILITY_FAILED_DETERMINISTIC_FENCE.json`. Parser v2
+accepts either raw JSON or exactly one whole-response, lowercase `json` code fence. It
+rejects text outside the fence, unlabeled or multiple fences, nested fences, malformed
+JSON, unknown fields, and schema violations; it preserves the raw completion and
+records the parse mode. This rule is implemented once in the shared task parser, not
+as a Phi-specific postprocessor.
+
+The original v1 manifest remains tied to the Git revision used by the published Qwen
+run and is verified from Git history. Parser v2 has a new input manifest while keeping
+the dataset bytes, prompt, trials, interventions, and scoring semantics fixed. An
+additional Qwen3-14B parser-v2 run is required before the strict cross-model comparison
+so both compared runs use the same execution manifest.
+
 ## Retention and interpretation
 
 The full result is retained if the frozen run passes integrity checks, including a

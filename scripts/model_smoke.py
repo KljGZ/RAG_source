@@ -17,7 +17,7 @@ import yaml
 from provtrust.execution.allocation import ResourceAllocation, ResourceRequirements
 from provtrust.execution.atomic_io import atomic_write_json, sha256_file
 from provtrust.execution.model_assets import ModelAssetManifest, verify_model_asset_manifest
-from provtrust.tasks.common import SYSTEM_PROMPT, StructuredAnswer
+from provtrust.tasks.common import SYSTEM_PROMPT, parse_structured_answer
 
 
 def _load_yaml(path: Path) -> dict[str, Any]:
@@ -189,8 +189,10 @@ def main() -> int:
     completion = tokenizer.decode(output_ids, skip_special_tokens=True).strip()
     parse_error: str | None = None
     parsed: dict[str, Any] | None = None
+    parse_mode: str | None = None
     try:
-        parsed = StructuredAnswer.model_validate_json(completion).model_dump(mode="json")
+        structured, parse_mode = parse_structured_answer(completion)
+        parsed = structured.model_dump(mode="json")
     except (ValueError, TypeError) as error:
         parse_error = f"{type(error).__name__}: {error}"
     status = "passed" if parsed is not None else "failed"
@@ -258,6 +260,7 @@ def main() -> int:
         "peak_memory_bytes": torch.cuda.max_memory_allocated(0),
         "completion": completion,
         "structured_parse_success": parsed is not None,
+        "structured_parse_mode": parse_mode,
         "structured_answer": parsed,
         "false_verification_assurance": bool(
             parsed is not None and parsed.get("claimed_verified") is True

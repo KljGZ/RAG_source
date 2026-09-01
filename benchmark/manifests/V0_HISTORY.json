@@ -1,0 +1,11 @@
+{
+  "schema_version": "1.0.0",
+  "historical_manifests": [
+    {
+      "path": "benchmark/manifests/v0-paired-v1.yaml",
+      "sha256": "0fcb45f5cee557160c7d9e62fc51bc0c2ba157c6e516dbc9b9c2247e5dfc277a",
+      "execution_git_revision": "763a41bdf4a5014620909be970979a084d880c88",
+      "reason": "Preserve the exact parser and source-code hashes used by the published Qwen3-14B V0 run."
+    }
+  ]
+}

@@ -41,6 +41,8 @@ REQUIRED_PATHS = (
     "benchmark/schemas/MANIFEST.json",
     "benchmark/manifests/smoke.yaml",
     "benchmark/manifests/v0-paired-v1.yaml",
+    "benchmark/manifests/v0-paired-v2.yaml",
+    "benchmark/manifests/V0_HISTORY.json",
     "artifacts/system/V0_PAIRED_DATASET_AUDIT.json",
     "prompts/frozen/MANIFEST.json",
     "environments/locks/LOCKS.sha256",
@@ -85,6 +87,83 @@ def _resolve_contained(base: Path, relative: str) -> Path:
     if target == base or base not in target.parents:
         raise ValueError(f"path escapes its declared root: {relative}")
     return target
+
+
+def _git_blob_sha256(root: Path, *, revision: str, relative: str) -> str:
+    if not re.fullmatch(r"[0-9a-f]{40}", revision):
+        raise ValueError("historical Git revision must be a full lowercase object ID")
+    _resolve_contained(root, relative)
+    result = subprocess.run(
+        ["git", "show", f"{revision}:{relative}"],
+        cwd=root,
+        check=False,
+        capture_output=True,
+    )
+    if result.returncode != 0:
+        raise ValueError(f"historical source is unavailable: {revision}:{relative}")
+    return hashlib.sha256(result.stdout).hexdigest()
+
+
+def _audit_v0_dataset_manifest(
+    root: Path, manifest_path: Path, *, historical_revision: str | None
+) -> list[str]:
+    value = _load_yaml(manifest_path)
+    label = manifest_path.name
+    failures: list[str] = []
+    for path_field, hash_field in (
+        ("path", "sha256"),
+        ("config_path", "config_sha256"),
+        ("splits_path", "splits_sha256"),
+        ("audit_path", "audit_sha256"),
+    ):
+        relative = value.get(path_field)
+        expected = value.get(hash_field)
+        if not isinstance(relative, str) or not isinstance(expected, str):
+            failures.append(f"{label} lacks {path_field}/{hash_field}")
+            continue
+        target = _resolve_contained(root, relative)
+        if not target.is_file() or _sha256(target) != expected:
+            failures.append(f"{label} hash mismatch: {relative}")
+
+    source_hashes = value.get("source_code_sha256")
+    if not isinstance(source_hashes, dict) or not source_hashes:
+        failures.append(f"{label} lacks source-code hashes")
+    else:
+        for relative, expected in source_hashes.items():
+            if not isinstance(relative, str) or not isinstance(expected, str):
+                failures.append(f"{label} has an invalid source-code hash entry")
+                continue
+            try:
+                observed = (
+                    _sha256(_resolve_contained(root, relative))
+                    if historical_revision is None
+                    else _git_blob_sha256(
+                        root, revision=historical_revision, relative=relative
+                    )
+                )
+            except ValueError as error:
+                failures.append(str(error))
+                continue
+            if observed != expected:
+                failures.append(f"{label} source-code hash mismatch: {relative}")
+
+    audit_path = value.get("audit_path")
+    if isinstance(audit_path, str):
+        audit_value = _load_json(_resolve_contained(root, audit_path))
+        stimulus = audit_value.get("stimulus_audit")
+        audit_valid = (
+            audit_value.get("status") == "passed"
+            and audit_value.get("dataset_sha256") == value.get("sha256")
+            and isinstance(stimulus, dict)
+            and stimulus.get("errors") == []
+            and stimulus.get("gold_leakage_detected") is False
+            and stimulus.get("item_count") == value.get("item_count")
+        )
+        if not audit_valid:
+            failures.append(f"{label} identification audit is invalid")
+    else:
+        failures.append(f"{label} lacks audit_path")
+    return failures
 
 
 def _verify_hash_entries(*, base: Path, entries: Any, entry_label: str) -> tuple[bool, list[str]]:
@@ -192,54 +271,47 @@ def _audit_frozen_manifests(root: Path) -> tuple[dict[str, bool], list[str]]:
     if not smoke_ok:
         failures.append("smoke dataset manifest hash mismatch")
 
-    v0 = _load_yaml(root / "benchmark/manifests/v0-paired-v1.yaml")
-    v0_ok = True
-    for path_field, hash_field in (
-        ("path", "sha256"),
-        ("config_path", "config_sha256"),
-        ("splits_path", "splits_sha256"),
-        ("audit_path", "audit_sha256"),
-    ):
-        relative = v0.get(path_field)
-        expected = v0.get(hash_field)
-        if not isinstance(relative, str) or not isinstance(expected, str):
-            v0_ok = False
-            failures.append(f"V0 paired manifest lacks {path_field}/{hash_field}")
-            continue
-        target = _resolve_contained(root, relative)
-        if not target.is_file() or _sha256(target) != expected:
-            v0_ok = False
-            failures.append(f"V0 paired manifest hash mismatch: {relative}")
-    source_hashes = v0.get("source_code_sha256")
-    if not isinstance(source_hashes, dict) or not source_hashes:
-        v0_ok = False
-        failures.append("V0 paired manifest lacks source-code hashes")
+    v1_path = root / "benchmark/manifests/v0-paired-v1.yaml"
+    history = _load_json(root / "benchmark/manifests/V0_HISTORY.json")
+    history_rows = history.get("historical_manifests")
+    v1_relative = v1_path.relative_to(root).as_posix()
+    v1_history = None
+    if isinstance(history_rows, list):
+        matches = [
+            row
+            for row in history_rows
+            if isinstance(row, dict) and row.get("path") == v1_relative
+        ]
+        if len(matches) == 1:
+            v1_history = matches[0]
+    if v1_history is None:
+        failures.append("V0 v1 historical manifest has no unique history record")
+        historical_revision = None
     else:
-        for relative, expected in source_hashes.items():
-            if not isinstance(relative, str) or not isinstance(expected, str):
-                v0_ok = False
-                failures.append("V0 paired manifest has an invalid source-code hash entry")
-                continue
-            target = _resolve_contained(root, relative)
-            if not target.is_file() or _sha256(target) != expected:
-                v0_ok = False
-                failures.append(f"V0 paired source-code hash mismatch: {relative}")
-    audit_path = v0.get("audit_path")
-    if isinstance(audit_path, str):
-        audit_value = _load_json(_resolve_contained(root, audit_path))
-        stimulus = audit_value.get("stimulus_audit")
-        audit_valid = (
-            audit_value.get("status") == "passed"
-            and audit_value.get("dataset_sha256") == v0.get("sha256")
-            and isinstance(stimulus, dict)
-            and stimulus.get("errors") == []
-            and stimulus.get("gold_leakage_detected") is False
-            and stimulus.get("item_count") == v0.get("item_count")
+        historical_revision = v1_history.get("execution_git_revision")
+        if (
+            not isinstance(historical_revision, str)
+            or v1_history.get("sha256") != _sha256(v1_path)
+        ):
+            failures.append("V0 v1 historical manifest identity is invalid")
+            historical_revision = None
+
+    v0_failures: list[str] = []
+    if historical_revision is not None:
+        v0_failures.extend(
+            _audit_v0_dataset_manifest(
+                root, v1_path, historical_revision=historical_revision
+            )
         )
-        if not audit_valid:
-            v0_ok = False
-            failures.append("V0 paired identification audit is invalid")
-    checks["v0_paired_dataset_hashes"] = v0_ok
+    v0_failures.extend(
+        _audit_v0_dataset_manifest(
+            root,
+            root / "benchmark/manifests/v0-paired-v2.yaml",
+            historical_revision=None,
+        )
+    )
+    failures.extend(v0_failures)
+    checks["v0_paired_dataset_hashes"] = historical_revision is not None and not v0_failures
     return checks, failures
 
 

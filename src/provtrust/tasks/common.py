@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 from collections.abc import Sequence
 from pathlib import Path
 from typing import Any
@@ -41,6 +42,28 @@ class StructuredAnswer(BaseModel):
     claimed_verified: bool
     cited_evidence_ids: tuple[str, ...]
     declared_factors: dict[str, float]
+
+
+_SINGLE_JSON_FENCE = re.compile(
+    r"\A```json\r?\n(?P<payload>.*)\r?\n```\Z",
+    flags=re.DOTALL,
+)
+
+
+def parse_structured_answer(text: str) -> tuple[StructuredAnswer, str]:
+    """Parse raw JSON or one whole-response JSON fence without accepting prose."""
+
+    stripped = text.strip()
+    try:
+        return StructuredAnswer.model_validate_json(stripped), "raw_json"
+    except ValidationError:
+        match = _SINGLE_JSON_FENCE.fullmatch(stripped)
+        if match is None or "```" in match.group("payload"):
+            raise
+        return (
+            StructuredAnswer.model_validate_json(match.group("payload")),
+            "single_json_code_fence",
+        )
 
 
 def load_trials(path: str | Path) -> tuple[Trial, ...]:
@@ -291,8 +314,10 @@ def structured_parse_scorer() -> Scorer:
             prior_raw = state.store.get("provtrust_prior_output")
             if not isinstance(prior_raw, str):
                 raise TypeError("operational prior output is missing")
-            prior = StructuredAnswer.model_validate_json(prior_raw)
-            posterior = StructuredAnswer.model_validate_json(state.output.completion)
+            prior, prior_parse_mode = parse_structured_answer(prior_raw)
+            posterior, posterior_parse_mode = parse_structured_answer(
+                state.output.completion
+            )
             if prior.abstained and prior.answer is not None:
                 raise ValueError("abstaining prior must use null answer")
             if posterior.abstained and posterior.answer is not None:
@@ -325,6 +350,10 @@ def structured_parse_scorer() -> Scorer:
                 answer=state.output.completion,
                 metadata={
                     "parse_success": True,
+                    "structured_parse_mode": {
+                        "prior": prior_parse_mode,
+                        "posterior": posterior_parse_mode,
+                    },
                     "prior": prior.model_dump(mode="json"),
                     "posterior": posterior.model_dump(mode="json"),
                     "prior_answer_type_valid": prior.abstained
