@@ -1,0 +1,11 @@
+# Copy to phi-4-static.local.yaml and replace REMOTE_USER. The local file is ignored.
+model_path: /home/REMOTE_USER/provtrust_cache/models/phi-4_2db69c1
+tokenizer_path: /home/REMOTE_USER/provtrust_cache/models/phi-4_2db69c1
+device: cuda:0
+dtype: auto
+local_files_only: true
+trust_remote_code: false
+low_cpu_mem_usage: true
+enable_thinking: false
+do_sample: false
+batch_size: 1

@@ -17,6 +17,8 @@ source sensitivity != source preference != source discernment != verification
 See `docs/THEORY.md` for the formal variables, axioms, estimands, and limits, and
 `docs/SPEC_TRACEABILITY.md` for the requirement-to-implementation matrix.
 `docs/DEPLOYMENT_AUDIT.md` gives the complete theory-to-code-to-acceptance review.
+`docs/V1_READINESS.md` separates integrity-accepted V0 observations from claims that
+still require an outcome-blind confirmatory V1.
 
 ## Remote environment
 

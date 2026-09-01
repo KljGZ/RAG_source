@@ -3,8 +3,10 @@
 from __future__ import annotations
 
 import argparse
+import importlib.metadata
 import json
 import os
+import subprocess
 import time
 from datetime import UTC, datetime
 from pathlib import Path
@@ -23,6 +25,24 @@ def _load_yaml(path: Path) -> dict[str, Any]:
     if not isinstance(value, dict):
         raise TypeError(f"expected YAML object: {path}")
     return value
+
+
+def _git_state(project_root: Path) -> tuple[str, bool]:
+    revision = subprocess.run(
+        ["git", "rev-parse", "HEAD"],
+        cwd=project_root,
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.strip()
+    status = subprocess.run(
+        ["git", "status", "--porcelain", "--untracked-files=all"],
+        cwd=project_root,
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout
+    return revision, not bool(status.strip())
 
 
 def _validate_execution_contract(
@@ -55,13 +75,24 @@ def _validate_execution_contract(
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--allocation", type=Path, required=True)
+    parser.add_argument("--project-root", type=Path, default=Path("."))
     parser.add_argument("--physical-index", type=int, required=True)
     parser.add_argument("--model-root", type=Path, required=True)
     parser.add_argument("--asset-manifest", type=Path, required=True)
+    parser.add_argument(
+        "--system-prompt",
+        type=Path,
+        default=Path("prompts/frozen/answer-system-v0.txt"),
+    )
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--seed", type=int, default=20260831)
     parser.add_argument("--max-new-tokens", type=int, default=192)
     args = parser.parse_args()
+
+    project_root = args.project_root.resolve()
+    git_revision, git_clean = _git_state(project_root)
+    if not git_clean:
+        raise RuntimeError("model smoke requires a clean Git worktree")
 
     allocation = _validate_execution_contract(
         args.allocation, physical_index=args.physical_index, model_root=args.model_root
@@ -72,6 +103,9 @@ def main() -> int:
     failures = verify_model_asset_manifest(args.model_root, manifest)
     if failures:
         raise RuntimeError(f"model asset verification failed: {', '.join(failures)}")
+    frozen_system_prompt = args.system_prompt.read_text(encoding="utf-8")
+    if frozen_system_prompt != SYSTEM_PROMPT:
+        raise RuntimeError("runtime system prompt does not match the frozen prompt file")
 
     # Import the GPU stack only after the allocation, device mask, and snapshot pass.
     import torch
@@ -100,7 +134,7 @@ def main() -> int:
     )
     loaded_seconds = time.monotonic() - started
     messages = [
-        {"role": "system", "content": SYSTEM_PROMPT},
+        {"role": "system", "content": frozen_system_prompt},
         {
             "role": "user",
             "content": json.dumps(
@@ -155,16 +189,53 @@ def main() -> int:
         parsed = StructuredAnswer.model_validate_json(completion).model_dump(mode="json")
     except (ValueError, TypeError) as error:
         parse_error = f"{type(error).__name__}: {error}"
+    status = "passed" if parsed is not None else "failed"
     report = {
         "schema_version": "1.0.0",
+        "status": status,
+        "scope": "cuda_and_direct_model_compatibility_only",
+        "scientific_claims_allowed": False,
         "captured_at": datetime.now(UTC).isoformat(),
+        "tested_git_revision": git_revision,
+        "git_clean": git_clean,
         "allocation_id": allocation.allocation_id,
         "physical_gpu_index": args.physical_index,
         "cuda_visible_devices": os.environ["CUDA_VISIBLE_DEVICES"],
         "torch_logical_device": 0,
+        "physical_gpu": {
+            "index": args.physical_index,
+            "name": torch.cuda.get_device_name(0),
+            "memory_total_bytes": torch.cuda.get_device_properties(0).total_memory,
+            "compute_capability": list(torch.cuda.get_device_capability(0)),
+        },
+        "software": {
+            "torch": torch.__version__,
+            "cuda": torch.version.cuda,
+            "transformers": importlib.metadata.version("transformers"),
+            "accelerate": importlib.metadata.version("accelerate"),
+            "inspect_ai": importlib.metadata.version("inspect_ai"),
+        },
         "model_id": manifest.model_id,
         "model_root_sha256": manifest.root_sha256,
         "asset_manifest_sha256": sha256_file(args.asset_manifest),
+        "model_asset": {
+            "model_id": manifest.model_id,
+            "root_sha256": manifest.root_sha256,
+            "manifest_sha256": sha256_file(args.asset_manifest),
+            "file_count": manifest.file_count,
+            "total_bytes": manifest.total_bytes,
+        },
+        "system_prompt": {
+            "path": args.system_prompt.as_posix(),
+            "sha256": sha256_file(args.system_prompt),
+        },
+        "runtime_contract": {
+            "device": "cuda:0",
+            "dtype": "auto",
+            "local_files_only": True,
+            "trust_remote_code": False,
+            "low_cpu_mem_usage": True,
+        },
         "enable_thinking": False,
         "generation": {
             "seed": args.seed,
@@ -182,13 +253,21 @@ def main() -> int:
         "completion": completion,
         "structured_parse_success": parsed is not None,
         "structured_answer": parsed,
+        "false_verification_assurance": bool(
+            parsed is not None and parsed.get("claimed_verified") is True
+        ),
         "parse_error": parse_error,
+        "interpretation_boundary": (
+            "This smoke validates offline loading and the structured-output contract only; "
+            "it is not a scientific performance result."
+        ),
     }
     digest = atomic_write_json(args.output, report)
     print(
         json.dumps(
             {
                 "generated": True,
+                "status": status,
                 "structured_parse_success": parsed is not None,
                 "output": str(args.output),
                 "sha256": digest,
