@@ -1,0 +1,39 @@
+schema_version: "1.0.0"
+registration_id: phi-4-v0-static-deterministic-secondary-target
+status: frozen
+role: secondary_target
+primary_judge_eligible: false
+provider: hf
+inspect_model: hf/microsoft/phi-4
+model_id: microsoft/phi-4
+architecture: Phi3ForCausalLM
+license: MIT
+parameter_count_billions: 14.66
+native_context_tokens: 16384
+config_max_position_embeddings: 16384
+inference_dtype: bfloat16
+local_files_only: true
+trust_remote_code: false
+deployment_subdirectory: phi-4_2db69c1
+snapshot:
+  source_platform: ModelScope
+  repository: LLM-Research/phi-4
+  source_revision: d767c0535ebfc0c3d8f049e06f6739eb9e8a2847
+  captured_at: "2026-09-01T05:29:22.997047Z"
+  upstream_huggingface_revision: 2db69c1c3e91a05d2c64a3185acfbaf36f744e25
+  asset_manifest: configs/models/assets/phi-4-2db69c1.manifest.json
+  asset_manifest_sha256: b8d4a4f234d849ab0196597259fcf9ad7991bc8f7c8d548dafea7a086aa7c00a
+  root_sha256: 5ae5572dbbc916ad0eb44e9e755e3dd345b46262d344c32db38b133b2cd56eeb
+  file_count: 21
+  total_bytes: 29325889707
+generation:
+  enable_thinking: false
+  do_sample: false
+  temperature: 0.0
+  top_p: 1.0
+  top_k: 1
+  max_tokens: 256
+  seeds: [20260831]
+system_prompt:
+  path: prompts/frozen/answer-system-v0.txt
+  sha256: 450e6eaa85df17643f17fab17840d4b8cb99dc349fb181e3d2d2ed91fb2c14dc
