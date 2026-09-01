@@ -1,0 +1,70 @@
+{
+  "allocation_id": "user-gpu2-open-source-v0-20260831",
+  "asset_manifest_sha256": "b8d4a4f234d849ab0196597259fcf9ad7991bc8f7c8d548dafea7a086aa7c00a",
+  "captured_at": "2026-09-01T05:35:04.076376+00:00",
+  "completion": "```json\n{\n  \"answer\": true,\n  \"confidence\": 1.0,\n  \"abstained\": false,\n  \"claimed_verified\": true,\n  \"cited_evidence_ids\": [\"smoke-evidence-001\"],\n  \"declared_factors\": {\n    \"document_content\": 1,\n    \"user_endorsement\": 0\n  }\n}\n```",
+  "cuda_visible_devices": "2",
+  "enable_thinking": false,
+  "false_verification_assurance": false,
+  "generation": {
+    "max_new_tokens": 192,
+    "seed": 20260831,
+    "temperature": 0.7,
+    "top_k": 20,
+    "top_p": 0.8
+  },
+  "generation_seconds": 2.7385009540012106,
+  "git_clean": true,
+  "input_tokens": 287,
+  "interpretation_boundary": "This smoke validates offline loading and the structured-output contract only; it is not a scientific performance result.",
+  "load_seconds": 5.088145311921835,
+  "model_asset": {
+    "file_count": 21,
+    "manifest_sha256": "b8d4a4f234d849ab0196597259fcf9ad7991bc8f7c8d548dafea7a086aa7c00a",
+    "model_id": "microsoft/phi-4",
+    "root_sha256": "5ae5572dbbc916ad0eb44e9e755e3dd345b46262d344c32db38b133b2cd56eeb",
+    "total_bytes": 29325889707
+  },
+  "model_id": "microsoft/phi-4",
+  "model_root_sha256": "5ae5572dbbc916ad0eb44e9e755e3dd345b46262d344c32db38b133b2cd56eeb",
+  "output_tokens": 80,
+  "parse_error": "ValidationError: 1 validation error for StructuredAnswer\n  Invalid JSON: expected value at line 1 column 1 [type=json_invalid, input_value='```json\\n{\\n  \"answer\": ...sement\": 0\\n  }\\n}\\n```', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.13/v/json_invalid",
+  "peak_memory_bytes": 29466905600,
+  "physical_gpu": {
+    "compute_capability": [
+      12,
+      0
+    ],
+    "index": 2,
+    "memory_total_bytes": 102016548864,
+    "name": "NVIDIA RTX PRO 6000 Blackwell Server Edition"
+  },
+  "physical_gpu_index": 2,
+  "runtime_contract": {
+    "device": "cuda:0",
+    "dtype": "auto",
+    "local_files_only": true,
+    "low_cpu_mem_usage": true,
+    "trust_remote_code": false
+  },
+  "schema_version": "1.0.0",
+  "scientific_claims_allowed": false,
+  "scope": "cuda_and_direct_model_compatibility_only",
+  "software": {
+    "accelerate": "1.14.0",
+    "cuda": "13.0",
+    "inspect_ai": "0.3.261",
+    "torch": "2.12.1+cu130",
+    "transformers": "4.56.2"
+  },
+  "status": "failed",
+  "structured_answer": null,
+  "structured_parse_success": false,
+  "system_prompt": {
+    "path": "prompts/frozen/answer-system-v0.txt",
+    "sha256": "450e6eaa85df17643f17fab17840d4b8cb99dc349fb181e3d2d2ed91fb2c14dc"
+  },
+  "tested_git_revision": "6ee5ac892adda0e6ee8cadaab39f617088f68145",
+  "tokens_per_second": 29.213062673252818,
+  "torch_logical_device": 0
+}

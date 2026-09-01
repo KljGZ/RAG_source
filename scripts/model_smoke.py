@@ -87,6 +87,11 @@ def main() -> int:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--seed", type=int, default=20260831)
     parser.add_argument("--max-new-tokens", type=int, default=192)
+    parser.add_argument(
+        "--decoding",
+        choices=("compatibility_sampling", "deterministic"),
+        default="compatibility_sampling",
+    )
     args = parser.parse_args()
 
     project_root = args.project_root.resolve()
@@ -169,16 +174,15 @@ def main() -> int:
     )
     inputs = tokenizer(rendered, return_tensors="pt").to("cuda:0")
     generation_started = time.monotonic()
+    generation_kwargs: dict[str, Any] = {
+        "max_new_tokens": args.max_new_tokens,
+        "do_sample": args.decoding == "compatibility_sampling",
+        "pad_token_id": tokenizer.eos_token_id,
+    }
+    if args.decoding == "compatibility_sampling":
+        generation_kwargs.update(temperature=0.7, top_p=0.8, top_k=20)
     with torch.inference_mode():
-        generated = model.generate(
-            **inputs,
-            max_new_tokens=args.max_new_tokens,
-            do_sample=True,
-            temperature=0.7,
-            top_p=0.8,
-            top_k=20,
-            pad_token_id=tokenizer.eos_token_id,
-        )
+        generated = model.generate(**inputs, **generation_kwargs)
     torch.cuda.synchronize(0)
     generated_seconds = time.monotonic() - generation_started
     output_ids = generated[0, inputs.input_ids.shape[1] :]
@@ -238,10 +242,12 @@ def main() -> int:
         },
         "enable_thinking": False,
         "generation": {
+            "decoding": args.decoding,
             "seed": args.seed,
-            "temperature": 0.7,
-            "top_p": 0.8,
-            "top_k": 20,
+            "do_sample": generation_kwargs["do_sample"],
+            "temperature": generation_kwargs.get("temperature", 0.0),
+            "top_p": generation_kwargs.get("top_p", 1.0),
+            "top_k": generation_kwargs.get("top_k", 1),
             "max_new_tokens": args.max_new_tokens,
         },
         "load_seconds": loaded_seconds,

@@ -66,6 +66,13 @@ No full run is authorized until all of the following pass:
 Compatibility sampling and the one-family preflight are engineering gates only.
 Their responses are retained but cannot be cited as scientific effects.
 
+Compatibility amendment before benchmark access: the first stochastic direct-load
+smoke loaded successfully but returned one valid JSON object inside a Markdown code
+fence, so the strict raw-JSON parser correctly blocked activation. A deterministic
+direct-load diagnostic using the already frozen scientific decoding is permitted. It
+does not replace or discard the failed artifact; if it also fails exact parsing, the
+scientific task remains blocked pending a versioned cross-model parser policy.
+
 ## Retention and interpretation
 
 The full result is retained if the frozen run passes integrity checks, including a
