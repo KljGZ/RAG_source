@@ -74,3 +74,17 @@ def test_model_manifest_rejects_duplicate_paths() -> None:
             files=(record, record),
             root_sha256="0" * 64,
         )
+
+
+def test_modelscope_downloader_metadata_is_not_part_of_snapshot(tmp_path: Path) -> None:
+    (tmp_path / "config.json").write_text("{}", encoding="utf-8")
+    (tmp_path / ".msc").write_text("mutable downloader state", encoding="utf-8")
+    (tmp_path / ".mv").write_text("master", encoding="utf-8")
+    temporary = tmp_path / "._____temp"
+    temporary.mkdir()
+    (temporary / "partial").write_bytes(b"incomplete")
+
+    manifest = _manifest(tmp_path)
+
+    assert tuple(record.path for record in manifest.files) == ("config.json",)
+    assert verify_model_asset_manifest(tmp_path, manifest) == ()

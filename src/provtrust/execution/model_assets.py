@@ -12,7 +12,8 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator, model_valida
 from provtrust.execution.atomic_io import sha256_file
 
 SHA256_PATTERN = re.compile(r"[0-9a-f]{64}")
-IGNORED_MODEL_DIRECTORIES = frozenset({".cache", ".git"})
+IGNORED_MODEL_DIRECTORIES = frozenset({"._____temp", ".cache", ".git"})
+IGNORED_MODEL_FILES = frozenset({".msc", ".mv"})
 
 
 def _safe_relative_path(value: str) -> PurePosixPath:
@@ -121,6 +122,8 @@ def discover_model_files(root: Path) -> tuple[Path, ...]:
     for path in root.rglob("*"):
         relative = path.relative_to(root)
         if any(part in IGNORED_MODEL_DIRECTORIES for part in relative.parts):
+            continue
+        if relative.as_posix() in IGNORED_MODEL_FILES:
             continue
         if path.is_symlink():
             raise ValueError(f"model snapshot contains a symlink: {relative.as_posix()}")
