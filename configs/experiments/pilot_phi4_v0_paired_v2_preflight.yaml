@@ -1,0 +1,69 @@
+schema_version: "1.0.0"
+input_contract_version: 2
+stage: v0
+execution_status: ready
+exploratory: true
+scientific_claims_allowed: false
+purpose: deterministic one-family Phi-4 preflight for the parser-v2 static protocol
+track: static_factorial
+dataset_manifest: benchmark/manifests/v0-paired-v2.yaml
+dataset_manifest_sha256: 624c852894fd53bfb693417d51669c53704da1374b80be97f3c27ce88fae10f9
+model_registration: configs/models/phi-4-static-v0.yaml
+model_registration_sha256: 9789f9c10cec766fd368348c7b4b9118266c652ac9588930a6cd542348e1293e
+model_asset_manifest: configs/models/assets/phi-4-2db69c1.manifest.json
+model_asset_manifest_sha256: b8d4a4f234d849ab0196597259fcf9ad7991bc8f7c8d548dafea7a086aa7c00a
+model_args: configs/models/phi-4-static.local.yaml
+system_prompt: prompts/frozen/answer-system-v0.txt
+system_prompt_sha256: 450e6eaa85df17643f17fab17840d4b8cb99dc349fb181e3d2d2ed91fb2c14dc
+activation_evidence: artifacts/system/PHI4_COMPATIBILITY.json
+activation_evidence_sha256: 0da6a293ac9f61ffde71727079635a37f84924a9d0aa1bd1535fa29e82e31046
+seed: 20260831
+epochs: 1
+sample_limit: 15
+family_count: 1
+expected_model_calls: 30
+temperature: 0.0
+top_p: 1.0
+top_k: 1
+max_tokens: 256
+enable_thinking: false
+retry_on_error: 0
+resource_allocation_required: true
+minimum_resources:
+  cpu_cores: 16
+  ram_gib: 64
+  storage_gib: 40
+  gpu_count: 1
+  minimum_gpu_memory_gib: 35
+  estimated_gpu_hours: 0.5
+  api_budget_usd: 0
+inspect_command:
+  - inspect
+  - eval
+  - src/provtrust/tasks/static_factorial.py@static_factorial
+  - -T
+  - dataset_path=benchmark/synthetic/v0-paired-v1.jsonl
+  - --model
+  - hf/microsoft/phi-4
+  - --model-config
+  - configs/models/phi-4-static.local.yaml
+  - --temperature
+  - "0"
+  - --top-p
+  - "1"
+  - --top-k
+  - "1"
+  - --max-tokens
+  - "256"
+  - --seed
+  - "20260831"
+  - --epochs
+  - "1"
+  - --limit
+  - "15"
+  - --max-connections
+  - "1"
+  - --max-samples
+  - "1"
+  - --log-dir
+  - artifacts/runs/pilot_phi4_v0_paired_v2_preflight
