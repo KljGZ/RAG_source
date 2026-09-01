@@ -41,6 +41,11 @@ The replication retains, without outcome-dependent changes:
 - family-level 2,000-replicate bootstrap intervals, exact two-sided sign-flip tests,
   and Holm adjustment across all fourteen contrasts.
 
+The cross-model comparison is descriptive and fixed before Phi-4 outcomes: it reports
+each model's effect and interval, exact effect equality, nonzero direction agreement,
+effect range, accuracy, abstention, false-verification assurance, and the number of
+Holm-supported contrasts. It performs no population-level pooling over two models.
+
 Model-specific chat formatting supplied by the frozen tokenizer is unavoidable and
 is recorded as part of the model asset. The prompt semantics, evidence, and scoring
 are not rewritten to improve Phi-4's apparent performance.
