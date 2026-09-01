@@ -113,3 +113,27 @@
 - Keep raw eval and generated analysis outside Git while tracking their SHA-256-backed
   acceptance, sanitized analysis publication, and full report. Do not modify this V0
   protocol after seeing outcomes; register any next-stage changes before new results.
+
+## 2026-09-01 — Cross-family V0 replication
+
+- Select Microsoft Phi-4 as the second target before generating any benchmark output.
+  Its 14.66B dense architecture approximately matches Qwen3-14B scale while coming
+  from an independently developed family; this remains an exploratory two-model
+  comparison, not a population-level or V1 claim.
+- Execute the 21-file ModelScope snapshot resolved at
+  `d767c0535ebfc0c3d8f049e06f6739eb9e8a2847`. Verify every local payload hash and the
+  six Microsoft weight hashes; exclude only mutable ModelScope downloader metadata
+  (`.msc`, `.mv`, and partial-download state) from the portable model root.
+- Retain both failed Phi-4 direct-load smokes. The model loaded successfully and
+  produced schema-valid objects, but wrapped each entire response in one lowercase
+  `json` Markdown fence, which the v1 raw-JSON-only parser correctly rejected.
+- Version parser v2 before benchmark access. Accept raw JSON or exactly one whole-
+  response lowercase `json` fence, preserve the raw completion, and record the parse
+  mode. Continue to reject surrounding prose, multiple/nested/unlabeled fences,
+  malformed JSON, unknown fields, and schema violations.
+- Preserve the published Qwen parser-v1 manifest against its exact historical Git
+  revision. Run both Qwen3-14B and Phi-4 again under the same parser-v2 manifest before
+  strict cross-model comparison; do not silently mix execution manifests.
+- Enforce the 35-GiB free-memory launch gate even when the reviewed GPU has sufficient
+  total capacity. Preexisting jobs are read-only observations and are never stopped,
+  resized, or reclassified as project processes.
