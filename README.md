@@ -19,6 +19,8 @@ See `docs/THEORY.md` for the formal variables, axioms, estimands, and limits, an
 `docs/DEPLOYMENT_AUDIT.md` gives the complete theory-to-code-to-acceptance review.
 `docs/V1_READINESS.md` separates integrity-accepted V0 observations from claims that
 still require an outcome-blind confirmatory V1.
+The outcome-blind second-model protocol is recorded in
+`analysis/preregistration/V0_PHI4_REPLICATION.md` before any Phi-4 response is generated.
 
 ## Remote environment
 

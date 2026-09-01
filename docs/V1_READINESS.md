@@ -63,6 +63,8 @@ not be interpreted as broad normative control.
 
 ## Gates before freezing V1
 
+- The outcome-blind Phi-4 cross-family replication protocol is fixed in
+  `analysis/preregistration/V0_PHI4_REPLICATION.md`; its results remain V0 evidence.
 - Complete static V0 replications across independently developed open-weight model
   families using the identical frozen trials and deterministic decoding.
 - Run controlled interactive-verification development experiments with identity,
@@ -75,4 +77,3 @@ not be interpreted as broad normative control.
   do not depend on one LLM judge.
 - Freeze the complete V1 plan and untouched confirmatory split before inspecting any
   V1 outcome.
-
