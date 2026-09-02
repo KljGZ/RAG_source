@@ -95,6 +95,8 @@ def main() -> int:
     )
 
     implementation = Path("src/provtrust/execution/inspect_compat.py")
+    validator = Path("scripts/validate_inspect_qwen3_adapter.py")
+    upstream_parser = Path(hf_handler.__file__)
     runtime_version = version("inspect_ai")
     passed = (
         info.family == QWEN3_14B_INSPECT_TOOL_FAMILY
@@ -112,8 +114,10 @@ def main() -> int:
         "runtime_version": runtime_version,
         "implementation_path": implementation.as_posix(),
         "implementation_sha256": sha256_file(implementation),
-        "upstream_parser_path": Path(hf_handler.__file__).as_posix(),
-        "upstream_parser_sha256": sha256_file(Path(hf_handler.__file__)),
+        "validator_path": validator.as_posix(),
+        "validator_sha256": sha256_file(validator),
+        "upstream_parser_path": "inspect_ai/model/_providers/util/hf_handler.py",
+        "upstream_parser_sha256": sha256_file(upstream_parser),
         "cases": cases,
         "scientific_claims_allowed": False,
         "interpretation_boundary": (

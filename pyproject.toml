@@ -92,6 +92,7 @@ where = ["src"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["."]
 addopts = "-ra --strict-config --strict-markers"
 markers = [
   "integration: requires local services but no external model calls",
