@@ -269,9 +269,11 @@ def main() -> int:
             risk_pairing = False
         for pair in grouped.values():
             risks = {str(row["metadata"]["risk_condition"]) for row in pair}
-            if len(pair) != 2 or risks != {"low", "high"}:
-                risk_pairing = False
-            elif len({_risk_fingerprint(row) for row in pair}) != 1:
+            if (
+                len(pair) != 2
+                or risks != {"low", "high"}
+                or len({_risk_fingerprint(row) for row in pair}) != 1
+            ):
                 risk_pairing = False
 
     expected_items = int(config["items_per_policy"])
