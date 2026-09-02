@@ -1,0 +1,60 @@
+{
+  "adapter_id": "inspect-hf-qwen3-instruct-tool-parser-v1",
+  "cases": [
+    {
+      "name": "raw_final_json_is_content",
+      "observed": {
+        "content_preserved": true,
+        "tool_call_count": 0
+      },
+      "passed": true
+    },
+    {
+      "name": "fenced_final_json_is_content",
+      "observed": {
+        "content_preserved": true,
+        "tool_call_count": 0
+      },
+      "passed": true
+    },
+    {
+      "name": "tagged_tool_call_is_extracted",
+      "observed": {
+        "remaining_content": "",
+        "tool_call_count": 1
+      },
+      "passed": true
+    },
+    {
+      "name": "mixed_content_and_tool_call_are_separated",
+      "observed": {
+        "remaining_content": "Checking the registry.",
+        "tool_call_count": 1
+      },
+      "passed": true
+    },
+    {
+      "name": "generic_route_reproduces_preflight_failure_mechanism",
+      "observed": {
+        "remaining_content": "",
+        "tool_call_count": 1
+      },
+      "passed": true
+    }
+  ],
+  "implementation_path": "src/provtrust/execution/inspect_compat.py",
+  "implementation_sha256": "0d4cefcdbe7b09a03b15e00ede1df598a64fc2fedffa3c126ce8370f34be1d08",
+  "interpretation_boundary": "This artifact validates parser routing only; it makes no claim about model verification behavior or answer quality.",
+  "model_family": "Qwen3-Instruct",
+  "purpose": "model-free acceptance of the Inspect/Qwen3 HF tool-parser route",
+  "registration_model_name": "Qwen/Qwen3-14B",
+  "runtime": "inspect_ai",
+  "runtime_version": "0.3.261",
+  "schema_version": "1.0.0",
+  "scientific_claims_allowed": false,
+  "status": "passed",
+  "upstream_parser_path": "inspect_ai/model/_providers/util/hf_handler.py",
+  "upstream_parser_sha256": "fa9f072a12e54e28bdf13809f1ffd001b45c54c0ec026022c4ef547c575d64c6",
+  "validator_path": "scripts/validate_inspect_qwen3_adapter.py",
+  "validator_sha256": "b1e6073d3d701c88333cf699ae81e35026e5ebc2a4b46e03400d7d5f5e92b1a6"
+}
