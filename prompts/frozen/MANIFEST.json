@@ -13,6 +13,11 @@
       "purpose": "verification policy prompt"
     },
     {
+      "path": "prompts/frozen/interactive-verification-system-v1.txt",
+      "sha256": "df598da58cf46b81a421a1371e559778d70afba3a1edf78be8d900c091a95d5d",
+      "purpose": "interactive verification structured-output system prompt"
+    },
+    {
       "path": "prompts/frozen/rationale-system-v0.txt",
       "sha256": "540fff794cfc0a5c35981057393afd7c1b5f1f36b03560a98ce02b20043339b3",
       "purpose": "declared factor prompt"

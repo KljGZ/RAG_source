@@ -39,20 +39,120 @@ def _command_option(command: list[str], flag: str) -> str | None:
     return command[positions[0] + 1]
 
 
+def _task_argument(command: list[str], name: str) -> str | None:
+    matches = [
+        value.partition("=")[2]
+        for index, value in enumerate(command)
+        if index > 0
+        and command[index - 1] == "-T"
+        and value.partition("=")[0] == name
+    ]
+    return matches[0] if len(matches) == 1 else None
+
+
+def _validate_tool_environment(
+    manifest: dict[str, Any], root: Path, command: list[str]
+) -> tuple[str, ...]:
+    errors: list[str] = []
+    files = manifest.get("files")
+    if not isinstance(files, list) or not files:
+        return ("tool_environment_files_invalid",)
+    observed_paths: set[str] = set()
+    for entry in files:
+        if not isinstance(entry, dict):
+            errors.append("tool_environment_file_entry_invalid")
+            continue
+        relative = entry.get("path")
+        path, error = _project_path(root, relative, label="tool_environment_file")
+        if error:
+            errors.append(error)
+            continue
+        assert path is not None
+        assert isinstance(relative, str)
+        if relative in observed_paths:
+            errors.append("tool_environment_file_duplicate")
+        observed_paths.add(relative)
+        if entry.get("sha256") != sha256_file(path):
+            errors.append("tool_environment_file_hash_mismatch")
+        if entry.get("bytes") != path.stat().st_size:
+            errors.append("tool_environment_file_size_mismatch")
+
+    path_arguments = {
+        "search_index_path": "search_index_path",
+        "source_registry_path": "source_registry_path",
+        "identifier_registry_path": "identifier_registry_path",
+        "provenance_registry_path": "provenance_registry_path",
+    }
+    for manifest_field, task_name in path_arguments.items():
+        expected = manifest.get(manifest_field)
+        if not isinstance(expected, str) or _task_argument(command, task_name) != expected:
+            errors.append(f"tool_environment_command_mismatch:{task_name}")
+    snapshot_root = manifest.get("snapshot_root")
+    if not isinstance(snapshot_root, str) or Path(snapshot_root).is_absolute():
+        errors.append("tool_environment_snapshot_root_invalid")
+    else:
+        resolved_root = (root / snapshot_root).resolve()
+        if root not in resolved_root.parents or not resolved_root.is_dir():
+            errors.append("tool_environment_snapshot_root_invalid")
+        if _task_argument(command, "snapshot_root") != snapshot_root:
+            errors.append("tool_environment_command_mismatch:snapshot_root")
+
+    snapshot_manifest_value = manifest.get("snapshot_manifest_path")
+    snapshot_manifest_path, snapshot_error = _project_path(
+        root, snapshot_manifest_value, label="tool_environment_snapshot_manifest"
+    )
+    if snapshot_error:
+        errors.append(snapshot_error)
+    elif snapshot_manifest_path is not None:
+        try:
+            snapshot_manifest = json.loads(
+                snapshot_manifest_path.read_text(encoding="utf-8")
+            )
+            entries = snapshot_manifest.get("files")
+            if not isinstance(entries, list):
+                raise TypeError("snapshot file list missing")
+            expected_snapshots = {
+                str(entry["path"])
+                for entry in entries
+                if isinstance(entry, dict) and isinstance(entry.get("path"), str)
+            }
+            if len(expected_snapshots) != len(entries):
+                errors.append("snapshot_manifest_entries_invalid")
+            if not expected_snapshots <= observed_paths:
+                errors.append("snapshot_manifest_not_covered_by_tool_manifest")
+            strict_root = snapshot_manifest.get("strict_root")
+            if isinstance(strict_root, str):
+                strict_path = (root / strict_root).resolve()
+                actual_snapshots = {
+                    path.relative_to(root).as_posix()
+                    for path in strict_path.rglob("*.txt")
+                    if path.is_file()
+                }
+                if actual_snapshots != expected_snapshots:
+                    errors.append("snapshot_root_membership_mismatch")
+        except (OSError, TypeError, ValueError, json.JSONDecodeError):
+            errors.append("snapshot_manifest_parse_failure")
+    return tuple(sorted(set(errors)))
+
+
 def validate_frozen_execution_inputs(plan: dict[str, Any], root: Path) -> tuple[str, ...]:
     """Return stable error codes; an empty tuple authorizes only frozen inputs."""
 
     root = root.resolve()
     errors: list[str] = []
     resolved: dict[str, Path] = {}
-    for field in (
+    required_fields = [
         "model_registration",
         "model_asset_manifest",
         "model_args",
         "system_prompt",
         "dataset_manifest",
         "activation_evidence",
-    ):
+    ]
+    tool_track = plan.get("track") in {"interactive_verification", "pavg_defense"}
+    if tool_track:
+        required_fields.append("tool_environment_manifest")
+    for field in required_fields:
         path, error = _project_path(root, plan.get(field), label=field)
         if error:
             errors.append(error)
@@ -61,13 +161,18 @@ def validate_frozen_execution_inputs(plan: dict[str, Any], root: Path) -> tuple[
     if errors:
         return tuple(sorted(set(errors)))
 
-    if plan.get("input_contract_version") == 2:
+    contract_version = plan.get("input_contract_version")
+    if isinstance(contract_version, int) and contract_version >= 2:
         frozen_hash_fields = {
             "model_registration": "model_registration_sha256",
             "model_asset_manifest": "model_asset_manifest_sha256",
             "dataset_manifest": "dataset_manifest_sha256",
             "activation_evidence": "activation_evidence_sha256",
         }
+        if tool_track:
+            frozen_hash_fields["tool_environment_manifest"] = (
+                "tool_environment_manifest_sha256"
+            )
         for resolved_field, plan_field in frozen_hash_fields.items():
             expected = plan.get(plan_field)
             if not isinstance(expected, str) or expected != sha256_file(resolved[resolved_field]):
@@ -87,6 +192,11 @@ def validate_frozen_execution_inputs(plan: dict[str, Any], root: Path) -> tuple[
         )
         if not isinstance(activation_evidence, dict):
             raise TypeError("activation evidence must contain a JSON object")
+        tool_environment = (
+            _load_yaml(resolved["tool_environment_manifest"])
+            if tool_track
+            else None
+        )
     except (OSError, TypeError, ValueError, json.JSONDecodeError, yaml.YAMLError):
         return ("frozen_input_parse_failure",)
 
@@ -206,4 +316,28 @@ def validate_frozen_execution_inputs(plan: dict[str, Any], root: Path) -> tuple[
             errors.append("inspect_model_args_path_mismatch")
         if isinstance(dataset_relative, str) and f"dataset_path={dataset_relative}" not in typed_command:
             errors.append("inspect_dataset_path_mismatch")
+        if tool_track:
+            assert isinstance(tool_environment, dict)
+            errors.extend(_validate_tool_environment(tool_environment, root, typed_command))
+            expected_tool_manifest = resolved["tool_environment_manifest"].relative_to(
+                root
+            ).as_posix()
+            if dataset_manifest.get("tool_environment_manifest") != expected_tool_manifest:
+                errors.append("dataset_tool_environment_manifest_mismatch")
+            if dataset_manifest.get("tool_environment_manifest_sha256") != sha256_file(
+                resolved["tool_environment_manifest"]
+            ):
+                errors.append("dataset_tool_environment_hash_mismatch")
+            if dataset_manifest.get("environment_version") != tool_environment.get(
+                "environment_version"
+            ):
+                errors.append("tool_environment_version_mismatch")
+            if _task_argument(typed_command, "system_prompt_path") != expected_prompt_relative:
+                errors.append("inspect_system_prompt_path_mismatch")
+            policy = dataset_manifest.get("interactive_policy")
+            if plan.get("track") == "interactive_verification" and (
+                not isinstance(policy, str)
+                or _task_argument(typed_command, "policy") != policy
+            ):
+                errors.append("interactive_policy_mismatch")
     return tuple(sorted(set(errors)))

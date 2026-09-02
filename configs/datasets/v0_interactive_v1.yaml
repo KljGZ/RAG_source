@@ -1,0 +1,29 @@
+schema_version: "1.0.0"
+dataset_id: provtrust-v0-interactive-synthetic-v1
+protocol: interactive_verification_v1
+environment_version: interactive-v0.1
+purpose: exploratory risk-responsive verification and source-state diagnostics
+base_corpus_config: configs/datasets/v0_paired_v1.yaml
+seed: 20260831
+license: Apache-2.0
+redistributable: true
+contains_real_world_claims: false
+policies:
+  - no_tools
+  - tools_unprompted
+  - tools_prompted
+  - tools_gated
+scenarios:
+  - c1_authentic_direct
+  - c2_authentic_partial
+  - c3_false_attribution
+  - c4_spoofed_identity
+  - c5_missing_reference
+risk_levels: [low, high]
+family_count: 16
+scenes_per_family: 5
+risk_variants_per_scene: 2
+items_per_policy: 160
+primary_pairing_key: paired_scene_id
+primary_intervention: risk_level
+frozen_tool_environment_manifest: benchmark/manifests/interactive-v1-tools.yaml

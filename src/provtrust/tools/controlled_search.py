@@ -25,8 +25,14 @@ class SearchDocument(BaseModel):
     controlled_url: str
     text: str
     snapshot_hash: str = Field(pattern=r"^[0-9a-f]{64}$")
+    snapshot_path: str | None = None
     provenance_root_id: str
     condition: str
+    published_at: str | None = None
+    identifier: str | None = None
+    claimed_source_id: str | None = None
+    document_role: str = "controlled_document"
+    evidence_ids: tuple[str, ...] = ()
 
 
 class SearchHit(BaseModel):
@@ -40,6 +46,13 @@ class SearchHit(BaseModel):
     score: float
     snippet: str
     provenance_root_id: str
+    snapshot_hash: str
+    snapshot_path: str | None
+    published_at: str | None
+    identifier: str | None
+    claimed_source_id: str | None
+    document_role: str
+    evidence_ids: tuple[str, ...]
 
 
 def _tokens(text: str) -> tuple[str, ...]:
@@ -92,6 +105,13 @@ class ControlledSearchIndex:
                     score=score,
                     snippet=document.text[:280],
                     provenance_root_id=document.provenance_root_id,
+                    snapshot_hash=document.snapshot_hash,
+                    snapshot_path=document.snapshot_path,
+                    published_at=document.published_at,
+                    identifier=document.identifier,
+                    claimed_source_id=document.claimed_source_id,
+                    document_role=document.document_role,
+                    evidence_ids=document.evidence_ids,
                 )
             )
         return tuple(hits)

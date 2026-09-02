@@ -28,16 +28,21 @@ def test_every_pgsd_track_builds_without_model_call() -> None:
         mirage_stress(dataset, "benchmark/manifests/mirage-smoke.yaml"),
     )
     tool_arguments = {
-        "dataset_path": dataset,
+        "dataset_path": "benchmark/synthetic/v0-interactive-v1-tools_unprompted.jsonl",
         "search_index_path": "web_env/search_index/documents.jsonl",
         "snapshot_root": "web_env/source_snapshots",
         "source_registry_path": "web_env/canonical_sources/registry.json",
         "identifier_registry_path": "web_env/canonical_sources/identifiers.json",
+        "provenance_registry_path": "web_env/canonical_sources/provenance-v1.json",
     }
-    tool_tasks = (
-        interactive_verification(**tool_arguments),
-        pavg_defense(**tool_arguments),
+    interactive = interactive_verification(
+        **tool_arguments,
+        system_prompt_path="prompts/frozen/interactive-verification-system-v1.txt",
+        policy="tools_unprompted",
     )
+    pavg_arguments = dict(tool_arguments)
+    pavg_arguments["dataset_path"] = dataset
+    tool_tasks = (interactive, pavg_defense(**pavg_arguments))
     assert all(len(task.dataset) == 1 for task in (*simple_tasks, *tool_tasks))
 
 

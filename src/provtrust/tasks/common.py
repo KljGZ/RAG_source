@@ -292,7 +292,14 @@ def _answer_type_matches(
     return isinstance(answer, str)
 
 
-def _tool_summary(state: TaskState) -> dict[str, Any]:
+def _tool_summary(state: TaskState, trial: Trial | None = None) -> dict[str, Any]:
+    if (
+        trial is not None
+        and trial.metadata.get("stimulus_protocol") == "interactive_verification_v1"
+    ):
+        from provtrust.scorers.interactive_trace import interactive_verification_summary
+
+        return interactive_verification_summary(list(state.messages), trial)
     calls: list[dict[str, Any]] = []
     successful: set[str] = set()
     evidence_span_found = False
@@ -337,7 +344,7 @@ def structured_parse_scorer() -> Scorer:
             if posterior.abstained and posterior.answer is not None:
                 raise ValueError("abstaining answer must use null answer")
             trial = Trial.model_validate(state.metadata["trial"])
-            tool_summary = _tool_summary(state)
+            tool_summary = _tool_summary(state, trial)
             if (
                 isinstance(prior.answer, (int, float))
                 and not isinstance(prior.answer, bool)

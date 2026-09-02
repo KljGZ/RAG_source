@@ -1,0 +1,39 @@
+schema_version: "1.0.0"
+registration_id: qwen3-14b-v0-interactive-v1-deterministic-target
+status: frozen
+role: target
+primary_judge_eligible: false
+provider: hf
+inspect_model: hf/Qwen/Qwen3-14B
+model_id: Qwen/Qwen3-14B
+architecture: Qwen3ForCausalLM
+license: Apache-2.0
+parameter_count_billions: 14.8
+native_context_tokens: 32768
+config_max_position_embeddings: 40960
+inference_dtype: bfloat16
+local_files_only: true
+trust_remote_code: false
+deployment_subdirectory: Qwen3-14B_cc692f4
+snapshot:
+  source_platform: ModelScope
+  repository: Qwen/Qwen3-14B
+  source_revision: master
+  captured_at: "2026-08-31T17:27:20.057546Z"
+  upstream_huggingface_revision: cc692f40d59e239c60676c8947c5f9f75493e02b
+  asset_manifest: configs/models/assets/qwen3-14b-cc692f4.manifest.json
+  asset_manifest_sha256: 5737d6eadb313042cf6d14634ffb3eaf8eb2149572a7b5f993caa459a0210bba
+  root_sha256: 494ab49926699409cf08e0f127175353082777bb25dc163dd93ed3b55fe1afeb
+  file_count: 19
+  total_bytes: 29552614406
+generation:
+  enable_thinking: false
+  do_sample: false
+  temperature: 0.0
+  top_p: 1.0
+  top_k: 1
+  max_tokens: 256
+  seeds: [20260831]
+system_prompt:
+  path: prompts/frozen/interactive-verification-system-v1.txt
+  sha256: df598da58cf46b81a421a1371e559778d70afba3a1edf78be8d900c091a95d5d

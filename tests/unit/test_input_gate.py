@@ -194,3 +194,25 @@ def test_v2_frozen_execution_gate_rejects_manifest_rewrite(tmp_path: Path) -> No
     assert "frozen_file_hash_mismatch:dataset_manifest" in (
         validate_frozen_execution_inputs(plan, tmp_path)
     )
+
+
+def test_later_contract_versions_do_not_bypass_frozen_hashes(tmp_path: Path) -> None:
+    plan = _frozen_fixture(tmp_path)
+    plan["input_contract_version"] = 3
+    manifest_path = tmp_path / "benchmark/manifests/smoke.yaml"
+    manifest = yaml.safe_load(manifest_path.read_text(encoding="utf-8"))
+    manifest["unreviewed_change"] = True
+    _write_yaml(manifest_path, manifest)
+
+    assert "frozen_file_hash_mismatch:dataset_manifest" in (
+        validate_frozen_execution_inputs(plan, tmp_path)
+    )
+
+
+def test_interactive_track_requires_frozen_tool_environment(tmp_path: Path) -> None:
+    plan = _frozen_fixture(tmp_path)
+    plan["track"] = "interactive_verification"
+
+    assert "tool_environment_manifest_missing" in (
+        validate_frozen_execution_inputs(plan, tmp_path)
+    )

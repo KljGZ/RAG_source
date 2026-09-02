@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import json
 from collections import deque
+from pathlib import Path
+from typing import Any
 
 from inspect_ai.tool import Tool, tool
 
@@ -27,20 +29,60 @@ def trace_to_roots(graph: ProvenanceGraph, start_node: str) -> tuple[tuple[str, 
     return tuple(traces)
 
 
-@tool(parallel=True)
-def provenance_trace(graph_json: str) -> Tool:
-    graph = ProvenanceGraph.model_validate_json(graph_json)
+class ProvenanceRegistry:
+    """Frozen document-level provenance and temporal relations."""
 
-    async def execute(start_node: str) -> str:
-        """Trace one controlled document through dependency edges to roots.
+    def __init__(self, records: dict[str, dict[str, Any]], environment_version: str) -> None:
+        self.records = records
+        self.environment_version = environment_version
+
+    @classmethod
+    def from_json(cls, path: Path) -> ProvenanceRegistry:
+        value = json.loads(path.read_text(encoding="utf-8"))
+        if not isinstance(value, dict):
+            raise TypeError("provenance registry must contain an object")
+        records = value.get("documents")
+        version = value.get("environment_version")
+        if not isinstance(records, dict) or not all(
+            isinstance(key, str) and isinstance(record, dict)
+            for key, record in records.items()
+        ):
+            raise TypeError("provenance registry documents must be an object mapping")
+        if not isinstance(version, str) or not version:
+            raise TypeError("provenance registry requires environment_version")
+        return cls(records, version)
+
+    def trace(self, document_id: str) -> dict[str, Any]:
+        record = self.records.get(document_id)
+        if record is None:
+            return {
+                "status": "not_found",
+                "document_id": document_id,
+                "environment_version": self.environment_version,
+                "record": None,
+            }
+        return {
+            "status": "found",
+            "document_id": document_id,
+            "environment_version": self.environment_version,
+            "record": record,
+        }
+
+
+@tool(parallel=True)
+def provenance_trace(registry_path: str) -> Tool:
+    registry = ProvenanceRegistry.from_json(Path(registry_path))
+
+    async def execute(document_id: str) -> str:
+        """Trace one controlled document through source and temporal relations.
 
         Args:
-            start_node: Provenance node from which to begin tracing.
+            document_id: Exact controlled document identifier to trace.
 
         Returns:
-            JSON arrays representing all paths to provenance roots.
+            JSON record with source roots, timestamps, and verified/unverified edges.
         """
 
-        return json.dumps(trace_to_roots(graph, start_node), ensure_ascii=False)
+        return json.dumps(registry.trace(document_id), ensure_ascii=False)
 
     return execute
