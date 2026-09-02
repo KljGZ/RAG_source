@@ -106,11 +106,20 @@ def _risk_fingerprint(row: dict[str, Any]) -> str:
     return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
 
 
-def _build_split_rows(base_splits: Path) -> list[dict[str, Any]]:
+def _build_split_rows(
+    base_splits: Path, base_dataset: Path
+) -> list[dict[str, Any]]:
+    item_to_family = {
+        str(row["item_id"]): str(row["claim"]["family_id"])
+        for row in read_jsonl(base_dataset)
+    }
     rows = list(read_jsonl(base_splits))
     by_family: dict[str, str] = {}
     for row in rows:
-        family_id = str(row["family_id"])
+        item_id = str(row["item_id"])
+        if item_id not in item_to_family:
+            raise ValueError(f"base split references an unknown item: {item_id}")
+        family_id = item_to_family[item_id]
         split = str(row["split"])
         previous = by_family.setdefault(family_id, split)
         if previous != split:
@@ -230,7 +239,10 @@ def main() -> int:
     atomic_write_bytes(tool_manifest_path, _yaml_bytes(tool_manifest))
 
     split_path = Path("benchmark/splits/v0-interactive-v1.jsonl")
-    split_rows = _build_split_rows(Path("benchmark/splits/v0-paired-v1.jsonl"))
+    split_rows = _build_split_rows(
+        Path("benchmark/splits/v0-paired-v1.jsonl"),
+        Path("benchmark/synthetic/v0-paired-v1.jsonl"),
+    )
     atomic_write_bytes(split_path, _jsonl_bytes(split_rows))
 
     dataset_paths: dict[InteractivePolicy, Path] = {}
