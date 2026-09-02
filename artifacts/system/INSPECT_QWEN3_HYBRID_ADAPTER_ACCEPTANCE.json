@@ -1,0 +1,99 @@
+{
+  "adapter_id": "inspect-hf-qwen3-hybrid-tool-parser-v2",
+  "cases": [
+    {
+      "name": "generic_route_reproduces_original_final_json_failure",
+      "observed": {
+        "remaining_content": "",
+        "tool_call_count": 1
+      },
+      "passed": true
+    },
+    {
+      "name": "raw_final_json_is_content",
+      "observed": {
+        "content_preserved": true,
+        "tool_call_count": 0,
+        "tool_calls_match": true
+      },
+      "passed": true
+    },
+    {
+      "name": "fenced_final_json_is_content",
+      "observed": {
+        "content_preserved": true,
+        "tool_call_count": 0,
+        "tool_calls_match": true
+      },
+      "passed": true
+    },
+    {
+      "name": "tagged_tool_call_is_extracted",
+      "observed": {
+        "content_preserved": true,
+        "tool_call_count": 1,
+        "tool_calls_match": true
+      },
+      "passed": true
+    },
+    {
+      "name": "fenced_tool_call_is_extracted",
+      "observed": {
+        "content_preserved": true,
+        "tool_call_count": 1,
+        "tool_calls_match": true
+      },
+      "passed": true
+    },
+    {
+      "name": "raw_tool_call_is_extracted",
+      "observed": {
+        "content_preserved": true,
+        "tool_call_count": 1,
+        "tool_calls_match": true
+      },
+      "passed": true
+    },
+    {
+      "name": "mixed_content_and_tagged_call_are_separated",
+      "observed": {
+        "content_preserved": true,
+        "tool_call_count": 1,
+        "tool_calls_match": true
+      },
+      "passed": true
+    },
+    {
+      "name": "non_tool_json_with_name_text_is_preserved",
+      "observed": {
+        "content_preserved": true,
+        "tool_call_count": 0,
+        "tool_calls_match": true
+      },
+      "passed": true
+    },
+    {
+      "name": "installed_dispatch_uses_hybrid_route",
+      "observed": {
+        "remaining_content": "",
+        "tool_call_count": 1
+      },
+      "passed": true
+    }
+  ],
+  "implementation_path": "src/provtrust/execution/inspect_qwen3_hybrid.py",
+  "implementation_sha256": "b9593ec658224c97e3df4c156827d4c88077efb46411ec805bbbc77a25f63867",
+  "interpretation_boundary": "This artifact validates representation normalization only; it does not validate model decisions, verification completeness, or answer quality.",
+  "model_family": "Qwen3-ProvTrust-Hybrid-v2",
+  "purpose": "model-free acceptance of the hybrid Inspect/Qwen3 tool parser",
+  "registration_model_name": "Qwen/Qwen3-14B",
+  "runtime": "inspect_ai",
+  "runtime_version": "0.3.261",
+  "schema_version": "1.0.0",
+  "scientific_claims_allowed": false,
+  "status": "passed",
+  "upstream_parser_path": "inspect_ai/model/_providers/util/hf_handler.py",
+  "upstream_parser_sha256": "fa9f072a12e54e28bdf13809f1ffd001b45c54c0ec026022c4ef547c575d64c6",
+  "validator_path": "scripts/validate_inspect_qwen3_hybrid_adapter.py",
+  "validator_sha256": "095a20d85e156f20c3d75576c86befb6b220210f6a2b2e8190f1dbdcc278a5b4"
+}
