@@ -242,3 +242,15 @@ def test_interactive_v5_also_requires_a_frozen_engineering_amendment(
     errors = validate_frozen_execution_inputs(plan, tmp_path)
 
     assert "engineering_amendment_must_be_relative" in errors
+
+
+def test_interactive_v6_also_requires_a_runtime_code_manifest(
+    tmp_path: Path,
+) -> None:
+    plan = _frozen_fixture(tmp_path)
+    plan["input_contract_version"] = 6
+    plan["track"] = "interactive_verification"
+
+    errors = validate_frozen_execution_inputs(plan, tmp_path)
+
+    assert "runtime_code_manifest_must_be_relative" in errors

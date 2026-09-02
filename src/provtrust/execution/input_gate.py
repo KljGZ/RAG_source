@@ -136,6 +136,41 @@ def _validate_tool_environment(
     return tuple(sorted(set(errors)))
 
 
+def _validate_runtime_code_manifest(
+    manifest: dict[str, Any], root: Path, command: list[str]
+) -> tuple[str, ...]:
+    errors: list[str] = []
+    files = manifest.get("files")
+    if not isinstance(files, list) or not files:
+        return ("runtime_code_manifest_files_invalid",)
+    observed_paths: set[str] = set()
+    for entry in files:
+        if not isinstance(entry, dict):
+            errors.append("runtime_code_manifest_entry_invalid")
+            continue
+        relative = entry.get("path")
+        path, error = _project_path(root, relative, label="runtime_code")
+        if error:
+            errors.append(error)
+            continue
+        assert path is not None
+        assert isinstance(relative, str)
+        if relative in observed_paths:
+            errors.append("runtime_code_manifest_duplicate")
+        observed_paths.add(relative)
+        if entry.get("sha256") != sha256_file(path):
+            errors.append("runtime_code_hash_mismatch")
+        if entry.get("bytes") != path.stat().st_size:
+            errors.append("runtime_code_size_mismatch")
+    entrypoint = manifest.get("entrypoint")
+    command_entrypoint = command[2].partition("@")[0] if len(command) > 2 else None
+    if not isinstance(entrypoint, str) or entrypoint not in observed_paths:
+        errors.append("runtime_code_entrypoint_invalid")
+    if command_entrypoint != entrypoint:
+        errors.append("runtime_code_command_entrypoint_mismatch")
+    return tuple(sorted(set(errors)))
+
+
 def validate_frozen_execution_inputs(plan: dict[str, Any], root: Path) -> tuple[str, ...]:
     """Return stable error codes; an empty tuple authorizes only frozen inputs."""
 
@@ -162,12 +197,19 @@ def validate_frozen_execution_inputs(plan: dict[str, Any], root: Path) -> tuple[
         and isinstance(contract_version, int)
         and contract_version >= 5
     )
+    interactive_v6 = (
+        plan.get("track") == "interactive_verification"
+        and isinstance(contract_version, int)
+        and contract_version >= 6
+    )
     if interactive_v4:
         required_fields.extend(
             ("protocol_preregistration", "tool_environment_acceptance")
         )
     if interactive_v5:
         required_fields.append("engineering_amendment")
+    if interactive_v6:
+        required_fields.append("runtime_code_manifest")
     for field in required_fields:
         path, error = _project_path(root, plan.get(field), label=field)
         if error:
@@ -201,6 +243,10 @@ def validate_frozen_execution_inputs(plan: dict[str, Any], root: Path) -> tuple[
             frozen_hash_fields["engineering_amendment"] = (
                 "engineering_amendment_sha256"
             )
+        if interactive_v6:
+            frozen_hash_fields["runtime_code_manifest"] = (
+                "runtime_code_manifest_sha256"
+            )
         for resolved_field, plan_field in frozen_hash_fields.items():
             expected = plan.get(plan_field)
             if not isinstance(expected, str) or expected != sha256_file(resolved[resolved_field]):
@@ -230,6 +276,11 @@ def validate_frozen_execution_inputs(plan: dict[str, Any], root: Path) -> tuple[
                 resolved["tool_environment_acceptance"].read_text(encoding="utf-8")
             )
             if interactive_v4
+            else None
+        )
+        runtime_code_manifest = (
+            json.loads(resolved["runtime_code_manifest"].read_text(encoding="utf-8"))
+            if interactive_v6
             else None
         )
     except (OSError, TypeError, ValueError, json.JSONDecodeError, yaml.YAMLError):
@@ -452,4 +503,13 @@ def validate_frozen_execution_inputs(plan: dict[str, Any], root: Path) -> tuple[
                 or _task_argument(typed_command, "policy") != policy
             ):
                 errors.append("interactive_policy_mismatch")
+        if interactive_v6:
+            if not isinstance(runtime_code_manifest, dict):
+                errors.append("runtime_code_manifest_invalid")
+            else:
+                errors.extend(
+                    _validate_runtime_code_manifest(
+                        runtime_code_manifest, root, typed_command
+                    )
+                )
     return tuple(sorted(set(errors)))

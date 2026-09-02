@@ -114,6 +114,26 @@ def _trace_is_redacted(verification: dict[str, Any]) -> bool:
     return True
 
 
+def _runtime_manifest_files_match(manifest: dict[str, Any]) -> bool:
+    files = manifest.get("files")
+    if not isinstance(files, list) or not files:
+        return False
+    paths: set[str] = set()
+    for entry in files:
+        if not isinstance(entry, dict):
+            return False
+        path = _project_file(entry.get("path"))
+        relative = entry.get("path")
+        if path is None or not isinstance(relative, str) or relative in paths:
+            return False
+        paths.add(relative)
+        if entry.get("sha256") != sha256_file(path):
+            return False
+        if entry.get("bytes") != path.stat().st_size:
+            return False
+    return manifest.get("entrypoint") in paths
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("log", type=Path)
@@ -121,6 +141,7 @@ def main() -> int:
     parser.add_argument("--tool-environment-manifest", type=Path, required=True)
     parser.add_argument("--model-registration", type=Path, required=True)
     parser.add_argument("--model-asset-manifest", type=Path, required=True)
+    parser.add_argument("--runtime-code-manifest", type=Path)
     parser.add_argument("--expected-model", required=True)
     parser.add_argument("--expected-model-root-sha256", required=True)
     parser.add_argument("--expected-plan-sha256", required=True)
@@ -164,6 +185,11 @@ def main() -> int:
             )
         except (OSError, TypeError, ValueError, json.JSONDecodeError):
             adapter_acceptance = {}
+    runtime_code_manifest: dict[str, Any] = {}
+    if args.runtime_code_manifest is not None:
+        runtime_code_manifest = _optional_dict(
+            json.loads(args.runtime_code_manifest.read_text(encoding="utf-8"))
+        )
 
     log = read_eval_log(args.log)
     eval_metadata = dict(log.eval.metadata or {})
@@ -444,6 +470,23 @@ def main() -> int:
                 == provider_adapter.get("implementation_sha256"),
             }
         )
+    if args.runtime_code_manifest is not None:
+        runtime_manifest_hash = sha256_file(args.runtime_code_manifest)
+        gates.update(
+            {
+                "runtime_code_manifest_hash_logged": eval_metadata.get(
+                    "provtrust_runtime_code_manifest_sha256"
+                )
+                == runtime_manifest_hash,
+                "runtime_code_manifest_files_match": _runtime_manifest_files_match(
+                    runtime_code_manifest
+                ),
+                "runtime_code_entrypoint_matches": runtime_code_manifest.get(
+                    "entrypoint"
+                )
+                == log.eval.task_file,
+            }
+        )
     failures = sorted(name for name, passed in gates.items() if not passed)
     status = "passed" if not failures else "failed"
     started_at = str(log.stats.started_at)
@@ -517,6 +560,17 @@ def main() -> int:
             "manifest_path": args.tool_environment_manifest.as_posix(),
             "manifest_sha256": sha256_file(args.tool_environment_manifest),
             "environment_version": tool_manifest.get("environment_version"),
+        },
+        "runtime_code": {
+            "manifest_path": args.runtime_code_manifest.as_posix()
+            if args.runtime_code_manifest is not None
+            else None,
+            "manifest_sha256": sha256_file(args.runtime_code_manifest)
+            if args.runtime_code_manifest is not None
+            else None,
+            "file_count": len(runtime_code_manifest.get("files", []))
+            if isinstance(runtime_code_manifest.get("files"), list)
+            else 0,
         },
         "plan_sha256": args.expected_plan_sha256,
         "raw_log": {

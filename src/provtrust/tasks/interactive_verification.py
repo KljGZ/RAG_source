@@ -13,7 +13,9 @@ from inspect_ai.solver import Generate, Solver, TaskState, solver, system_messag
 from inspect_ai.tool import Tool
 
 from provtrust.datasets.interactive_v0 import InteractivePolicy
-from provtrust.execution.inspect_compat import register_qwen3_14b_hf_tool_adapter
+from provtrust.execution.inspect_qwen3_hybrid import (
+    register_qwen3_14b_hybrid_tool_adapter,
+)
 from provtrust.schemas.trial import Trial
 from provtrust.scorers.interactive_trace import interactive_verification_summary
 from provtrust.tasks.common import load_trials, render_prior, structured_parse_scorer
@@ -174,7 +176,7 @@ def interactive_verification(
 ) -> Task:
     # HFHandler is created lazily on the first tool-enabled generation, so this
     # task-construction check both registers and verifies the frozen parser route.
-    register_qwen3_14b_hf_tool_adapter()
+    register_qwen3_14b_hybrid_tool_adapter()
     parsed_policy = InteractivePolicy(policy)
     tools = (
         controlled_search(search_index_path),

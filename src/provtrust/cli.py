@@ -239,6 +239,9 @@ def run_plan(
                 ),
             }
         )
+    runtime_manifest_hash = plan.get("runtime_code_manifest_sha256")
+    if isinstance(runtime_manifest_hash, str):
+        metadata["provtrust_runtime_code_manifest_sha256"] = runtime_manifest_hash
     constrained_command = _resolve_task_resource_arguments(list(command), project_root)
     constrained_command = _resolve_plan_executable(constrained_command, environment)
     for key, value in metadata.items():
