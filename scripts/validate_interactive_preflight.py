@@ -59,6 +59,19 @@ def _portable_path(path: Path) -> str:
         return path.name
 
 
+def _project_file(value: Any) -> Path | None:
+    if not isinstance(value, str) or not value:
+        return None
+    relative = Path(value)
+    if relative.is_absolute():
+        return None
+    root = Path.cwd().resolve()
+    resolved = (root / relative).resolve()
+    if resolved == root or root not in resolved.parents or not resolved.is_file():
+        return None
+    return resolved
+
+
 def _revision_matches(observed: str | None, expected: str | None) -> bool:
     """Accept Git's unambiguous short display of the same expected revision."""
 
@@ -135,9 +148,26 @@ def main() -> int:
     asset_manifest = json.loads(args.model_asset_manifest.read_text(encoding="utf-8"))
     if not isinstance(asset_manifest, dict):
         raise TypeError("model asset manifest must contain an object")
+    model_registration = yaml.safe_load(
+        args.model_registration.read_text(encoding="utf-8")
+    )
+    if not isinstance(model_registration, dict):
+        raise TypeError("model registration must contain an object")
+    provider_adapter = _optional_dict(model_registration.get("provider_adapter"))
+    adapter_implementation = _project_file(provider_adapter.get("implementation_path"))
+    adapter_acceptance_path = _project_file(provider_adapter.get("acceptance_path"))
+    adapter_acceptance: dict[str, Any] = {}
+    if adapter_acceptance_path is not None:
+        try:
+            adapter_acceptance = _optional_dict(
+                json.loads(adapter_acceptance_path.read_text(encoding="utf-8"))
+            )
+        except (OSError, TypeError, ValueError, json.JSONDecodeError):
+            adapter_acceptance = {}
 
     log = read_eval_log(args.log)
     eval_metadata = dict(log.eval.metadata or {})
+    runtime_packages = dict(log.eval.packages or {})
     generate_config = _as_dict(log.eval.model_generate_config, label="model_generate_config")
     model_args = dict(log.eval.model_args or {})
     samples = list(log.samples or [])
@@ -371,6 +401,49 @@ def main() -> int:
         "offline_model_loading": model_args.get("local_files_only") is True,
         "physical_gpu_2_mapped_to_logical_cuda_0": model_args.get("device") == "cuda:0",
     }
+    if provider_adapter:
+        gates.update(
+            {
+                "provider_adapter_id_logged": eval_metadata.get(
+                    "provtrust_provider_adapter_id"
+                )
+                == provider_adapter.get("adapter_id"),
+                "provider_adapter_family_logged": eval_metadata.get(
+                    "provtrust_provider_adapter_family"
+                )
+                == provider_adapter.get("model_family"),
+                "provider_adapter_code_hash_logged": eval_metadata.get(
+                    "provtrust_provider_adapter_sha256"
+                )
+                == provider_adapter.get("implementation_sha256"),
+                "provider_adapter_acceptance_hash_logged": eval_metadata.get(
+                    "provtrust_provider_adapter_acceptance_sha256"
+                )
+                == provider_adapter.get("acceptance_sha256"),
+                "provider_adapter_runtime_version": runtime_packages.get(
+                    str(provider_adapter.get("runtime"))
+                )
+                == provider_adapter.get("runtime_version"),
+                "provider_adapter_implementation_hash": adapter_implementation
+                is not None
+                and sha256_file(adapter_implementation)
+                == provider_adapter.get("implementation_sha256"),
+                "provider_adapter_acceptance_hash": adapter_acceptance_path
+                is not None
+                and sha256_file(adapter_acceptance_path)
+                == provider_adapter.get("acceptance_sha256"),
+                "provider_adapter_acceptance_passed": adapter_acceptance.get("status")
+                == "passed",
+                "provider_adapter_acceptance_identity": adapter_acceptance.get(
+                    "adapter_id"
+                )
+                == provider_adapter.get("adapter_id")
+                and adapter_acceptance.get("model_family")
+                == provider_adapter.get("model_family")
+                and adapter_acceptance.get("implementation_sha256")
+                == provider_adapter.get("implementation_sha256"),
+            }
+        )
     failures = sorted(name for name, passed in gates.items() if not passed)
     status = "passed" if not failures else "failed"
     started_at = str(log.stats.started_at)
@@ -412,6 +485,17 @@ def main() -> int:
                     "batch_size",
                 )
             },
+        },
+        "provider_adapter": {
+            "configured": bool(provider_adapter),
+            "adapter_id": provider_adapter.get("adapter_id"),
+            "runtime": provider_adapter.get("runtime"),
+            "runtime_version": provider_adapter.get("runtime_version"),
+            "model_family": provider_adapter.get("model_family"),
+            "implementation_path": provider_adapter.get("implementation_path"),
+            "implementation_sha256": provider_adapter.get("implementation_sha256"),
+            "acceptance_path": provider_adapter.get("acceptance_path"),
+            "acceptance_sha256": provider_adapter.get("acceptance_sha256"),
         },
         "model_asset": {
             "manifest_path": args.model_asset_manifest.as_posix(),

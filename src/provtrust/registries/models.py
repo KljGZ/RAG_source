@@ -93,6 +93,29 @@ class FrozenGenerationConfig(BaseModel):
         return self
 
 
+class FrozenProviderAdapter(BaseModel):
+    """Auditable provider compatibility layer used by a frozen registration."""
+
+    model_config = ConfigDict(extra="forbid", frozen=True)
+
+    adapter_id: str = Field(min_length=1)
+    runtime: Literal["inspect_ai"]
+    runtime_version: str = Field(min_length=1)
+    registration_model_name: str = Field(min_length=1)
+    model_family: str = Field(min_length=1)
+    implementation_path: str = Field(min_length=1)
+    implementation_sha256: str
+    acceptance_path: str = Field(min_length=1)
+    acceptance_sha256: str
+
+    @field_validator("implementation_sha256", "acceptance_sha256")
+    @classmethod
+    def validate_sha256(cls, value: str) -> str:
+        if not re.fullmatch(r"[0-9a-f]{64}", value):
+            raise ValueError("provider-adapter hashes must be lowercase SHA-256 values")
+        return value
+
+
 class FrozenModelRegistration(BaseModel):
     """Publication-safe model identity separate from machine-local model args."""
 
@@ -118,6 +141,7 @@ class FrozenModelRegistration(BaseModel):
     snapshot: FrozenSnapshotReference
     generation: FrozenGenerationConfig
     system_prompt: FrozenPromptReference
+    provider_adapter: FrozenProviderAdapter | None = None
 
     @field_validator("deployment_subdirectory")
     @classmethod

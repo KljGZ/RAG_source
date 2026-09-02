@@ -221,6 +221,24 @@ def run_plan(
         "provtrust_plan_sha256": plan_sha256,
         "provtrust_system_prompt_sha256": str(plan["system_prompt_sha256"]),
     }
+    provider_adapter = registration_value.get("provider_adapter")
+    if isinstance(provider_adapter, dict):
+        metadata.update(
+            {
+                "provtrust_provider_adapter_id": str(
+                    provider_adapter.get("adapter_id")
+                ),
+                "provtrust_provider_adapter_family": str(
+                    provider_adapter.get("model_family")
+                ),
+                "provtrust_provider_adapter_sha256": str(
+                    provider_adapter.get("implementation_sha256")
+                ),
+                "provtrust_provider_adapter_acceptance_sha256": str(
+                    provider_adapter.get("acceptance_sha256")
+                ),
+            }
+        )
     constrained_command = _resolve_task_resource_arguments(list(command), project_root)
     constrained_command = _resolve_plan_executable(constrained_command, environment)
     for key, value in metadata.items():

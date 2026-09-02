@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
 from typing import Any
 
@@ -156,10 +157,17 @@ def validate_frozen_execution_inputs(plan: dict[str, Any], root: Path) -> tuple[
     interactive_v4 = (
         tool_track and isinstance(contract_version, int) and contract_version >= 4
     )
+    interactive_v5 = (
+        plan.get("track") == "interactive_verification"
+        and isinstance(contract_version, int)
+        and contract_version >= 5
+    )
     if interactive_v4:
         required_fields.extend(
             ("protocol_preregistration", "tool_environment_acceptance")
         )
+    if interactive_v5:
+        required_fields.append("engineering_amendment")
     for field in required_fields:
         path, error = _project_path(root, plan.get(field), label=field)
         if error:
@@ -188,6 +196,10 @@ def validate_frozen_execution_inputs(plan: dict[str, Any], root: Path) -> tuple[
                         "tool_environment_acceptance_sha256"
                     ),
                 }
+            )
+        if interactive_v5:
+            frozen_hash_fields["engineering_amendment"] = (
+                "engineering_amendment_sha256"
             )
         for resolved_field, plan_field in frozen_hash_fields.items():
             expected = plan.get(plan_field)
@@ -261,6 +273,65 @@ def validate_frozen_execution_inputs(plan: dict[str, Any], root: Path) -> tuple[
                 != sha256_file(resolved["dataset_manifest"])
             ):
                 errors.append("tool_environment_acceptance_dataset_mismatch")
+    if interactive_v5:
+        adapter = registration.provider_adapter
+        if adapter is None:
+            errors.append("provider_adapter_registration_missing")
+        else:
+            implementation_path, implementation_error = _project_path(
+                root,
+                adapter.implementation_path,
+                label="provider_adapter_implementation",
+            )
+            acceptance_path, acceptance_error = _project_path(
+                root,
+                adapter.acceptance_path,
+                label="provider_adapter_acceptance",
+            )
+            if implementation_error:
+                errors.append(implementation_error)
+            elif implementation_path is not None and (
+                sha256_file(implementation_path) != adapter.implementation_sha256
+            ):
+                errors.append("provider_adapter_implementation_hash_mismatch")
+            if acceptance_error:
+                errors.append(acceptance_error)
+            elif acceptance_path is not None:
+                if sha256_file(acceptance_path) != adapter.acceptance_sha256:
+                    errors.append("provider_adapter_acceptance_hash_mismatch")
+                try:
+                    adapter_acceptance = json.loads(
+                        acceptance_path.read_text(encoding="utf-8")
+                    )
+                    if not isinstance(adapter_acceptance, dict):
+                        raise TypeError("adapter acceptance must be an object")
+                    if adapter_acceptance.get("status") != "passed":
+                        errors.append("provider_adapter_acceptance_not_passed")
+                    if adapter_acceptance.get("adapter_id") != adapter.adapter_id:
+                        errors.append("provider_adapter_acceptance_id_mismatch")
+                    if adapter_acceptance.get("model_family") != adapter.model_family:
+                        errors.append("provider_adapter_acceptance_family_mismatch")
+                    if (
+                        adapter_acceptance.get("implementation_sha256")
+                        != adapter.implementation_sha256
+                    ):
+                        errors.append("provider_adapter_acceptance_code_mismatch")
+                    if (
+                        adapter_acceptance.get("runtime_version")
+                        != adapter.runtime_version
+                    ):
+                        errors.append("provider_adapter_acceptance_runtime_mismatch")
+                except (OSError, TypeError, ValueError, json.JSONDecodeError):
+                    errors.append("provider_adapter_acceptance_parse_failure")
+            if adapter.registration_model_name != registration.model_id:
+                errors.append("provider_adapter_model_name_mismatch")
+            try:
+                installed_runtime = version(adapter.runtime)
+            except PackageNotFoundError:
+                errors.append("provider_adapter_runtime_missing")
+            else:
+                if installed_runtime != adapter.runtime_version:
+                    errors.append("provider_adapter_runtime_version_mismatch")
 
     expected_prompt_relative = resolved["system_prompt"].relative_to(root).as_posix()
     observed_prompt_hash = sha256_file(resolved["system_prompt"])
