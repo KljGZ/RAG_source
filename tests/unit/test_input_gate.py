@@ -216,3 +216,17 @@ def test_interactive_track_requires_frozen_tool_environment(tmp_path: Path) -> N
     assert "tool_environment_manifest_must_be_relative" in (
         validate_frozen_execution_inputs(plan, tmp_path)
     )
+
+
+def test_interactive_v4_requires_preregistration_and_environment_acceptance(
+    tmp_path: Path,
+) -> None:
+    plan = _frozen_fixture(tmp_path)
+    plan["input_contract_version"] = 4
+    plan["track"] = "interactive_verification"
+
+    errors = validate_frozen_execution_inputs(plan, tmp_path)
+
+    assert "tool_environment_manifest_must_be_relative" in errors
+    assert "protocol_preregistration_must_be_relative" in errors
+    assert "tool_environment_acceptance_must_be_relative" in errors

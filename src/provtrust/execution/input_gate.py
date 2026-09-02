@@ -141,6 +141,7 @@ def validate_frozen_execution_inputs(plan: dict[str, Any], root: Path) -> tuple[
     root = root.resolve()
     errors: list[str] = []
     resolved: dict[str, Path] = {}
+    contract_version = plan.get("input_contract_version")
     required_fields = [
         "model_registration",
         "model_asset_manifest",
@@ -152,6 +153,13 @@ def validate_frozen_execution_inputs(plan: dict[str, Any], root: Path) -> tuple[
     tool_track = plan.get("track") in {"interactive_verification", "pavg_defense"}
     if tool_track:
         required_fields.append("tool_environment_manifest")
+    interactive_v4 = (
+        tool_track and isinstance(contract_version, int) and contract_version >= 4
+    )
+    if interactive_v4:
+        required_fields.extend(
+            ("protocol_preregistration", "tool_environment_acceptance")
+        )
     for field in required_fields:
         path, error = _project_path(root, plan.get(field), label=field)
         if error:
@@ -161,7 +169,6 @@ def validate_frozen_execution_inputs(plan: dict[str, Any], root: Path) -> tuple[
     if errors:
         return tuple(sorted(set(errors)))
 
-    contract_version = plan.get("input_contract_version")
     if isinstance(contract_version, int) and contract_version >= 2:
         frozen_hash_fields = {
             "model_registration": "model_registration_sha256",
@@ -172,6 +179,15 @@ def validate_frozen_execution_inputs(plan: dict[str, Any], root: Path) -> tuple[
         if tool_track:
             frozen_hash_fields["tool_environment_manifest"] = (
                 "tool_environment_manifest_sha256"
+            )
+        if interactive_v4:
+            frozen_hash_fields.update(
+                {
+                    "protocol_preregistration": "protocol_preregistration_sha256",
+                    "tool_environment_acceptance": (
+                        "tool_environment_acceptance_sha256"
+                    ),
+                }
             )
         for resolved_field, plan_field in frozen_hash_fields.items():
             expected = plan.get(plan_field)
@@ -197,6 +213,13 @@ def validate_frozen_execution_inputs(plan: dict[str, Any], root: Path) -> tuple[
             if tool_track
             else None
         )
+        tool_acceptance = (
+            json.loads(
+                resolved["tool_environment_acceptance"].read_text(encoding="utf-8")
+            )
+            if interactive_v4
+            else None
+        )
     except (OSError, TypeError, ValueError, json.JSONDecodeError, yaml.YAMLError):
         return ("frozen_input_parse_failure",)
 
@@ -220,6 +243,24 @@ def validate_frozen_execution_inputs(plan: dict[str, Any], root: Path) -> tuple[
         manifest.root_sha256
     ):
         errors.append("activation_model_root_hash_mismatch")
+    if interactive_v4:
+        if not isinstance(tool_acceptance, dict):
+            errors.append("tool_environment_acceptance_invalid")
+        else:
+            if tool_acceptance.get("status") != "passed":
+                errors.append("tool_environment_acceptance_not_passed")
+            acceptance_environment = tool_acceptance.get("tool_environment")
+            acceptance_dataset = tool_acceptance.get("dataset")
+            if not isinstance(acceptance_environment, dict) or (
+                acceptance_environment.get("manifest_sha256")
+                != sha256_file(resolved["tool_environment_manifest"])
+            ):
+                errors.append("tool_environment_acceptance_manifest_mismatch")
+            if not isinstance(acceptance_dataset, dict) or (
+                acceptance_dataset.get("manifest_sha256")
+                != sha256_file(resolved["dataset_manifest"])
+            ):
+                errors.append("tool_environment_acceptance_dataset_mismatch")
 
     expected_prompt_relative = resolved["system_prompt"].relative_to(root).as_posix()
     observed_prompt_hash = sha256_file(resolved["system_prompt"])
