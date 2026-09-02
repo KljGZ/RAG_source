@@ -1,6 +1,6 @@
 # Project status
 
-Current stage: **parser-v3 cross-model preflights accepted; two full V0 reruns frozen**
+Current stage: **two-model parser-v3 static V0 complete and integrity-accepted**
 
 ## Deployment state
 
@@ -37,6 +37,11 @@ Current stage: **parser-v3 cross-model preflights accepted; two full V0 reruns f
   answer-type, citation, frozen-input, model-asset, and allocation acceptance.
 - [x] Parser-v3 full plans for both models were frozen before either new full-run
   response; each retains the same 240 trials, prompt, decoding, and 14 estimands.
+- [x] Both parser-v3 full reruns completed on the same clean revision: each has
+  240/240 samples, 480 calls, zero errors/retries, 100% parsing/type/citation validity,
+  an accepted 224-effect analysis, and a passed cross-model invariant comparison.
+- [x] The Qwen parser-v3 paired-effects artifact exactly reproduced the earlier run's
+  SHA-256, while Phi independently exercised the registered fenced-envelope path.
 - [x] Raw-log acceptance and the 224-effect analysis publication gates passed; the raw
   eval, observations, paired effects, summary, and manifests agree by SHA-256 on the
   workstation and compute node.
@@ -73,8 +78,8 @@ Current stage: **parser-v3 cross-model preflights accepted; two full V0 reruns f
 - [x] Physical GPU index 2 allocated by the user for continuous use; CPU use approved.
 - [ ] Additional target/judge model registries and any paid API budget approved.
 - [x] First full 16-family/240-sample V0 static experiment run and reported.
-- [ ] Parser-v3 full reruns, strict cross-model comparison, and interactive-
-  verification/PAVG experiments run.
+- [x] Parser-v3 full reruns and strict descriptive cross-model comparison run.
+- [ ] Interactive-verification and PAVG experiments run.
 - [ ] V1 plan frozen or confirmatory outcomes inspected.
 
 The first exploratory static V0 experiment has run; no paid API call or V1
@@ -82,7 +87,10 @@ confirmatory experiment has run. Qwen3-14B showed zero adoption effects for 12/1
 contrasts, a -0.5 raw adoption effect for each weaker-warrant contrast, and a 90%
 false-verification-assurance rate. Neither warrant contrast survived the registered
 14-test Holm correction. These results cannot support a general SDI, PGSD, or model-
-quality conclusion. The immediate gate is the two frozen parser-v3 full reruns and
-their strict descriptive cross-model comparison; subsequent gates are interactive
-verification, PAVG baselines, licensed/validated real data, and independent
-target/judge registries.
+quality conclusion. The parser-v3 replication adds Phi-4: false-verification assurance
+was 92.5%, twelve contrasts were again exactly zero, and the two warrant effects were
+-0.875 with Holm-adjusted p=0.00170898. Both models agree in warrant-effect direction
+and show no categorical adoption effect for the tested provenance or proxy cues, but
+the saturated binary endpoint prevents equivalence claims. Next gates are interactive
+verification, PAVG baselines, graded endpoints, licensed/validated real data, and
+independent target/judge registries.

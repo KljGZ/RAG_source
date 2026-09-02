@@ -26,6 +26,12 @@ silently replace earlier outputs.
 - Report all zero and non-zero effects, exact sign-flip tests, Holm correction,
   confidence/adoption dissociation, and false-verification assurance without promoting
   the exploratory single-model result to a general SDI conclusion.
+- Register a model-general parser-v3 envelope after retaining the Phi-4 parser-v2
+  failure, then pass independent Phi-4 and Qwen3-14B preflights.
+- Complete both 240-sample parser-v3 full reruns on one clean revision, freeze their
+  accepted analyses, and publish the invariant-gated descriptive comparison.
+- Reproduce the historical Qwen paired-effects artifact byte-for-byte and retain
+  Phi/Qwen heterogeneity, null contrasts, and false-assurance rates without selection.
 
 ## [0.1.0] - 2026-08-31
 

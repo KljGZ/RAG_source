@@ -25,7 +25,8 @@ be silently folded into the core V1 confirmation.
 
 ## Evidence currently established by V0
 
-The Qwen3-14B static V0 establishes the following facts within its registered scope:
+The Qwen3-14B and Phi-4 parser-v3 static V0 runs establish the following facts within
+their registered two-model, closed-world scope:
 
 - The 16-family, 15-cell paired design contains 240 unique trials, balanced 120/120
   on claim truth, with invariant priors, isolated intervention channels, no detected
@@ -43,8 +44,21 @@ The Qwen3-14B static V0 establishes the following facts within its registered sc
 - The model asserted `claimed_verified=true` in 216/240 cases while the static track
   completed no verification trace, yielding a protocol-defined false-verification-
   assurance rate of 90%.
+- Phi-4 independently completed the same 240 trials and 480 calls with zero errors or
+  retries and 100% parser, answer-type, and citation validity. Its accuracy was
+  116/240 (48.33%), abstention was 6/240 (2.50%), and false-verification assurance was
+  222/240 (92.5%).
+- Phi-4 also had twelve exact-zero contrasts. Its two warrant effects were each
+  -0.875 with a bootstrap interval of [-1.0, -0.6875], exact raw p=0.0001220703125,
+  and Holm-adjusted p=0.001708984375.
+- Both models agreed on the negative direction of the two warrant effects and were
+  exactly equal at zero on the other twelve contrasts. The warrant-effect magnitude
+  differed by 0.375. Exact zero is not treated as equivalence.
+- The Qwen parser-v3 paired-effects artifact is byte-identical to the historical
+  parser-v1 paired-effects artifact, demonstrating result preservation for its raw-
+  JSON outputs while retaining both versioned raw logs.
 
-These are integrity-accepted exploratory observations for one open-weight model on a
+These are integrity-accepted exploratory observations for two open-weight models on a
 closed-world synthetic corpus. Citation validity here means that cited evidence IDs
 were supplied; it does not mean that source identity, attribution, or warrant was
 externally verified.
@@ -52,10 +66,11 @@ externally verified.
 ## Claims not established by V0
 
 V0 does not establish a general SDI diagnosis, general PGSD competence or failure,
-cross-model or cross-task effects, real-world external validity, causal rationale
-faithfulness, risk-responsive tool use, consensus laundering, PAVG benefit, or
-MIRAGE robustness. The static no-tool track cannot identify actual verification
-ability, and 16 independent families provide limited power for heterogeneous effects.
+population-level cross-model or cross-task effects, real-world external validity,
+causal rationale faithfulness, risk-responsive tool use, consensus laundering, PAVG
+benefit, or MIRAGE robustness. The static no-tool track cannot identify actual
+verification ability, and 16 independent families provide limited power for
+heterogeneous effects.
 
 The reported normative-factor control ratio of 1.0 is degenerate in this run: all
 heuristic effects were zero and only the two warrant contrasts were nonzero. It must
@@ -65,8 +80,9 @@ not be interpreted as broad normative control.
 
 - The outcome-blind Phi-4 cross-family replication protocol is fixed in
   `analysis/preregistration/V0_PHI4_REPLICATION.md`; its results remain V0 evidence.
-- Complete static V0 replications across independently developed open-weight model
-  families using the identical frozen trials and deterministic decoding.
+- The matched-size Qwen3-14B/Phi-4 static replication is complete. Add further model
+  families only under a separately frozen V0 extension; do not reinterpret two models
+  as a model-population sample.
 - Run controlled interactive-verification development experiments with identity,
   attribution, identifier, canonical-record, and evidence-span trace checks.
 - Validate real-source snapshots, licenses, timestamps, provenance roots, and a

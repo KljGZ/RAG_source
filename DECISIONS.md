@@ -192,3 +192,19 @@
 - Freeze separate 240-sample parser-v3 full plans for both models before either full
   outcome is generated. Require both full reruns and integrity-accepted analyses
   before the preregistered descriptive cross-model comparison.
+
+## 2026-09-01 — Retain parser-v3 cross-model V0 outcomes
+
+- Retain both complete full runs and all null/non-null results. Both models produced
+  exact-zero categorical adoption effects for twelve contrasts and negative warrant
+  effects; Qwen's two warrant effects did not survive Holm correction, while Phi's
+  did. Do not use this heterogeneity to replace either target or analysis.
+- Treat the 90.0% Qwen and 92.5% Phi false-verification-assurance rates as replicated
+  static action-language mismatches, not as proof of hidden beliefs or autonomous
+  verification inability.
+- Do not claim proxy dominance: every registered heuristic adoption contrast was
+  zero. Do not claim broad PGSD: reliability, identity, attribution, and independence
+  were also zero, and the binary baseline adoption rate was saturated.
+- Record that Qwen's parser-v3 paired-effects artifact exactly matches its historical
+  paired-effects SHA-256. This validates result preservation for raw-JSON outputs but
+  does not remove the requirement to retain both versioned raw logs.
