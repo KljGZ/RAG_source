@@ -1,0 +1,124 @@
+schema_version: "1.0.0"
+input_contract_version: 6
+stage: v0
+execution_status: ready
+exploratory: true
+scientific_claims_allowed: false
+purpose: unprompted-tools preflight for the frozen hybrid-parser protocol
+track: interactive_verification
+interactive_policy: tools_unprompted
+replacement_history:
+  reason: same-revision comparability after engineering amendment 002
+  prior_plan_sha256: dcaec9c79edf9bbac452ac764c578cbc8a9302634d72a6ea376568057b6e71ed
+  prior_validation_sha256: e0af7f4bf6b18cd74764195bbc8aee0c049ea0226923beb8b71347074e9dc349
+protocol_preregistration: analysis/preregistration/V0_INTERACTIVE_VERIFICATION.md
+protocol_preregistration_sha256: a6270bf38e262afc8e583ba9ab78fabd5a7b4a7d445c3f28ff65bcb7a25d94fa
+engineering_amendment: analysis/preregistration/V0_INTERACTIVE_VERIFICATION_ENGINEERING_AMENDMENT_002.md
+engineering_amendment_sha256: cac9ea352c97667a00080821a741612f1e5c413a144fc81502be9384eb091a41
+amendment_history:
+  - path: analysis/preregistration/V0_INTERACTIVE_VERIFICATION_ENGINEERING_AMENDMENT_001.md
+    sha256: 5e789b92aec1a0a648c04e0ee325bbff4eedcd3cb067f7914623dd6bb06822df
+  - path: analysis/preregistration/V0_INTERACTIVE_VERIFICATION_ENGINEERING_AMENDMENT_002.md
+    sha256: cac9ea352c97667a00080821a741612f1e5c413a144fc81502be9384eb091a41
+runtime_code_manifest: configs/runtime/interactive-v1-qwen3-hybrid-v2.manifest.json
+runtime_code_manifest_sha256: 95e945e34273f617bbd477380c1b10cab215710439f37d3c92716b20422d7635
+dataset_manifest: benchmark/manifests/v0-interactive-v1-tools_unprompted.yaml
+dataset_manifest_sha256: 14989d9923ecae6adec102ed9e6862ca068c83a5182dc5a389283e54e67c8329
+tool_environment_manifest: benchmark/manifests/interactive-v1-tools.yaml
+tool_environment_manifest_sha256: c68fec20b240f199d38e71079750522162afa0f1b66b43aae7fe3e2f55371fd2
+tool_environment_acceptance: artifacts/system/INTERACTIVE_ENV_TOOLS_UNPROMPTED.json
+tool_environment_acceptance_sha256: 84c2df19901b41ccdf871b266e33a69de86cf0c63f4dbe8b6c868845971cf4c6
+model_registration: configs/models/qwen3-14b-interactive-v3.yaml
+model_registration_sha256: fe5348f6cb0e9338999350edc468042a6f81eaeede5a0c21426fd89b72926cdb
+model_asset_manifest: configs/models/assets/qwen3-14b-cc692f4.manifest.json
+model_asset_manifest_sha256: 5737d6eadb313042cf6d14634ffb3eaf8eb2149572a7b5f993caa459a0210bba
+model_args: configs/models/qwen3-14b-static.local.yaml
+system_prompt: prompts/frozen/interactive-verification-system-v1.txt
+system_prompt_sha256: df598da58cf46b81a421a1371e559778d70afba3a1edf78be8d900c091a95d5d
+activation_evidence: artifacts/system/QWEN3_14B_COMPATIBILITY.json
+activation_evidence_sha256: ba52fe06de4c82d4b9afd5c5722a987e5252c012403ad75f2ae55f89f4bf9158
+seed: 20260831
+epochs: 1
+sample_limit: 10
+family_count: 1
+scenario_count: 5
+minimum_model_turns: 20
+temperature: 0.0
+top_p: 1.0
+top_k: 1
+max_tokens: 256
+enable_thinking: false
+retry_on_error: 0
+resource_allocation_required: true
+minimum_resources:
+  cpu_cores: 16
+  ram_gib: 64
+  storage_gib: 50
+  gpu_count: 1
+  minimum_gpu_memory_gib: 35
+  estimated_gpu_hours: 0.5
+  api_budget_usd: 0
+inspect_command:
+  - inspect
+  - eval
+  - src/provtrust/tasks/interactive_verification.py@interactive_verification
+  - -T
+  - dataset_path=benchmark/synthetic/v0-interactive-v1-tools_unprompted.jsonl
+  - -T
+  - search_index_path=web_env/search_index/documents.jsonl
+  - -T
+  - snapshot_root=web_env/source_snapshots
+  - -T
+  - source_registry_path=web_env/canonical_sources/registry.json
+  - -T
+  - identifier_registry_path=web_env/canonical_sources/identifiers.json
+  - -T
+  - provenance_registry_path=web_env/canonical_sources/provenance-v1.json
+  - -T
+  - system_prompt_path=prompts/frozen/interactive-verification-system-v1.txt
+  - -T
+  - policy=tools_unprompted
+  - --model
+  - hf/Qwen/Qwen3-14B
+  - --model-config
+  - configs/models/qwen3-14b-static.local.yaml
+  - --max-tokens
+  - "256"
+  - --seed
+  - "20260831"
+  - --epochs
+  - "1"
+  - --limit
+  - "10"
+  - --max-connections
+  - "1"
+  - --max-samples
+  - "1"
+  - --log-dir
+  - artifacts/runs/pilot_qwen3_14b_interactive_v3_tools_unprompted_preflight
+analysis_command:
+  - python
+  - scripts/validate_interactive_preflight.py
+  - artifacts/runs/pilot_qwen3_14b_interactive_v3_tools_unprompted_preflight/RUN.eval
+  - --dataset-manifest
+  - benchmark/manifests/v0-interactive-v1-tools_unprompted.yaml
+  - --tool-environment-manifest
+  - benchmark/manifests/interactive-v1-tools.yaml
+  - --model-registration
+  - configs/models/qwen3-14b-interactive-v3.yaml
+  - --model-asset-manifest
+  - configs/models/assets/qwen3-14b-cc692f4.manifest.json
+  - --runtime-code-manifest
+  - configs/runtime/interactive-v1-qwen3-hybrid-v2.manifest.json
+  - --expected-model
+  - hf/Qwen/Qwen3-14B
+  - --expected-model-root-sha256
+  - 494ab49926699409cf08e0f127175353082777bb25dc163dd93ed3b55fe1afeb
+  - --expected-policy
+  - tools_unprompted
+  - --expected-plan-sha256
+  - PLAN_SHA256
+  - --expected-git-revision
+  - GIT_REVISION
+  - --output
+  - artifacts/system/INTERACTIVE_V3_TOOLS_UNPROMPTED_PREFLIGHT.json
