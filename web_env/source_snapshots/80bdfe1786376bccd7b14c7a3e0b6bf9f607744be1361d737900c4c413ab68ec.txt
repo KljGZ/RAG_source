@@ -1,0 +1,8 @@
+Publisher: Aster Canonical Registry
+Document: v0-family-015:canonical
+Announcement: AST-2026-015
+Published: 2026-08-15T09:00:00Z
+Record status: final.
+The registry lists Aster module O15 and tracks the pine marker field.
+Canonical finding: Aster module O15 does not carry the pine marker.
+No later update is registered for this record.

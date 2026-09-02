@@ -1,9 +1,42 @@
 [
   {
-    "source_id": "controlled-fixture",
+    "aliases": [
+      "Fixture Publisher"
+    ],
     "canonical_name": "Controlled Fixture Publisher",
-    "aliases": ["Fixture Publisher"],
     "canonical_url": "http://127.0.0.1:18080/source/fixture-001",
-    "identity_authentic": true
+    "identity_authentic": true,
+    "source_id": "controlled-fixture"
+  },
+  {
+    "aliases": [
+      "The Aster Gazette"
+    ],
+    "canonical_domain": "v0-gazette.invalid",
+    "canonical_name": "Aster Gazette",
+    "identity_authentic": true,
+    "source_id": "v0-aster-gazette",
+    "source_role": "secondary_reporter"
+  },
+  {
+    "aliases": [
+      "Aster Registry",
+      "Aster Attribute Registry"
+    ],
+    "canonical_domain": "v0-registry.invalid",
+    "canonical_name": "Aster Canonical Registry",
+    "identity_authentic": true,
+    "source_id": "v0-canonical-registry",
+    "source_role": "primary_data_owner"
+  },
+  {
+    "aliases": [
+      "Aster Replica"
+    ],
+    "canonical_domain": "v0-replica.invalid",
+    "canonical_name": "Unverified Aster Replica",
+    "identity_authentic": true,
+    "source_id": "v0-unverified-replica",
+    "source_role": "aggregator"
   }
 ]

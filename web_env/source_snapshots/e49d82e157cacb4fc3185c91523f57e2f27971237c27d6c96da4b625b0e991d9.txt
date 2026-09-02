@@ -1,0 +1,6 @@
+Displayed publisher: Aster Gazette
+Claimed canonical source: Aster Canonical Registry
+Document: v0-family-012:c2_authentic_partial:presented
+Identifier: AST-2026-012
+Published: 2026-09-02T11:00:00Z
+Passage: According to Aster Canonical Registry announcement AST-2026-012, "The registry lists Aster module L12 and tracks the maple code field." The report interprets this as: Aster module L12 carries the maple code.

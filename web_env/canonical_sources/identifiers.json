@@ -1,8 +1,152 @@
 {
+  "AST-2026-001": {
+    "document_id": "v0-family-001:canonical",
+    "evidence_ids": [
+      "v0-family-001:canonical:evidence"
+    ],
+    "published_at": "2026-08-01T09:00:00Z",
+    "snapshot_hash": "63ca5dd5f12f114d329b239fbbb8847de15d1c19b6ba893d2b60fb2e6a9eee4c",
+    "source_id": "v0-canonical-registry"
+  },
+  "AST-2026-002": {
+    "document_id": "v0-family-002:canonical",
+    "evidence_ids": [
+      "v0-family-002:canonical:evidence"
+    ],
+    "published_at": "2026-08-02T09:00:00Z",
+    "snapshot_hash": "b5bbd07d85bacd221789a1378477bdb53f43096d90ee8d81c526e827015cf3a0",
+    "source_id": "v0-canonical-registry"
+  },
+  "AST-2026-003": {
+    "document_id": "v0-family-003:canonical",
+    "evidence_ids": [
+      "v0-family-003:canonical:evidence"
+    ],
+    "published_at": "2026-08-03T09:00:00Z",
+    "snapshot_hash": "8ae18d4eee4b405b561131bb8ef5c4208b858791dd818bca719c599be8d1284a",
+    "source_id": "v0-canonical-registry"
+  },
+  "AST-2026-004": {
+    "document_id": "v0-family-004:canonical",
+    "evidence_ids": [
+      "v0-family-004:canonical:evidence"
+    ],
+    "published_at": "2026-08-04T09:00:00Z",
+    "snapshot_hash": "97931b2b6b062a46ea4b5d4a83b19e0606b37fd30e71079b4a8cf5ef97ac66b1",
+    "source_id": "v0-canonical-registry"
+  },
+  "AST-2026-005": {
+    "document_id": "v0-family-005:canonical",
+    "evidence_ids": [
+      "v0-family-005:canonical:evidence"
+    ],
+    "published_at": "2026-08-05T09:00:00Z",
+    "snapshot_hash": "4b121bd316232ef0745fe1726bab2bb539d91ff856ac352599aaec5f7fd15780",
+    "source_id": "v0-canonical-registry"
+  },
+  "AST-2026-006": {
+    "document_id": "v0-family-006:canonical",
+    "evidence_ids": [
+      "v0-family-006:canonical:evidence"
+    ],
+    "published_at": "2026-08-06T09:00:00Z",
+    "snapshot_hash": "f13aa068da96d68c37b97f227085a1a72cfb56a58a7b7795ac01e13050765cd7",
+    "source_id": "v0-canonical-registry"
+  },
+  "AST-2026-007": {
+    "document_id": "v0-family-007:canonical",
+    "evidence_ids": [
+      "v0-family-007:canonical:evidence"
+    ],
+    "published_at": "2026-08-07T09:00:00Z",
+    "snapshot_hash": "5eee00eeb1dbfc27fd3d59f2006b7424d8699eb2cd82c4f735b88697488b4605",
+    "source_id": "v0-canonical-registry"
+  },
+  "AST-2026-008": {
+    "document_id": "v0-family-008:canonical",
+    "evidence_ids": [
+      "v0-family-008:canonical:evidence"
+    ],
+    "published_at": "2026-08-08T09:00:00Z",
+    "snapshot_hash": "185a14dacd3498a59aeadc8071ed795ea2569d8c965a5db46cd3057669682d4f",
+    "source_id": "v0-canonical-registry"
+  },
+  "AST-2026-009": {
+    "document_id": "v0-family-009:canonical",
+    "evidence_ids": [
+      "v0-family-009:canonical:evidence"
+    ],
+    "published_at": "2026-08-09T09:00:00Z",
+    "snapshot_hash": "49ad4bc621ff7920e4f939c726d243fe0139cbcf2a9cffd2c031e02f47b925e5",
+    "source_id": "v0-canonical-registry"
+  },
+  "AST-2026-010": {
+    "document_id": "v0-family-010:canonical",
+    "evidence_ids": [
+      "v0-family-010:canonical:evidence"
+    ],
+    "published_at": "2026-08-10T09:00:00Z",
+    "snapshot_hash": "1bc1a446958e05c30299d39d0cf7d5f549429366d87f2efb7a0773cc01f80640",
+    "source_id": "v0-canonical-registry"
+  },
+  "AST-2026-011": {
+    "document_id": "v0-family-011:canonical",
+    "evidence_ids": [
+      "v0-family-011:canonical:evidence"
+    ],
+    "published_at": "2026-08-11T09:00:00Z",
+    "snapshot_hash": "98b86f766ecf40e5af720161c4006b6814f830f5f4a129cc751a5af650537720",
+    "source_id": "v0-canonical-registry"
+  },
+  "AST-2026-012": {
+    "document_id": "v0-family-012:canonical",
+    "evidence_ids": [
+      "v0-family-012:canonical:evidence"
+    ],
+    "published_at": "2026-08-12T09:00:00Z",
+    "snapshot_hash": "d4165081c1a13c191178499a499fff5001354093354c77d289fd1fec0b169d68",
+    "source_id": "v0-canonical-registry"
+  },
+  "AST-2026-013": {
+    "document_id": "v0-family-013:canonical",
+    "evidence_ids": [
+      "v0-family-013:canonical:evidence"
+    ],
+    "published_at": "2026-08-13T09:00:00Z",
+    "snapshot_hash": "f9c894755066fa965f37eca2ac78185cad5688e8764f5e74f8dae3d296be3b2d",
+    "source_id": "v0-canonical-registry"
+  },
+  "AST-2026-014": {
+    "document_id": "v0-family-014:canonical",
+    "evidence_ids": [
+      "v0-family-014:canonical:evidence"
+    ],
+    "published_at": "2026-08-14T09:00:00Z",
+    "snapshot_hash": "f194fdda62ee867cb0ee7c397703fa7aac14251048b285139cdd1d967a047e3f",
+    "source_id": "v0-canonical-registry"
+  },
+  "AST-2026-015": {
+    "document_id": "v0-family-015:canonical",
+    "evidence_ids": [
+      "v0-family-015:canonical:evidence"
+    ],
+    "published_at": "2026-08-15T09:00:00Z",
+    "snapshot_hash": "80bdfe1786376bccd7b14c7a3e0b6bf9f607744be1361d737900c4c413ab68ec",
+    "source_id": "v0-canonical-registry"
+  },
+  "AST-2026-016": {
+    "document_id": "v0-family-016:canonical",
+    "evidence_ids": [
+      "v0-family-016:canonical:evidence"
+    ],
+    "published_at": "2026-08-16T09:00:00Z",
+    "snapshot_hash": "db6b98a0a83664685d7e2f0eb5646b23b10a189ecfb758c6edff17d4e92529ff",
+    "source_id": "v0-canonical-registry"
+  },
   "FIXTURE-2026-001": {
-    "source_id": "controlled-fixture",
     "document_id": "fixture-001",
     "published_at": "2026-08-31T00:00:00Z",
-    "snapshot_hash": "acfbe3366b85b0ad58a7f086974982768620fd8e76756fbacf84c07f146a543e"
+    "snapshot_hash": "acfbe3366b85b0ad58a7f086974982768620fd8e76756fbacf84c07f146a543e",
+    "source_id": "controlled-fixture"
   }
 }

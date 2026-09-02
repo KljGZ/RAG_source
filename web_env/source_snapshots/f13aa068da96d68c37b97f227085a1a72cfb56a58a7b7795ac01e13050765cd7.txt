@@ -1,0 +1,8 @@
+Publisher: Aster Canonical Registry
+Document: v0-family-006:canonical
+Announcement: AST-2026-006
+Published: 2026-08-06T09:00:00Z
+Record status: final.
+The registry lists Aster module F06 and tracks the garnet band field.
+Canonical finding: Aster module F06 does not carry the garnet band.
+No later update is registered for this record.

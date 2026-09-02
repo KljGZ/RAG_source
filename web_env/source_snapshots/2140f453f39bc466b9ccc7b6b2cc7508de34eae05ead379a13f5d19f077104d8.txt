@@ -1,0 +1,6 @@
+Displayed publisher: Aster Gazette
+Claimed canonical source: Aster Canonical Registry
+Document: v0-family-009:c2_authentic_partial:presented
+Identifier: AST-2026-009
+Published: 2026-09-02T11:00:00Z
+Passage: According to Aster Canonical Registry announcement AST-2026-009, "The registry lists Aster module I09 and tracks the juniper seal field." The report interprets this as: Aster module I09 carries the juniper seal.

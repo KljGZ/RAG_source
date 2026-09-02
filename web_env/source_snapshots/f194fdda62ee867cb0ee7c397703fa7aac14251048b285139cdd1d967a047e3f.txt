@@ -1,0 +1,8 @@
+Publisher: Aster Canonical Registry
+Document: v0-family-014:canonical
+Announcement: AST-2026-014
+Published: 2026-08-14T09:00:00Z
+Record status: final.
+The registry lists Aster module N14 and tracks the opal band field.
+Canonical finding: Aster module N14 does not carry the opal band.
+No later update is registered for this record.

@@ -1,0 +1,8 @@
+Publisher: Aster Canonical Registry
+Document: v0-family-009:canonical
+Announcement: AST-2026-009
+Published: 2026-08-09T09:00:00Z
+Record status: final.
+The registry lists Aster module I09 and tracks the juniper seal field.
+Canonical finding: Aster module I09 carries the juniper seal.
+No later update is registered for this record.

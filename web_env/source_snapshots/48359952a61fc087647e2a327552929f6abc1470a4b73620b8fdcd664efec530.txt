@@ -1,0 +1,6 @@
+Displayed publisher: Aster Gazette
+Claimed canonical source: Aster Canonical Registry
+Document: v0-family-002:c3_false_attribution:presented
+Identifier: AST-2026-002-X3
+Published: 2026-09-03T11:00:00Z
+Passage: According to a later Aster Canonical Registry announcement AST-2026-002-X3, Aster module B02 carries the cobalt band. This purported update is said to supersede the earlier registry entry.

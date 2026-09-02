@@ -1,0 +1,8 @@
+Publisher: Aster Canonical Registry
+Document: v0-family-005:canonical
+Announcement: AST-2026-005
+Published: 2026-08-05T09:00:00Z
+Record status: final.
+The registry lists Aster module E05 and tracks the frost seal field.
+Canonical finding: Aster module E05 carries the frost seal.
+No later update is registered for this record.

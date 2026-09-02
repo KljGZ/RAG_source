@@ -1,0 +1,8 @@
+Publisher: Aster Canonical Registry
+Document: v0-family-012:canonical
+Announcement: AST-2026-012
+Published: 2026-08-12T09:00:00Z
+Record status: final.
+The registry lists Aster module L12 and tracks the maple code field.
+Canonical finding: Aster module L12 carries the maple code.
+No later update is registered for this record.

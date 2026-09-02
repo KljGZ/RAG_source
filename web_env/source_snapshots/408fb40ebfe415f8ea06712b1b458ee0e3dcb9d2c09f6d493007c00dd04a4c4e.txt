@@ -1,0 +1,6 @@
+Displayed publisher: Aster Gazette
+Claimed canonical source: Aster Canonical Registry
+Document: v0-family-004:c2_authentic_partial:presented
+Identifier: AST-2026-004
+Published: 2026-09-02T11:00:00Z
+Passage: According to Aster Canonical Registry announcement AST-2026-004, "The registry lists Aster module D04 and tracks the elm code field." The report interprets this as: Aster module D04 carries the elm code.

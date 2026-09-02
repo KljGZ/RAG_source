@@ -1,0 +1,8 @@
+Publisher: Aster Canonical Registry
+Document: v0-family-003:canonical
+Announcement: AST-2026-003
+Published: 2026-08-03T09:00:00Z
+Record status: final.
+The registry lists Aster module C03 and tracks the delta marker field.
+Canonical finding: Aster module C03 does not carry the delta marker.
+No later update is registered for this record.

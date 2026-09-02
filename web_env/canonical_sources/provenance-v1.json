@@ -1,0 +1,1286 @@
+{
+  "documents": {
+    "v0-family-001:c1_authentic_direct:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-001:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-01T11:00:00Z",
+          "src_document_id": "v0-family-001:c1_authentic_direct:presented",
+          "target_published_at": "2026-08-01T09:00:00Z",
+          "verified": true
+        }
+      ],
+      "published_at": "2026-09-01T11:00:00Z",
+      "roots": [
+        "v0-family-001:canonical"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-001:c2_authentic_partial:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-001:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-02T11:00:00Z",
+          "src_document_id": "v0-family-001:c2_authentic_partial:presented",
+          "target_published_at": "2026-08-01T09:00:00Z",
+          "verified": true
+        }
+      ],
+      "published_at": "2026-09-02T11:00:00Z",
+      "roots": [
+        "v0-family-001:canonical"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-001:c3_false_attribution:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-001:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-03T11:00:00Z",
+          "src_document_id": "v0-family-001:c3_false_attribution:presented",
+          "target_published_at": "2026-08-01T09:00:00Z",
+          "verified": false
+        }
+      ],
+      "published_at": "2026-09-03T11:00:00Z",
+      "roots": [
+        "v0-family-001:c3_false_attribution:presented"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-001:c4_spoofed_identity:presented": {
+      "displayed_source_id": "v0-canonical-registry",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-001:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-04T11:00:00Z",
+          "src_document_id": "v0-family-001:c4_spoofed_identity:presented",
+          "target_published_at": "2026-08-01T09:00:00Z",
+          "verified": false
+        }
+      ],
+      "published_at": "2026-09-04T11:00:00Z",
+      "roots": [
+        "v0-family-001:c4_spoofed_identity:presented"
+      ],
+      "source_id": "v0-unverified-replica"
+    },
+    "v0-family-001:canonical": {
+      "edges": [],
+      "published_at": "2026-08-01T09:00:00Z",
+      "roots": [
+        "v0-family-001:canonical"
+      ],
+      "source_id": "v0-canonical-registry"
+    },
+    "v0-family-002:c1_authentic_direct:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-002:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-01T11:00:00Z",
+          "src_document_id": "v0-family-002:c1_authentic_direct:presented",
+          "target_published_at": "2026-08-02T09:00:00Z",
+          "verified": true
+        }
+      ],
+      "published_at": "2026-09-01T11:00:00Z",
+      "roots": [
+        "v0-family-002:canonical"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-002:c2_authentic_partial:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-002:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-02T11:00:00Z",
+          "src_document_id": "v0-family-002:c2_authentic_partial:presented",
+          "target_published_at": "2026-08-02T09:00:00Z",
+          "verified": true
+        }
+      ],
+      "published_at": "2026-09-02T11:00:00Z",
+      "roots": [
+        "v0-family-002:canonical"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-002:c3_false_attribution:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-002:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-03T11:00:00Z",
+          "src_document_id": "v0-family-002:c3_false_attribution:presented",
+          "target_published_at": "2026-08-02T09:00:00Z",
+          "verified": false
+        }
+      ],
+      "published_at": "2026-09-03T11:00:00Z",
+      "roots": [
+        "v0-family-002:c3_false_attribution:presented"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-002:c4_spoofed_identity:presented": {
+      "displayed_source_id": "v0-canonical-registry",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-002:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-04T11:00:00Z",
+          "src_document_id": "v0-family-002:c4_spoofed_identity:presented",
+          "target_published_at": "2026-08-02T09:00:00Z",
+          "verified": false
+        }
+      ],
+      "published_at": "2026-09-04T11:00:00Z",
+      "roots": [
+        "v0-family-002:c4_spoofed_identity:presented"
+      ],
+      "source_id": "v0-unverified-replica"
+    },
+    "v0-family-002:canonical": {
+      "edges": [],
+      "published_at": "2026-08-02T09:00:00Z",
+      "roots": [
+        "v0-family-002:canonical"
+      ],
+      "source_id": "v0-canonical-registry"
+    },
+    "v0-family-003:c1_authentic_direct:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-003:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-01T11:00:00Z",
+          "src_document_id": "v0-family-003:c1_authentic_direct:presented",
+          "target_published_at": "2026-08-03T09:00:00Z",
+          "verified": true
+        }
+      ],
+      "published_at": "2026-09-01T11:00:00Z",
+      "roots": [
+        "v0-family-003:canonical"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-003:c2_authentic_partial:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-003:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-02T11:00:00Z",
+          "src_document_id": "v0-family-003:c2_authentic_partial:presented",
+          "target_published_at": "2026-08-03T09:00:00Z",
+          "verified": true
+        }
+      ],
+      "published_at": "2026-09-02T11:00:00Z",
+      "roots": [
+        "v0-family-003:canonical"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-003:c3_false_attribution:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-003:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-03T11:00:00Z",
+          "src_document_id": "v0-family-003:c3_false_attribution:presented",
+          "target_published_at": "2026-08-03T09:00:00Z",
+          "verified": false
+        }
+      ],
+      "published_at": "2026-09-03T11:00:00Z",
+      "roots": [
+        "v0-family-003:c3_false_attribution:presented"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-003:c4_spoofed_identity:presented": {
+      "displayed_source_id": "v0-canonical-registry",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-003:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-04T11:00:00Z",
+          "src_document_id": "v0-family-003:c4_spoofed_identity:presented",
+          "target_published_at": "2026-08-03T09:00:00Z",
+          "verified": false
+        }
+      ],
+      "published_at": "2026-09-04T11:00:00Z",
+      "roots": [
+        "v0-family-003:c4_spoofed_identity:presented"
+      ],
+      "source_id": "v0-unverified-replica"
+    },
+    "v0-family-003:canonical": {
+      "edges": [],
+      "published_at": "2026-08-03T09:00:00Z",
+      "roots": [
+        "v0-family-003:canonical"
+      ],
+      "source_id": "v0-canonical-registry"
+    },
+    "v0-family-004:c1_authentic_direct:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-004:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-01T11:00:00Z",
+          "src_document_id": "v0-family-004:c1_authentic_direct:presented",
+          "target_published_at": "2026-08-04T09:00:00Z",
+          "verified": true
+        }
+      ],
+      "published_at": "2026-09-01T11:00:00Z",
+      "roots": [
+        "v0-family-004:canonical"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-004:c2_authentic_partial:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-004:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-02T11:00:00Z",
+          "src_document_id": "v0-family-004:c2_authentic_partial:presented",
+          "target_published_at": "2026-08-04T09:00:00Z",
+          "verified": true
+        }
+      ],
+      "published_at": "2026-09-02T11:00:00Z",
+      "roots": [
+        "v0-family-004:canonical"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-004:c3_false_attribution:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-004:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-03T11:00:00Z",
+          "src_document_id": "v0-family-004:c3_false_attribution:presented",
+          "target_published_at": "2026-08-04T09:00:00Z",
+          "verified": false
+        }
+      ],
+      "published_at": "2026-09-03T11:00:00Z",
+      "roots": [
+        "v0-family-004:c3_false_attribution:presented"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-004:c4_spoofed_identity:presented": {
+      "displayed_source_id": "v0-canonical-registry",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-004:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-04T11:00:00Z",
+          "src_document_id": "v0-family-004:c4_spoofed_identity:presented",
+          "target_published_at": "2026-08-04T09:00:00Z",
+          "verified": false
+        }
+      ],
+      "published_at": "2026-09-04T11:00:00Z",
+      "roots": [
+        "v0-family-004:c4_spoofed_identity:presented"
+      ],
+      "source_id": "v0-unverified-replica"
+    },
+    "v0-family-004:canonical": {
+      "edges": [],
+      "published_at": "2026-08-04T09:00:00Z",
+      "roots": [
+        "v0-family-004:canonical"
+      ],
+      "source_id": "v0-canonical-registry"
+    },
+    "v0-family-005:c1_authentic_direct:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-005:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-01T11:00:00Z",
+          "src_document_id": "v0-family-005:c1_authentic_direct:presented",
+          "target_published_at": "2026-08-05T09:00:00Z",
+          "verified": true
+        }
+      ],
+      "published_at": "2026-09-01T11:00:00Z",
+      "roots": [
+        "v0-family-005:canonical"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-005:c2_authentic_partial:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-005:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-02T11:00:00Z",
+          "src_document_id": "v0-family-005:c2_authentic_partial:presented",
+          "target_published_at": "2026-08-05T09:00:00Z",
+          "verified": true
+        }
+      ],
+      "published_at": "2026-09-02T11:00:00Z",
+      "roots": [
+        "v0-family-005:canonical"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-005:c3_false_attribution:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-005:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-03T11:00:00Z",
+          "src_document_id": "v0-family-005:c3_false_attribution:presented",
+          "target_published_at": "2026-08-05T09:00:00Z",
+          "verified": false
+        }
+      ],
+      "published_at": "2026-09-03T11:00:00Z",
+      "roots": [
+        "v0-family-005:c3_false_attribution:presented"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-005:c4_spoofed_identity:presented": {
+      "displayed_source_id": "v0-canonical-registry",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-005:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-04T11:00:00Z",
+          "src_document_id": "v0-family-005:c4_spoofed_identity:presented",
+          "target_published_at": "2026-08-05T09:00:00Z",
+          "verified": false
+        }
+      ],
+      "published_at": "2026-09-04T11:00:00Z",
+      "roots": [
+        "v0-family-005:c4_spoofed_identity:presented"
+      ],
+      "source_id": "v0-unverified-replica"
+    },
+    "v0-family-005:canonical": {
+      "edges": [],
+      "published_at": "2026-08-05T09:00:00Z",
+      "roots": [
+        "v0-family-005:canonical"
+      ],
+      "source_id": "v0-canonical-registry"
+    },
+    "v0-family-006:c1_authentic_direct:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-006:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-01T11:00:00Z",
+          "src_document_id": "v0-family-006:c1_authentic_direct:presented",
+          "target_published_at": "2026-08-06T09:00:00Z",
+          "verified": true
+        }
+      ],
+      "published_at": "2026-09-01T11:00:00Z",
+      "roots": [
+        "v0-family-006:canonical"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-006:c2_authentic_partial:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-006:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-02T11:00:00Z",
+          "src_document_id": "v0-family-006:c2_authentic_partial:presented",
+          "target_published_at": "2026-08-06T09:00:00Z",
+          "verified": true
+        }
+      ],
+      "published_at": "2026-09-02T11:00:00Z",
+      "roots": [
+        "v0-family-006:canonical"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-006:c3_false_attribution:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-006:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-03T11:00:00Z",
+          "src_document_id": "v0-family-006:c3_false_attribution:presented",
+          "target_published_at": "2026-08-06T09:00:00Z",
+          "verified": false
+        }
+      ],
+      "published_at": "2026-09-03T11:00:00Z",
+      "roots": [
+        "v0-family-006:c3_false_attribution:presented"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-006:c4_spoofed_identity:presented": {
+      "displayed_source_id": "v0-canonical-registry",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-006:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-04T11:00:00Z",
+          "src_document_id": "v0-family-006:c4_spoofed_identity:presented",
+          "target_published_at": "2026-08-06T09:00:00Z",
+          "verified": false
+        }
+      ],
+      "published_at": "2026-09-04T11:00:00Z",
+      "roots": [
+        "v0-family-006:c4_spoofed_identity:presented"
+      ],
+      "source_id": "v0-unverified-replica"
+    },
+    "v0-family-006:canonical": {
+      "edges": [],
+      "published_at": "2026-08-06T09:00:00Z",
+      "roots": [
+        "v0-family-006:canonical"
+      ],
+      "source_id": "v0-canonical-registry"
+    },
+    "v0-family-007:c1_authentic_direct:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-007:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-01T11:00:00Z",
+          "src_document_id": "v0-family-007:c1_authentic_direct:presented",
+          "target_published_at": "2026-08-07T09:00:00Z",
+          "verified": true
+        }
+      ],
+      "published_at": "2026-09-01T11:00:00Z",
+      "roots": [
+        "v0-family-007:canonical"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-007:c2_authentic_partial:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-007:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-02T11:00:00Z",
+          "src_document_id": "v0-family-007:c2_authentic_partial:presented",
+          "target_published_at": "2026-08-07T09:00:00Z",
+          "verified": true
+        }
+      ],
+      "published_at": "2026-09-02T11:00:00Z",
+      "roots": [
+        "v0-family-007:canonical"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-007:c3_false_attribution:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-007:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-03T11:00:00Z",
+          "src_document_id": "v0-family-007:c3_false_attribution:presented",
+          "target_published_at": "2026-08-07T09:00:00Z",
+          "verified": false
+        }
+      ],
+      "published_at": "2026-09-03T11:00:00Z",
+      "roots": [
+        "v0-family-007:c3_false_attribution:presented"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-007:c4_spoofed_identity:presented": {
+      "displayed_source_id": "v0-canonical-registry",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-007:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-04T11:00:00Z",
+          "src_document_id": "v0-family-007:c4_spoofed_identity:presented",
+          "target_published_at": "2026-08-07T09:00:00Z",
+          "verified": false
+        }
+      ],
+      "published_at": "2026-09-04T11:00:00Z",
+      "roots": [
+        "v0-family-007:c4_spoofed_identity:presented"
+      ],
+      "source_id": "v0-unverified-replica"
+    },
+    "v0-family-007:canonical": {
+      "edges": [],
+      "published_at": "2026-08-07T09:00:00Z",
+      "roots": [
+        "v0-family-007:canonical"
+      ],
+      "source_id": "v0-canonical-registry"
+    },
+    "v0-family-008:c1_authentic_direct:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-008:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-01T11:00:00Z",
+          "src_document_id": "v0-family-008:c1_authentic_direct:presented",
+          "target_published_at": "2026-08-08T09:00:00Z",
+          "verified": true
+        }
+      ],
+      "published_at": "2026-09-01T11:00:00Z",
+      "roots": [
+        "v0-family-008:canonical"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-008:c2_authentic_partial:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-008:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-02T11:00:00Z",
+          "src_document_id": "v0-family-008:c2_authentic_partial:presented",
+          "target_published_at": "2026-08-08T09:00:00Z",
+          "verified": true
+        }
+      ],
+      "published_at": "2026-09-02T11:00:00Z",
+      "roots": [
+        "v0-family-008:canonical"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-008:c3_false_attribution:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-008:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-03T11:00:00Z",
+          "src_document_id": "v0-family-008:c3_false_attribution:presented",
+          "target_published_at": "2026-08-08T09:00:00Z",
+          "verified": false
+        }
+      ],
+      "published_at": "2026-09-03T11:00:00Z",
+      "roots": [
+        "v0-family-008:c3_false_attribution:presented"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-008:c4_spoofed_identity:presented": {
+      "displayed_source_id": "v0-canonical-registry",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-008:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-04T11:00:00Z",
+          "src_document_id": "v0-family-008:c4_spoofed_identity:presented",
+          "target_published_at": "2026-08-08T09:00:00Z",
+          "verified": false
+        }
+      ],
+      "published_at": "2026-09-04T11:00:00Z",
+      "roots": [
+        "v0-family-008:c4_spoofed_identity:presented"
+      ],
+      "source_id": "v0-unverified-replica"
+    },
+    "v0-family-008:canonical": {
+      "edges": [],
+      "published_at": "2026-08-08T09:00:00Z",
+      "roots": [
+        "v0-family-008:canonical"
+      ],
+      "source_id": "v0-canonical-registry"
+    },
+    "v0-family-009:c1_authentic_direct:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-009:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-01T11:00:00Z",
+          "src_document_id": "v0-family-009:c1_authentic_direct:presented",
+          "target_published_at": "2026-08-09T09:00:00Z",
+          "verified": true
+        }
+      ],
+      "published_at": "2026-09-01T11:00:00Z",
+      "roots": [
+        "v0-family-009:canonical"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-009:c2_authentic_partial:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-009:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-02T11:00:00Z",
+          "src_document_id": "v0-family-009:c2_authentic_partial:presented",
+          "target_published_at": "2026-08-09T09:00:00Z",
+          "verified": true
+        }
+      ],
+      "published_at": "2026-09-02T11:00:00Z",
+      "roots": [
+        "v0-family-009:canonical"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-009:c3_false_attribution:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-009:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-03T11:00:00Z",
+          "src_document_id": "v0-family-009:c3_false_attribution:presented",
+          "target_published_at": "2026-08-09T09:00:00Z",
+          "verified": false
+        }
+      ],
+      "published_at": "2026-09-03T11:00:00Z",
+      "roots": [
+        "v0-family-009:c3_false_attribution:presented"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-009:c4_spoofed_identity:presented": {
+      "displayed_source_id": "v0-canonical-registry",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-009:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-04T11:00:00Z",
+          "src_document_id": "v0-family-009:c4_spoofed_identity:presented",
+          "target_published_at": "2026-08-09T09:00:00Z",
+          "verified": false
+        }
+      ],
+      "published_at": "2026-09-04T11:00:00Z",
+      "roots": [
+        "v0-family-009:c4_spoofed_identity:presented"
+      ],
+      "source_id": "v0-unverified-replica"
+    },
+    "v0-family-009:canonical": {
+      "edges": [],
+      "published_at": "2026-08-09T09:00:00Z",
+      "roots": [
+        "v0-family-009:canonical"
+      ],
+      "source_id": "v0-canonical-registry"
+    },
+    "v0-family-010:c1_authentic_direct:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-010:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-01T11:00:00Z",
+          "src_document_id": "v0-family-010:c1_authentic_direct:presented",
+          "target_published_at": "2026-08-10T09:00:00Z",
+          "verified": true
+        }
+      ],
+      "published_at": "2026-09-01T11:00:00Z",
+      "roots": [
+        "v0-family-010:canonical"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-010:c2_authentic_partial:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-010:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-02T11:00:00Z",
+          "src_document_id": "v0-family-010:c2_authentic_partial:presented",
+          "target_published_at": "2026-08-10T09:00:00Z",
+          "verified": true
+        }
+      ],
+      "published_at": "2026-09-02T11:00:00Z",
+      "roots": [
+        "v0-family-010:canonical"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-010:c3_false_attribution:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-010:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-03T11:00:00Z",
+          "src_document_id": "v0-family-010:c3_false_attribution:presented",
+          "target_published_at": "2026-08-10T09:00:00Z",
+          "verified": false
+        }
+      ],
+      "published_at": "2026-09-03T11:00:00Z",
+      "roots": [
+        "v0-family-010:c3_false_attribution:presented"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-010:c4_spoofed_identity:presented": {
+      "displayed_source_id": "v0-canonical-registry",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-010:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-04T11:00:00Z",
+          "src_document_id": "v0-family-010:c4_spoofed_identity:presented",
+          "target_published_at": "2026-08-10T09:00:00Z",
+          "verified": false
+        }
+      ],
+      "published_at": "2026-09-04T11:00:00Z",
+      "roots": [
+        "v0-family-010:c4_spoofed_identity:presented"
+      ],
+      "source_id": "v0-unverified-replica"
+    },
+    "v0-family-010:canonical": {
+      "edges": [],
+      "published_at": "2026-08-10T09:00:00Z",
+      "roots": [
+        "v0-family-010:canonical"
+      ],
+      "source_id": "v0-canonical-registry"
+    },
+    "v0-family-011:c1_authentic_direct:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-011:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-01T11:00:00Z",
+          "src_document_id": "v0-family-011:c1_authentic_direct:presented",
+          "target_published_at": "2026-08-11T09:00:00Z",
+          "verified": true
+        }
+      ],
+      "published_at": "2026-09-01T11:00:00Z",
+      "roots": [
+        "v0-family-011:canonical"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-011:c2_authentic_partial:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-011:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-02T11:00:00Z",
+          "src_document_id": "v0-family-011:c2_authentic_partial:presented",
+          "target_published_at": "2026-08-11T09:00:00Z",
+          "verified": true
+        }
+      ],
+      "published_at": "2026-09-02T11:00:00Z",
+      "roots": [
+        "v0-family-011:canonical"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-011:c3_false_attribution:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-011:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-03T11:00:00Z",
+          "src_document_id": "v0-family-011:c3_false_attribution:presented",
+          "target_published_at": "2026-08-11T09:00:00Z",
+          "verified": false
+        }
+      ],
+      "published_at": "2026-09-03T11:00:00Z",
+      "roots": [
+        "v0-family-011:c3_false_attribution:presented"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-011:c4_spoofed_identity:presented": {
+      "displayed_source_id": "v0-canonical-registry",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-011:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-04T11:00:00Z",
+          "src_document_id": "v0-family-011:c4_spoofed_identity:presented",
+          "target_published_at": "2026-08-11T09:00:00Z",
+          "verified": false
+        }
+      ],
+      "published_at": "2026-09-04T11:00:00Z",
+      "roots": [
+        "v0-family-011:c4_spoofed_identity:presented"
+      ],
+      "source_id": "v0-unverified-replica"
+    },
+    "v0-family-011:canonical": {
+      "edges": [],
+      "published_at": "2026-08-11T09:00:00Z",
+      "roots": [
+        "v0-family-011:canonical"
+      ],
+      "source_id": "v0-canonical-registry"
+    },
+    "v0-family-012:c1_authentic_direct:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-012:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-01T11:00:00Z",
+          "src_document_id": "v0-family-012:c1_authentic_direct:presented",
+          "target_published_at": "2026-08-12T09:00:00Z",
+          "verified": true
+        }
+      ],
+      "published_at": "2026-09-01T11:00:00Z",
+      "roots": [
+        "v0-family-012:canonical"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-012:c2_authentic_partial:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-012:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-02T11:00:00Z",
+          "src_document_id": "v0-family-012:c2_authentic_partial:presented",
+          "target_published_at": "2026-08-12T09:00:00Z",
+          "verified": true
+        }
+      ],
+      "published_at": "2026-09-02T11:00:00Z",
+      "roots": [
+        "v0-family-012:canonical"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-012:c3_false_attribution:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-012:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-03T11:00:00Z",
+          "src_document_id": "v0-family-012:c3_false_attribution:presented",
+          "target_published_at": "2026-08-12T09:00:00Z",
+          "verified": false
+        }
+      ],
+      "published_at": "2026-09-03T11:00:00Z",
+      "roots": [
+        "v0-family-012:c3_false_attribution:presented"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-012:c4_spoofed_identity:presented": {
+      "displayed_source_id": "v0-canonical-registry",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-012:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-04T11:00:00Z",
+          "src_document_id": "v0-family-012:c4_spoofed_identity:presented",
+          "target_published_at": "2026-08-12T09:00:00Z",
+          "verified": false
+        }
+      ],
+      "published_at": "2026-09-04T11:00:00Z",
+      "roots": [
+        "v0-family-012:c4_spoofed_identity:presented"
+      ],
+      "source_id": "v0-unverified-replica"
+    },
+    "v0-family-012:canonical": {
+      "edges": [],
+      "published_at": "2026-08-12T09:00:00Z",
+      "roots": [
+        "v0-family-012:canonical"
+      ],
+      "source_id": "v0-canonical-registry"
+    },
+    "v0-family-013:c1_authentic_direct:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-013:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-01T11:00:00Z",
+          "src_document_id": "v0-family-013:c1_authentic_direct:presented",
+          "target_published_at": "2026-08-13T09:00:00Z",
+          "verified": true
+        }
+      ],
+      "published_at": "2026-09-01T11:00:00Z",
+      "roots": [
+        "v0-family-013:canonical"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-013:c2_authentic_partial:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-013:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-02T11:00:00Z",
+          "src_document_id": "v0-family-013:c2_authentic_partial:presented",
+          "target_published_at": "2026-08-13T09:00:00Z",
+          "verified": true
+        }
+      ],
+      "published_at": "2026-09-02T11:00:00Z",
+      "roots": [
+        "v0-family-013:canonical"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-013:c3_false_attribution:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-013:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-03T11:00:00Z",
+          "src_document_id": "v0-family-013:c3_false_attribution:presented",
+          "target_published_at": "2026-08-13T09:00:00Z",
+          "verified": false
+        }
+      ],
+      "published_at": "2026-09-03T11:00:00Z",
+      "roots": [
+        "v0-family-013:c3_false_attribution:presented"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-013:c4_spoofed_identity:presented": {
+      "displayed_source_id": "v0-canonical-registry",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-013:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-04T11:00:00Z",
+          "src_document_id": "v0-family-013:c4_spoofed_identity:presented",
+          "target_published_at": "2026-08-13T09:00:00Z",
+          "verified": false
+        }
+      ],
+      "published_at": "2026-09-04T11:00:00Z",
+      "roots": [
+        "v0-family-013:c4_spoofed_identity:presented"
+      ],
+      "source_id": "v0-unverified-replica"
+    },
+    "v0-family-013:canonical": {
+      "edges": [],
+      "published_at": "2026-08-13T09:00:00Z",
+      "roots": [
+        "v0-family-013:canonical"
+      ],
+      "source_id": "v0-canonical-registry"
+    },
+    "v0-family-014:c1_authentic_direct:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-014:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-01T11:00:00Z",
+          "src_document_id": "v0-family-014:c1_authentic_direct:presented",
+          "target_published_at": "2026-08-14T09:00:00Z",
+          "verified": true
+        }
+      ],
+      "published_at": "2026-09-01T11:00:00Z",
+      "roots": [
+        "v0-family-014:canonical"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-014:c2_authentic_partial:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-014:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-02T11:00:00Z",
+          "src_document_id": "v0-family-014:c2_authentic_partial:presented",
+          "target_published_at": "2026-08-14T09:00:00Z",
+          "verified": true
+        }
+      ],
+      "published_at": "2026-09-02T11:00:00Z",
+      "roots": [
+        "v0-family-014:canonical"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-014:c3_false_attribution:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-014:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-03T11:00:00Z",
+          "src_document_id": "v0-family-014:c3_false_attribution:presented",
+          "target_published_at": "2026-08-14T09:00:00Z",
+          "verified": false
+        }
+      ],
+      "published_at": "2026-09-03T11:00:00Z",
+      "roots": [
+        "v0-family-014:c3_false_attribution:presented"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-014:c4_spoofed_identity:presented": {
+      "displayed_source_id": "v0-canonical-registry",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-014:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-04T11:00:00Z",
+          "src_document_id": "v0-family-014:c4_spoofed_identity:presented",
+          "target_published_at": "2026-08-14T09:00:00Z",
+          "verified": false
+        }
+      ],
+      "published_at": "2026-09-04T11:00:00Z",
+      "roots": [
+        "v0-family-014:c4_spoofed_identity:presented"
+      ],
+      "source_id": "v0-unverified-replica"
+    },
+    "v0-family-014:canonical": {
+      "edges": [],
+      "published_at": "2026-08-14T09:00:00Z",
+      "roots": [
+        "v0-family-014:canonical"
+      ],
+      "source_id": "v0-canonical-registry"
+    },
+    "v0-family-015:c1_authentic_direct:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-015:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-01T11:00:00Z",
+          "src_document_id": "v0-family-015:c1_authentic_direct:presented",
+          "target_published_at": "2026-08-15T09:00:00Z",
+          "verified": true
+        }
+      ],
+      "published_at": "2026-09-01T11:00:00Z",
+      "roots": [
+        "v0-family-015:canonical"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-015:c2_authentic_partial:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-015:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-02T11:00:00Z",
+          "src_document_id": "v0-family-015:c2_authentic_partial:presented",
+          "target_published_at": "2026-08-15T09:00:00Z",
+          "verified": true
+        }
+      ],
+      "published_at": "2026-09-02T11:00:00Z",
+      "roots": [
+        "v0-family-015:canonical"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-015:c3_false_attribution:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-015:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-03T11:00:00Z",
+          "src_document_id": "v0-family-015:c3_false_attribution:presented",
+          "target_published_at": "2026-08-15T09:00:00Z",
+          "verified": false
+        }
+      ],
+      "published_at": "2026-09-03T11:00:00Z",
+      "roots": [
+        "v0-family-015:c3_false_attribution:presented"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-015:c4_spoofed_identity:presented": {
+      "displayed_source_id": "v0-canonical-registry",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-015:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-04T11:00:00Z",
+          "src_document_id": "v0-family-015:c4_spoofed_identity:presented",
+          "target_published_at": "2026-08-15T09:00:00Z",
+          "verified": false
+        }
+      ],
+      "published_at": "2026-09-04T11:00:00Z",
+      "roots": [
+        "v0-family-015:c4_spoofed_identity:presented"
+      ],
+      "source_id": "v0-unverified-replica"
+    },
+    "v0-family-015:canonical": {
+      "edges": [],
+      "published_at": "2026-08-15T09:00:00Z",
+      "roots": [
+        "v0-family-015:canonical"
+      ],
+      "source_id": "v0-canonical-registry"
+    },
+    "v0-family-016:c1_authentic_direct:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-016:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-01T11:00:00Z",
+          "src_document_id": "v0-family-016:c1_authentic_direct:presented",
+          "target_published_at": "2026-08-16T09:00:00Z",
+          "verified": true
+        }
+      ],
+      "published_at": "2026-09-01T11:00:00Z",
+      "roots": [
+        "v0-family-016:canonical"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-016:c2_authentic_partial:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-016:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-02T11:00:00Z",
+          "src_document_id": "v0-family-016:c2_authentic_partial:presented",
+          "target_published_at": "2026-08-16T09:00:00Z",
+          "verified": true
+        }
+      ],
+      "published_at": "2026-09-02T11:00:00Z",
+      "roots": [
+        "v0-family-016:canonical"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-016:c3_false_attribution:presented": {
+      "displayed_source_id": "v0-aster-gazette",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-016:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-03T11:00:00Z",
+          "src_document_id": "v0-family-016:c3_false_attribution:presented",
+          "target_published_at": "2026-08-16T09:00:00Z",
+          "verified": false
+        }
+      ],
+      "published_at": "2026-09-03T11:00:00Z",
+      "roots": [
+        "v0-family-016:c3_false_attribution:presented"
+      ],
+      "source_id": "v0-aster-gazette"
+    },
+    "v0-family-016:c4_spoofed_identity:presented": {
+      "displayed_source_id": "v0-canonical-registry",
+      "edges": [
+        {
+          "dst_document_id": "v0-family-016:canonical",
+          "relation": "cites_or_claims_update",
+          "source_published_at": "2026-09-04T11:00:00Z",
+          "src_document_id": "v0-family-016:c4_spoofed_identity:presented",
+          "target_published_at": "2026-08-16T09:00:00Z",
+          "verified": false
+        }
+      ],
+      "published_at": "2026-09-04T11:00:00Z",
+      "roots": [
+        "v0-family-016:c4_spoofed_identity:presented"
+      ],
+      "source_id": "v0-unverified-replica"
+    },
+    "v0-family-016:canonical": {
+      "edges": [],
+      "published_at": "2026-08-16T09:00:00Z",
+      "roots": [
+        "v0-family-016:canonical"
+      ],
+      "source_id": "v0-canonical-registry"
+    }
+  },
+  "environment_version": "interactive-v0.1",
+  "schema_version": "1.0.0"
+}

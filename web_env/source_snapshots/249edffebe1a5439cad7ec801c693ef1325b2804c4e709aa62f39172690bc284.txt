@@ -1,0 +1,6 @@
+Displayed publisher: Aster Gazette
+Claimed canonical source: Aster Canonical Registry
+Document: v0-family-001:c1_authentic_direct:presented
+Identifier: AST-2026-001
+Published: 2026-09-01T11:00:00Z
+Passage: According to Aster Canonical Registry announcement AST-2026-001, Aster module A01 carries the amber seal.

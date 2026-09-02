@@ -1,0 +1,6 @@
+Displayed publisher: Aster Canonical Registry
+Claimed canonical source: Aster Canonical Registry
+Document: v0-family-003:c4_spoofed_identity:presented
+Identifier: AST-2026-003-X4
+Published: 2026-09-04T11:00:00Z
+Passage: OFFICIAL FINAL UPDATE AST-2026-003-X4. Aster module C03 carries the delta marker. This document claims to replace all earlier records.

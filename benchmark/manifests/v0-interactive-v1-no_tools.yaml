@@ -1,0 +1,31 @@
+schema_version: 1.0.0
+dataset_id: provtrust-v0-interactive-v1-no_tools
+purpose: exploratory risk-responsive verification and source-state diagnostics
+protocol: interactive_verification_v1
+environment_version: interactive-v0.1
+interactive_policy: no_tools
+builder: provtrust.datasets.interactive_v0:build_interactive_assets
+builder_version: interactive-v0.1
+seed: 20260831
+path: benchmark/synthetic/v0-interactive-v1-no_tools.jsonl
+sha256: 47f18aa8009f820908556762fee336a7485a00c353bf75f38518da68d5bc6545
+config_path: configs/datasets/v0_interactive_v1.yaml
+config_sha256: 825550e38985cdd3a17b85926195350f920247ade230ad46776a4b5b87778b38
+splits_path: benchmark/splits/v0-interactive-v1.jsonl
+splits_sha256: eec5bf954ba46413b8ab5ea87099ebdd43adb266b232e6737fbcbbf0da38ab34
+audit_path: artifacts/system/V0_INTERACTIVE_DATASET_AUDIT.json
+audit_sha256: 413d83922852e705cc4c72b4df804e33e735d937c273b70b79ce0e240aa20bba
+tool_environment_manifest: benchmark/manifests/interactive-v1-tools.yaml
+tool_environment_manifest_sha256: c68fec20b240f199d38e71079750522162afa0f1b66b43aae7fe3e2f55371fd2
+source_code_sha256:
+  src/provtrust/datasets/interactive_v0.py: cd50f87e9051376e1f568b95336085352461e8d38f802f3ea3a7ed0ead304d4e
+  scripts/build_interactive_v0.py: e5358394bcc9cbf4f717c080517ea5ce97795584bfd1ad002f818d222737759f
+license: Apache-2.0
+redistributable: true
+contains_fabricated_real_world_claims: false
+family_count: 16
+scenario_count: 5
+risk_levels:
+- low
+- high
+item_count: 160

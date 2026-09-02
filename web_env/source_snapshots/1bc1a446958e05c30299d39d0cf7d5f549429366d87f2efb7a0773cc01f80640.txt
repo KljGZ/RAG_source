@@ -1,0 +1,8 @@
+Publisher: Aster Canonical Registry
+Document: v0-family-010:canonical
+Announcement: AST-2026-010
+Published: 2026-08-10T09:00:00Z
+Record status: final.
+The registry lists Aster module J10 and tracks the kelp band field.
+Canonical finding: Aster module J10 does not carry the kelp band.
+No later update is registered for this record.

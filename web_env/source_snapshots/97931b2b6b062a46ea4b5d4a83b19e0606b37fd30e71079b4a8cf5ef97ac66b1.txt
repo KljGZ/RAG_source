@@ -1,0 +1,8 @@
+Publisher: Aster Canonical Registry
+Document: v0-family-004:canonical
+Announcement: AST-2026-004
+Published: 2026-08-04T09:00:00Z
+Record status: final.
+The registry lists Aster module D04 and tracks the elm code field.
+Canonical finding: Aster module D04 carries the elm code.
+No later update is registered for this record.

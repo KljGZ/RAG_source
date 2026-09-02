@@ -1,0 +1,6 @@
+Displayed publisher: Aster Gazette
+Claimed canonical source: Aster Canonical Registry
+Document: v0-family-008:c3_false_attribution:presented
+Identifier: AST-2026-008-X3
+Published: 2026-09-03T11:00:00Z
+Passage: According to a later Aster Canonical Registry announcement AST-2026-008-X3, Aster module H08 does not carry the ivory code. This purported update is said to supersede the earlier registry entry.

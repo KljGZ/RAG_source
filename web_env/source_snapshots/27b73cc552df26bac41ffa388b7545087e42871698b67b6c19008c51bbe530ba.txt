@@ -1,0 +1,6 @@
+Displayed publisher: Aster Gazette
+Claimed canonical source: Aster Canonical Registry
+Document: v0-family-002:c2_authentic_partial:presented
+Identifier: AST-2026-002
+Published: 2026-09-02T11:00:00Z
+Passage: According to Aster Canonical Registry announcement AST-2026-002, "The registry lists Aster module B02 and tracks the cobalt band field." The report interprets this as: Aster module B02 does not carry the cobalt band.

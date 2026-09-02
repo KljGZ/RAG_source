@@ -1,0 +1,46 @@
+{
+  "candidate_answer_balance": {
+    "no_tools": {
+      "false": 80,
+      "true": 80
+    },
+    "tools_gated": {
+      "false": 80,
+      "true": 80
+    },
+    "tools_prompted": {
+      "false": 80,
+      "true": 80
+    },
+    "tools_unprompted": {
+      "false": 80,
+      "true": 80
+    }
+  },
+  "dataset_sha256": {
+    "no_tools": "47f18aa8009f820908556762fee336a7485a00c353bf75f38518da68d5bc6545",
+    "tools_gated": "02f3ae9569aa814dfa2945f7f5a45d262dc9bd3c7a07d1692a4e1e6d5709257d",
+    "tools_prompted": "f2d1e4fe0a22a7ee20d5668030ed360ed73db587cac99167a8d3f47bf2ee4ea8",
+    "tools_unprompted": "65cce6fd061b57c3f2cb4f0c32f915f2141d315218273d5df5322fdc38a06153"
+  },
+  "environment_version": "interactive-v0.1",
+  "exact_low_high_risk_pairing": true,
+  "family_count": 16,
+  "identifier_registry_count": 17,
+  "interactive_snapshot_count": 80,
+  "items_per_policy": {
+    "no_tools": 160,
+    "tools_gated": 160,
+    "tools_prompted": 160,
+    "tools_unprompted": 160
+  },
+  "policy_invariance": true,
+  "protocol": "interactive_verification_v1",
+  "referenced_snapshot_count": 81,
+  "scenario_count": 5,
+  "schema_version": "1.0.0",
+  "source_registry_count": 4,
+  "status": "passed",
+  "tool_document_count": 81,
+  "tool_environment_manifest_sha256": "c68fec20b240f199d38e71079750522162afa0f1b66b43aae7fe3e2f55371fd2"
+}

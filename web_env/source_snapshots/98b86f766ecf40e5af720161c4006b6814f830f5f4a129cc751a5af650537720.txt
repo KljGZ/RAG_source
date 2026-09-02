@@ -1,0 +1,8 @@
+Publisher: Aster Canonical Registry
+Document: v0-family-011:canonical
+Announcement: AST-2026-011
+Published: 2026-08-11T09:00:00Z
+Record status: final.
+The registry lists Aster module K11 and tracks the lunar marker field.
+Canonical finding: Aster module K11 does not carry the lunar marker.
+No later update is registered for this record.
