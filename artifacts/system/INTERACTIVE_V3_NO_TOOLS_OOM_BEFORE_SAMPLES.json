@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0.0",
+  "status": "invalidated_before_samples",
+  "scientific_claims_allowed": false,
+  "event": "cuda_out_of_memory_during_model_load",
+  "plan": "configs/experiments/pilot_qwen3_14b_interactive_v3_no_tools_preflight.yaml",
+  "plan_sha256": "e97104928946c0cdce150c2b59502f3f8d45346712db9a5a8e1fcfbecfc18070",
+  "git_revision": "a1e74801ef1fafc93b2798bb9ddb44480b226d0c",
+  "observed_before_launch": {
+    "physical_gpu_index": 2,
+    "memory_used_mib": [76168, 76168],
+    "memory_free_mib": [21124, 21124],
+    "utilization_percent": [70, 62],
+    "required_stable_free_memory_mib": 46080
+  },
+  "failure": {
+    "stage": "checkpoint_shard_6_of_8",
+    "exception": "torch.OutOfMemoryError",
+    "attempted_allocation_mib": 170,
+    "completed_samples": 0,
+    "raw_eval_log_created": false,
+    "automatic_retry_count": 0
+  },
+  "external_processes": [
+    {"pid": 2712737, "used_memory_mib": 5940, "action": "none"},
+    {"pid": 2743189, "used_memory_mib": 70208, "action": "none"}
+  ],
+  "project_processes_after_failure": 0,
+  "interpretation": "Infrastructure-only invalid attempt; no model behavior was observed.",
+  "corrective_action": "Require a machine-enforced stable 45 GiB free-memory gate before any replacement launch."
+}

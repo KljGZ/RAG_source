@@ -1,0 +1,26 @@
+schema_version: "1.0.0"
+controller_id: track-e-v3-preflight-queue
+project_root: /home/REMOTE_USER/projects/RAG_source
+allowed_state_root: /home/REMOTE_USER/provtrust_runs
+state_dir: /home/REMOTE_USER/provtrust_runs/track-e-v3
+controller_script: scripts/control_track_e.py
+controller_sha256: REPLACE_WITH_SHA256
+expected_git_revision: REPLACE_WITH_FULL_GIT_REVISION
+python_executable: /home/REMOTE_USER/miniforge3/envs/provtrust/bin/python
+provtrust_executable: /home/REMOTE_USER/miniforge3/envs/provtrust/bin/provtrust
+monitor_config: configs/monitoring/remote.local.yaml
+allocation: configs/clusters/allocation.local.yaml
+physical_gpu_index: 2
+minimum_free_gpu_memory_gib: 45
+stable_readings: 2
+stable_interval_seconds: 5
+plans:
+  - name: interactive-v3-no-tools-preflight
+    path: configs/experiments/pilot_qwen3_14b_interactive_v3_no_tools_preflight.yaml
+    sha256: e97104928946c0cdce150c2b59502f3f8d45346712db9a5a8e1fcfbecfc18070
+  - name: interactive-v3-tools-unprompted-preflight
+    path: configs/experiments/pilot_qwen3_14b_interactive_v3_tools_unprompted_preflight.yaml
+    sha256: 26431de3b59344d15f835a2586374c5d7be2bd57f73caeb32c7985073593bb56
+  - name: interactive-v3-tools-prompted-preflight
+    path: configs/experiments/pilot_qwen3_14b_interactive_v3_tools_prompted_preflight.yaml
+    sha256: 668f6229bcca60a642201028c2a5c57bf455e7977137b75cbdd4a4542a351f74
