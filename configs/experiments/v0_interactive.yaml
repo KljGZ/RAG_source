@@ -1,8 +1,12 @@
 schema_version: "1.0.0"
 stage: v0
-execution_status: blocked_pending_resources_and_frozen_inputs
+execution_status: blocked_by_versioned_protocol
 exploratory: true
 track: interactive_verification
+superseded_by:
+  - configs/experiments/pilot_qwen3_14b_interactive_v1_no_tools_preflight.yaml
+  - configs/experiments/pilot_qwen3_14b_interactive_v1_tools_unprompted_preflight.yaml
+  - configs/experiments/pilot_qwen3_14b_interactive_v1_tools_prompted_preflight.yaml
 seed: 20260831
 tool_call_limit: 12
 service_urls:

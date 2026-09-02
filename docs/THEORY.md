@@ -77,8 +77,10 @@ The six normative variables are:
 6. **Completed verification**
 
    \[
-   V=\mathbf 1[\text{a trace resolves identity, opens a canonical record, checks
-   attribution/identifier, and stores an evidence span}].
+   V=\mathbf 1[\text{a trace resolves identity, finds the canonical and presented
+   records or establishes absence, opens the hash-verified canonical snapshot, checks
+   the identifier, stores an exact evidence span, and checks required temporal/
+   provenance relations}].
    \]
 
    A phrase such as “I verified this” is not a verification action.

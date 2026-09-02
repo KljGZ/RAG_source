@@ -16,7 +16,7 @@ been supported.
 | Track B: static causal decomposition | 15-cell exact paired design and paired task | frozen corpus/audits; 240-sample Qwen3-14B run; 224 paired effects and integrity manifests | verified | first exploratory model complete; multi-model replication pending |
 | Track C: authenticity and warrant | interventions, tasks, gaps/monotonicity scorers | counterfactual/scorer tests | verified | untested |
 | Track D: independence/consensus laundering | provenance graphs, idempotent aggregation, task/scorers | root and non-amplification tests | verified | untested |
-| Track E: interactive verification | controlled tools, prior/posterior solver, trace diagnostics | loopback service and browser smoke | verified | model runs pending |
+| Track E: interactive verification | controlled tools, prior/posterior solver, seven-component trial-specific trace diagnostics | three hash-bound model-free acceptances over 160 trials and 81 documents per policy | verified | three one-family model preflights ready; no interactive outcome yet |
 | Track F: rationale causal faithfulness | declared-factor output plus counterfactual consistency scorer | scorer test | verified | model runs pending |
 | Track G: PAVG defense | risk gate, attribution/warrant/root aggregation, abstention, tool protocol | defense tests and task build | verified | baseline comparison pending |
 | MIRAGE isolated stress adapter | safety-gated manifest reader and task | harmless safety manifest build test | verified | upstream/license/resource gated |

@@ -208,3 +208,28 @@
 - Record that Qwen's parser-v3 paired-effects artifact exactly matches its historical
   paired-effects SHA-256. This validates result preservation for raw-JSON outputs but
   does not remove the requirement to retain both versioned raw logs.
+
+## 2026-09-02 — Track E identification and activation boundary
+
+- Freeze the interactive development matrix before model output: 16 independent
+  families, five diagnostic source states, paired low/high risk, and separate
+  `no_tools`, `tools_unprompted`, and `tools_prompted` policies. Defer the structured
+  gate and PAVG until these baselines finish so forced verification is not mistaken
+  for intrinsic capability.
+- Treat risk within a `paired_scene_id` and policy on matched cells as identified
+  interventions. Do not interpret C1--C5 marginal differences as a pure authenticity
+  effect because candidate truth, warrant, identity, attribution, page existence,
+  identifier validity, and temporal claims co-vary by construction.
+- Define completion from the actual tool transcript only. Require canonical source
+  resolution, canonical and presented-record search checks, a hash-verified canonical
+  snapshot, identifier match/non-match, an exact canonical evidence span, and the
+  necessary temporal/provenance check. Verbal assurance and search alone are
+  insufficient.
+- Require a model-free acceptance for each policy dataset before GPU execution. The
+  three acceptances passed 1,120 trial-level semantic checks each and verified both
+  loopback services against the frozen 81-document index without loading a model or
+  CUDA.
+- Gate the 10-row preflights only on execution integrity. Tool triggering,
+  completion, model-selected tool errors, accuracy, abstention, confidence, and false
+  assurance remain observable behavior and cannot be used to accept, retry, or reject
+  a preflight.

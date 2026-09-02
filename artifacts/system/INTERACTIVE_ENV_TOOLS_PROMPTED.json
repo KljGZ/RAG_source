@@ -1,0 +1,55 @@
+{
+  "captured_at": "2026-09-02T09:50:22.669603+00:00",
+  "dataset": {
+    "families": 16,
+    "manifest_path": "benchmark/manifests/v0-interactive-v1-tools_prompted.yaml",
+    "manifest_sha256": "9fd4d556bf5d76831e3ce23abd3583a36d2dd6b84b4de908b2bfa3cf5a6ee78a",
+    "paired_scenes": 80,
+    "path": "benchmark/synthetic/v0-interactive-v1-tools_prompted.jsonl",
+    "policy": "tools_prompted",
+    "risk_counts": {
+      "high": 80,
+      "low": 80
+    },
+    "scenario_counts": {
+      "c1_authentic_direct": 32,
+      "c2_authentic_partial": 32,
+      "c3_false_attribution": 32,
+      "c4_spoofed_identity": 32,
+      "c5_missing_reference": 32
+    },
+    "sha256": "f2d1e4fe0a22a7ee20d5668030ed360ed73db587cac99167a8d3f47bf2ee4ea8",
+    "trials": 160
+  },
+  "failures": [],
+  "gpu_requested": false,
+  "model_calls": 0,
+  "purpose": "model-free semantic acceptance of interactive_verification_v1",
+  "repository": {
+    "clean": true,
+    "revision": "3f1458770c8504dd0aa4703204d924646a32e7e8"
+  },
+  "schema_version": "1.0.0",
+  "services": {
+    "canonical_page": true,
+    "controlled-search_health": true,
+    "controlled-web_health": true,
+    "required": true,
+    "search_api": true,
+    "web_manifest": true
+  },
+  "status": "passed",
+  "tool_environment": {
+    "document_count": 81,
+    "environment_version": "interactive-v0.1",
+    "manifest_file_count": 86,
+    "manifest_path": "benchmark/manifests/interactive-v1-tools.yaml",
+    "manifest_sha256": "c68fec20b240f199d38e71079750522162afa0f1b66b43aae7fe3e2f55371fd2",
+    "snapshot_count": 81,
+    "trial_semantic_checks": 1120
+  },
+  "validator": {
+    "path": "scripts/validate_interactive_environment.py",
+    "sha256": "6e37bd38233f0d6ea2984318169915f6eff37c320f4d9b62a260c5203d9173ef"
+  }
+}
