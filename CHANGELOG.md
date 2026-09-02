@@ -39,6 +39,9 @@ silently replace earlier outputs.
 - Pass three model-free interactive environment acceptances (1,120 trial checks per
   policy) and prepare outcome-independent one-family preflights for no tools,
   unprompted tools, and explicitly prompted verification.
+- Retain the first no-tools acceptance failure caused solely by comparing Inspect's
+  seven-character Git display to the same full revision; accept only unambiguous
+  bidirectional Git-prefix matching and revalidate the immutable log without rerun.
 
 ## [0.1.0] - 2026-08-31
 

@@ -59,6 +59,16 @@ def _portable_path(path: Path) -> str:
         return path.name
 
 
+def _revision_matches(observed: str | None, expected: str | None) -> bool:
+    """Accept Git's unambiguous short display of the same expected revision."""
+
+    if expected is None:
+        return True
+    if observed is None or len(observed) < 7 or len(expected) < 7:
+        return False
+    return observed.startswith(expected) or expected.startswith(observed)
+
+
 def _expected_rows(
     manifest: dict[str, Any], expected_samples: int
 ) -> tuple[list[dict[str, Any]], Path]:
@@ -306,8 +316,10 @@ def main() -> int:
         "eval_status_success": log.status == "success",
         "eval_not_invalidated": log.invalidated is False,
         "clean_git_revision": revision is not None and revision.dirty is False,
-        "expected_git_revision": args.expected_git_revision is None
-        or (revision is not None and revision.commit == args.expected_git_revision),
+        "expected_git_revision": _revision_matches(
+            revision.commit if revision is not None else None,
+            args.expected_git_revision,
+        ),
         "expected_model": log.eval.model == args.expected_model,
         "expected_plan_hash": eval_metadata.get("provtrust_plan_sha256")
         == args.expected_plan_sha256,
@@ -376,6 +388,10 @@ def main() -> int:
             "Trigger, completion, accuracy, confidence, abstention, tool failures, and "
             "false assurance are descriptive observations and are not activation gates."
         ),
+        "validator": {
+            "path": Path(__file__).resolve().relative_to(Path.cwd().resolve()).as_posix(),
+            "sha256": sha256_file(Path(__file__)),
+        },
         "model": {
             "inspect_id": args.expected_model,
             "registration_path": args.model_registration.as_posix(),
