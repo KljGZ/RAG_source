@@ -213,6 +213,6 @@ def test_interactive_track_requires_frozen_tool_environment(tmp_path: Path) -> N
     plan = _frozen_fixture(tmp_path)
     plan["track"] = "interactive_verification"
 
-    assert "tool_environment_manifest_missing" in (
+    assert "tool_environment_manifest_must_be_relative" in (
         validate_frozen_execution_inputs(plan, tmp_path)
     )

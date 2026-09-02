@@ -7,11 +7,16 @@ from pathlib import Path
 
 import yaml
 
+from provtrust.datasets.io import read_jsonl
+
 
 def test_snapshot_name_is_content_hash() -> None:
-    index = json.loads(Path("web_env/search_index/documents.jsonl").read_text(encoding="utf-8"))
-    snapshot = Path("web_env/source_snapshots") / f"{index['snapshot_hash']}.txt"
-    assert hashlib.sha256(snapshot.read_bytes()).hexdigest() == index["snapshot_hash"]
+    documents = list(read_jsonl(Path("web_env/search_index/documents.jsonl")))
+    assert documents
+    for document in documents:
+        relative = document.get("snapshot_path") or f"{document['snapshot_hash']}.txt"
+        snapshot = Path("web_env/source_snapshots") / relative
+        assert hashlib.sha256(snapshot.read_bytes()).hexdigest() == document["snapshot_hash"]
 
 
 def test_frozen_prompt_hashes() -> None:
@@ -43,7 +48,7 @@ def test_v0_paired_dataset_and_identification_artifacts_are_frozen() -> None:
         Path("benchmark/manifests/V0_HISTORY.json").read_text(encoding="utf-8")
     )
     records = {row["path"]: row for row in history["historical_manifests"]}
-    for version in ("v1", "v2"):
+    for version in ("v1", "v2", "v3"):
         manifest_path = Path(f"benchmark/manifests/v0-paired-{version}.yaml")
         manifest = yaml.safe_load(manifest_path.read_text(encoding="utf-8"))
         _assert_dataset_payload(manifest)
@@ -56,10 +61,3 @@ def test_v0_paired_dataset_and_identification_artifacts_are_frozen() -> None:
                 capture_output=True,
             ).stdout
             assert hashlib.sha256(source).hexdigest() == expected
-
-    v3 = yaml.safe_load(
-        Path("benchmark/manifests/v0-paired-v3.yaml").read_text(encoding="utf-8")
-    )
-    _assert_dataset_payload(v3)
-    for relative, expected in v3["source_code_sha256"].items():
-        assert hashlib.sha256(Path(relative).read_bytes()).hexdigest() == expected

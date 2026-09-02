@@ -42,8 +42,9 @@ def test_every_pgsd_track_builds_without_model_call() -> None:
     )
     pavg_arguments = dict(tool_arguments)
     pavg_arguments["dataset_path"] = dataset
-    tool_tasks = (interactive, pavg_defense(**pavg_arguments))
-    assert all(len(task.dataset) == 1 for task in (*simple_tasks, *tool_tasks))
+    pavg = pavg_defense(**pavg_arguments)
+    assert all(len(task.dataset) == 1 for task in (*simple_tasks, pavg))
+    assert len(interactive.dataset) == 160
 
 
 def test_l2d_two_stage_task_builds_without_model_call(tmp_path: Path) -> None:

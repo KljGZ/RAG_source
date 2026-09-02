@@ -276,7 +276,7 @@ def _audit_frozen_manifests(root: Path) -> tuple[dict[str, bool], list[str]]:
     history_rows = history.get("historical_manifests")
     v0_failures: list[str] = []
     historical_manifests_valid = isinstance(history_rows, list)
-    for version in ("v1", "v2"):
+    for version in ("v1", "v2", "v3"):
         manifest_path = root / f"benchmark/manifests/v0-paired-{version}.yaml"
         relative = manifest_path.relative_to(root).as_posix()
         matches = (
@@ -305,13 +305,6 @@ def _audit_frozen_manifests(root: Path) -> tuple[dict[str, bool], list[str]]:
                 root, manifest_path, historical_revision=revision
             )
         )
-    v0_failures.extend(
-        _audit_v0_dataset_manifest(
-            root,
-            root / "benchmark/manifests/v0-paired-v3.yaml",
-            historical_revision=None,
-        )
-    )
     failures.extend(v0_failures)
     checks["v0_paired_dataset_hashes"] = historical_manifests_valid and not v0_failures
     return checks, failures

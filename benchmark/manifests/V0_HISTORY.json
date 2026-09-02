@@ -12,6 +12,12 @@
       "sha256": "624c852894fd53bfb693417d51669c53704da1374b80be97f3c27ce88fae10f9",
       "execution_git_revision": "58b5cbc7efeb1f9408ee977805853079fc148678",
       "reason": "Preserve the exact whole-response-fence parser used by the retained Phi-4 preflight that failed because all responses added a trailing Explanation paragraph."
+    },
+    {
+      "path": "benchmark/manifests/v0-paired-v3.yaml",
+      "sha256": "ef72025e5259ad61d2c647680e8f5be178517eb271a3432a6be3084357337496",
+      "execution_git_revision": "3a7f55241f05c0794f5052559e3e71babce1a4c4",
+      "reason": "Preserve the exact parser-v3 task implementation used by both accepted full static reruns before Track E development changed shared task code."
     }
   ]
 }
