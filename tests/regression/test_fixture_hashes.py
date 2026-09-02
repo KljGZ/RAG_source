@@ -42,20 +42,24 @@ def test_v0_paired_dataset_and_identification_artifacts_are_frozen() -> None:
     history = json.loads(
         Path("benchmark/manifests/V0_HISTORY.json").read_text(encoding="utf-8")
     )
-    record = history["historical_manifests"][0]
-    assert record["path"] == v1_path.as_posix()
-    assert hashlib.sha256(v1_path.read_bytes()).hexdigest() == record["sha256"]
-    for relative, expected in v1["source_code_sha256"].items():
-        source = subprocess.run(
-            ["git", "show", f"{record['execution_git_revision']}:{relative}"],
-            check=True,
-            capture_output=True,
-        ).stdout
-        assert hashlib.sha256(source).hexdigest() == expected
+    records = {row["path"]: row for row in history["historical_manifests"]}
+    for version in ("v1", "v2"):
+        manifest_path = Path(f"benchmark/manifests/v0-paired-{version}.yaml")
+        manifest = yaml.safe_load(manifest_path.read_text(encoding="utf-8"))
+        _assert_dataset_payload(manifest)
+        record = records[manifest_path.as_posix()]
+        assert hashlib.sha256(manifest_path.read_bytes()).hexdigest() == record["sha256"]
+        for relative, expected in manifest["source_code_sha256"].items():
+            source = subprocess.run(
+                ["git", "show", f"{record['execution_git_revision']}:{relative}"],
+                check=True,
+                capture_output=True,
+            ).stdout
+            assert hashlib.sha256(source).hexdigest() == expected
 
-    v2 = yaml.safe_load(
-        Path("benchmark/manifests/v0-paired-v2.yaml").read_text(encoding="utf-8")
+    v3 = yaml.safe_load(
+        Path("benchmark/manifests/v0-paired-v3.yaml").read_text(encoding="utf-8")
     )
-    _assert_dataset_payload(v2)
-    for relative, expected in v2["source_code_sha256"].items():
+    _assert_dataset_payload(v3)
+    for relative, expected in v3["source_code_sha256"].items():
         assert hashlib.sha256(Path(relative).read_bytes()).hexdigest() == expected

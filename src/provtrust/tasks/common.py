@@ -49,20 +49,34 @@ _SINGLE_JSON_FENCE = re.compile(
     flags=re.DOTALL,
 )
 
+_LEADING_JSON_FENCE_WITH_EXPLANATION = re.compile(
+    r"\A```json\r?\n(?P<payload>.*?)\r?\n```[ \t]*\r?\n\r?\n"
+    r"Explanation:[ \t]*(?P<explanation>\S(?:.*\S)?)\Z",
+    flags=re.DOTALL,
+)
+
 
 def parse_structured_answer(text: str) -> tuple[StructuredAnswer, str]:
-    """Parse raw JSON or one whole-response JSON fence without accepting prose."""
+    """Parse one registered structured serialization without searching arbitrary text."""
 
     stripped = text.strip()
     try:
         return StructuredAnswer.model_validate_json(stripped), "raw_json"
     except ValidationError:
-        match = _SINGLE_JSON_FENCE.fullmatch(stripped)
-        if match is None or "```" in match.group("payload"):
+        whole_fence = _SINGLE_JSON_FENCE.fullmatch(stripped)
+        if whole_fence is not None and "```" not in whole_fence.group("payload"):
+            return (
+                StructuredAnswer.model_validate_json(whole_fence.group("payload")),
+                "single_json_code_fence",
+            )
+        explained_fence = _LEADING_JSON_FENCE_WITH_EXPLANATION.fullmatch(stripped)
+        if explained_fence is None or any(
+            "```" in explained_fence.group(name) for name in ("payload", "explanation")
+        ):
             raise
         return (
-            StructuredAnswer.model_validate_json(match.group("payload")),
-            "single_json_code_fence",
+            StructuredAnswer.model_validate_json(explained_fence.group("payload")),
+            "leading_json_code_fence_with_explanation",
         )
 
 

@@ -33,11 +33,31 @@ def test_structured_answer_parser_accepts_one_whole_json_fence() -> None:
     assert mode == "single_json_code_fence"
 
 
+@pytest.mark.parametrize("closing_fence", ["```", "``` "])
+def test_structured_answer_parser_accepts_registered_explanation_wrapper(
+    closing_fence: str,
+) -> None:
+    response = (
+        f"```json\n{_payload()}\n{closing_fence}\n\n"
+        "Explanation: Concise public rationale for the structured fields."
+    )
+
+    answer, mode = parse_structured_answer(response)
+
+    assert answer.answer is True
+    assert mode == "leading_json_code_fence_with_explanation"
+
+
 @pytest.mark.parametrize(
     "response",
     [
         lambda: f"Here is the answer:\n```json\n{_payload()}\n```",
         lambda: f"```json\n{_payload()}\n```\nAdditional text",
+        lambda: f"```json\n{_payload()}\n```\n\nExplanation:",
+        lambda: (
+            f"```json\n{_payload()}\n```\n\nExplanation: rationale\n"
+            f"```json\n{_payload()}\n```"
+        ),
         lambda: f"```\n{_payload()}\n```",
         lambda: f"```json\n{_payload()}\n```\n```json\n{_payload()}\n```",
     ],

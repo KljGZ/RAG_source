@@ -150,3 +150,32 @@
   not modify the frozen experiment plan or rely on an interactive-shell activation.
 - Cover both the active-environment fallback and unknown-executable refusal with
   regression tests before repeating the full preflight gate sequence.
+
+## 2026-09-01 — Hourly experiment-control authority
+
+- Upgrade the hourly heartbeat from service-only observation to a bounded V0
+  experiment controller after explicit user authorization. It may launch and
+  supervise only hash-valid, allocation-valid, local open-weight plans already marked
+  `ready`; it may never start V1, paid APIs, GPU 0/1, or an unregistered plan.
+- Store operational launch/running/completed/failed state outside frozen scientific
+  plans. Do not mutate a plan merely to signal process state because its SHA-256 is an
+  execution identity. A protocol may change a plan to a blocked status only through a
+  committed, versioned amendment that retains the historical revision.
+- Never infer ownership from GPU presence alone. Control only processes identified by
+  project command, PID, and plan hash, and leave all unrelated processes untouched.
+  Respect plan retry limits; a zero-retry output-contract failure stops automatically.
+
+## 2026-09-01 — Parser-v3 preflight amendment
+
+- Retain the completed Phi-4 parser-v2 preflight as failed: all 15 priors and all 15
+  posteriors contained a schema-valid leading `json` fence followed by one
+  `Explanation:` paragraph. Parser v2 correctly rejected the surrounding prose, so
+  no accuracy, assurance, or behavioral result is extracted from that run.
+- Version parser v3 as a model-general structured envelope, not a Phi-specific
+  postprocessor. In addition to v2 forms, it accepts exactly one leading lowercase
+  `json` fence, a blank line, and one non-empty `Explanation:` suffix. It still rejects
+  leading/arbitrary prose, empty explanations, multiple or nested fences, malformed
+  JSON, unknown fields, and schema violations; raw output and parse mode are retained.
+- Mark both parser-v2 preflight plans blocked, preserve their manifest at execution
+  revision `58b5cbc`, and require new Phi-4 and Qwen3-14B parser-v3 preflights before
+  either full run or strict cross-model comparison.

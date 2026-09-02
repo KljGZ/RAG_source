@@ -32,6 +32,7 @@ web_env/spoofed_sources/*
 !web_env/spoofed_sources/.gitkeep
 artifacts/runs/
 artifacts/analyses/
+artifacts/controller/
 artifacts/figures/
 artifacts/tables/
 artifacts/publication/

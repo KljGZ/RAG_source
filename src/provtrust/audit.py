@@ -42,6 +42,7 @@ REQUIRED_PATHS = (
     "benchmark/manifests/smoke.yaml",
     "benchmark/manifests/v0-paired-v1.yaml",
     "benchmark/manifests/v0-paired-v2.yaml",
+    "benchmark/manifests/v0-paired-v3.yaml",
     "benchmark/manifests/V0_HISTORY.json",
     "artifacts/system/V0_PAIRED_DATASET_AUDIT.json",
     "prompts/frozen/MANIFEST.json",
@@ -271,47 +272,48 @@ def _audit_frozen_manifests(root: Path) -> tuple[dict[str, bool], list[str]]:
     if not smoke_ok:
         failures.append("smoke dataset manifest hash mismatch")
 
-    v1_path = root / "benchmark/manifests/v0-paired-v1.yaml"
     history = _load_json(root / "benchmark/manifests/V0_HISTORY.json")
     history_rows = history.get("historical_manifests")
-    v1_relative = v1_path.relative_to(root).as_posix()
-    v1_history = None
-    if isinstance(history_rows, list):
-        matches = [
-            row
-            for row in history_rows
-            if isinstance(row, dict) and row.get("path") == v1_relative
-        ]
-        if len(matches) == 1:
-            v1_history = matches[0]
-    if v1_history is None:
-        failures.append("V0 v1 historical manifest has no unique history record")
-        historical_revision = None
-    else:
-        historical_revision = v1_history.get("execution_git_revision")
-        if (
-            not isinstance(historical_revision, str)
-            or v1_history.get("sha256") != _sha256(v1_path)
-        ):
-            failures.append("V0 v1 historical manifest identity is invalid")
-            historical_revision = None
-
     v0_failures: list[str] = []
-    if historical_revision is not None:
+    historical_manifests_valid = isinstance(history_rows, list)
+    for version in ("v1", "v2"):
+        manifest_path = root / f"benchmark/manifests/v0-paired-{version}.yaml"
+        relative = manifest_path.relative_to(root).as_posix()
+        matches = (
+            [
+                row
+                for row in history_rows
+                if isinstance(row, dict) and row.get("path") == relative
+            ]
+            if isinstance(history_rows, list)
+            else []
+        )
+        if len(matches) != 1:
+            historical_manifests_valid = False
+            v0_failures.append(
+                f"V0 {version} historical manifest has no unique history record"
+            )
+            continue
+        record = matches[0]
+        revision = record.get("execution_git_revision")
+        if not isinstance(revision, str) or record.get("sha256") != _sha256(manifest_path):
+            historical_manifests_valid = False
+            v0_failures.append(f"V0 {version} historical manifest identity is invalid")
+            continue
         v0_failures.extend(
             _audit_v0_dataset_manifest(
-                root, v1_path, historical_revision=historical_revision
+                root, manifest_path, historical_revision=revision
             )
         )
     v0_failures.extend(
         _audit_v0_dataset_manifest(
             root,
-            root / "benchmark/manifests/v0-paired-v2.yaml",
+            root / "benchmark/manifests/v0-paired-v3.yaml",
             historical_revision=None,
         )
     )
     failures.extend(v0_failures)
-    checks["v0_paired_dataset_hashes"] = historical_revision is not None and not v0_failures
+    checks["v0_paired_dataset_hashes"] = historical_manifests_valid and not v0_failures
     return checks, failures
 
 
@@ -327,6 +329,7 @@ def _audit_resource_gates(root: Path) -> tuple[dict[str, bool], list[str]]:
         execution_status = value.get("execution_status")
         if execution_status not in {
             "ready",
+            "blocked_by_versioned_protocol",
             "blocked_pending_resources_and_frozen_inputs",
             "blocked_until_experiment_plan_frozen",
         }:

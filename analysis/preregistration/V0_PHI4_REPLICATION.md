@@ -1,6 +1,6 @@
 # Phi-4 cross-family static V0 replication protocol
 
-Status: **outcome-blind exploratory protocol; model responses not yet generated**
+Status: **outcome-blind full-benchmark protocol; compatibility/preflight responses retained**
 
 This protocol was written after publishing the Qwen3-14B V0 result and before any
 Phi-4 compatibility, preflight, or benchmark response was generated. It prevents the
@@ -87,6 +87,21 @@ run and is verified from Git history. Parser v2 has a new input manifest while k
 the dataset bytes, prompt, trials, interventions, and scoring semantics fixed. An
 additional Qwen3-14B parser-v2 run is required before the strict cross-model comparison
 so both compared runs use the same execution manifest.
+
+Parser-v3 amendment after the non-scientific v2 preflight: all 15 Phi-4 prior and all
+15 posterior responses contained one valid leading lowercase `json` fence followed
+by exactly one public `Explanation:` paragraph. Parser v2 correctly rejected every
+response because it prohibited surrounding prose; the eval, zero-retry failure, and
+raw outputs are retained. Parser v3 additionally accepts only this registered envelope:
+one leading fence, one schema-valid object, a blank line, and one non-empty
+`Explanation:` suffix. It continues to reject leading prose, arbitrary suffixes,
+empty explanations, unlabeled/multiple/nested fences, malformed JSON, unknown fields,
+and schema violations. The raw completion and parse mode remain recorded.
+
+The v2 manifest is now historical at its exact execution revision. No v2 preflight is
+retried. Both Phi-4 and Qwen3-14B require new parser-v3 preflights and, if activated,
+new parser-v3 full runs before any strict cross-model comparison. The dataset, prompt,
+trials, decoding, estimands, scoring semantics, and scientific labels remain unchanged.
 
 ## Retention and interpretation
 

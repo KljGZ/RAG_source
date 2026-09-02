@@ -1,22 +1,22 @@
 schema_version: "1.0.0"
-input_contract_version: 2
+input_contract_version: 3
 stage: v0
-execution_status: blocked_by_versioned_protocol
+execution_status: ready
 exploratory: true
 scientific_claims_allowed: false
-purpose: deterministic Qwen3-14B preflight for the parser-v2 cross-model protocol
+purpose: deterministic one-family Phi-4 preflight for the parser-v3 static protocol
 track: static_factorial
-dataset_manifest: benchmark/manifests/v0-paired-v2.yaml
-dataset_manifest_sha256: 624c852894fd53bfb693417d51669c53704da1374b80be97f3c27ce88fae10f9
-model_registration: configs/models/qwen3-14b-static-v0.yaml
-model_registration_sha256: a747f8f522a4591e25cf55386b4577092213a0215a022b59d2574efe76aa4650
-model_asset_manifest: configs/models/assets/qwen3-14b-cc692f4.manifest.json
-model_asset_manifest_sha256: 5737d6eadb313042cf6d14634ffb3eaf8eb2149572a7b5f993caa459a0210bba
-model_args: configs/models/qwen3-14b-static.local.yaml
+dataset_manifest: benchmark/manifests/v0-paired-v3.yaml
+dataset_manifest_sha256: ef72025e5259ad61d2c647680e8f5be178517eb271a3432a6be3084357337496
+model_registration: configs/models/phi-4-static-v0.yaml
+model_registration_sha256: 9789f9c10cec766fd368348c7b4b9118266c652ac9588930a6cd542348e1293e
+model_asset_manifest: configs/models/assets/phi-4-2db69c1.manifest.json
+model_asset_manifest_sha256: b8d4a4f234d849ab0196597259fcf9ad7991bc8f7c8d548dafea7a086aa7c00a
+model_args: configs/models/phi-4-static.local.yaml
 system_prompt: prompts/frozen/answer-system-v0.txt
 system_prompt_sha256: 450e6eaa85df17643f17fab17840d4b8cb99dc349fb181e3d2d2ed91fb2c14dc
-activation_evidence: artifacts/system/QWEN3_14B_COMPATIBILITY.json
-activation_evidence_sha256: ba52fe06de4c82d4b9afd5c5722a987e5252c012403ad75f2ae55f89f4bf9158
+activation_evidence: artifacts/system/PHI4_COMPATIBILITY.json
+activation_evidence_sha256: 0da6a293ac9f61ffde71727079635a37f84924a9d0aa1bd1535fa29e82e31046
 seed: 20260831
 epochs: 1
 sample_limit: 15
@@ -44,9 +44,9 @@ inspect_command:
   - -T
   - dataset_path=benchmark/synthetic/v0-paired-v1.jsonl
   - --model
-  - hf/Qwen/Qwen3-14B
+  - hf/microsoft/phi-4
   - --model-config
-  - configs/models/qwen3-14b-static.local.yaml
+  - configs/models/phi-4-static.local.yaml
   - --temperature
   - "0"
   - --top-p
@@ -66,4 +66,4 @@ inspect_command:
   - --max-samples
   - "1"
   - --log-dir
-  - artifacts/runs/pilot_qwen3_14b_v0_paired_v2_preflight
+  - artifacts/runs/pilot_phi4_v0_paired_v3_preflight

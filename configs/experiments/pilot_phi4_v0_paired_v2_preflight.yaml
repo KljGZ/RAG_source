@@ -1,7 +1,7 @@
 schema_version: "1.0.0"
 input_contract_version: 2
 stage: v0
-execution_status: ready
+execution_status: blocked_by_versioned_protocol
 exploratory: true
 scientific_claims_allowed: false
 purpose: deterministic one-family Phi-4 preflight for the parser-v2 static protocol

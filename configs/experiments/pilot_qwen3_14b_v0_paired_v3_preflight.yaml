@@ -1,13 +1,13 @@
 schema_version: "1.0.0"
-input_contract_version: 2
+input_contract_version: 3
 stage: v0
-execution_status: blocked_by_versioned_protocol
+execution_status: ready
 exploratory: true
 scientific_claims_allowed: false
-purpose: deterministic Qwen3-14B preflight for the parser-v2 cross-model protocol
+purpose: deterministic Qwen3-14B preflight for the parser-v3 cross-model protocol
 track: static_factorial
-dataset_manifest: benchmark/manifests/v0-paired-v2.yaml
-dataset_manifest_sha256: 624c852894fd53bfb693417d51669c53704da1374b80be97f3c27ce88fae10f9
+dataset_manifest: benchmark/manifests/v0-paired-v3.yaml
+dataset_manifest_sha256: ef72025e5259ad61d2c647680e8f5be178517eb271a3432a6be3084357337496
 model_registration: configs/models/qwen3-14b-static-v0.yaml
 model_registration_sha256: a747f8f522a4591e25cf55386b4577092213a0215a022b59d2574efe76aa4650
 model_asset_manifest: configs/models/assets/qwen3-14b-cc692f4.manifest.json
@@ -66,4 +66,4 @@ inspect_command:
   - --max-samples
   - "1"
   - --log-dir
-  - artifacts/runs/pilot_qwen3_14b_v0_paired_v2_preflight
+  - artifacts/runs/pilot_qwen3_14b_v0_paired_v3_preflight

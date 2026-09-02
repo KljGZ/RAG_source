@@ -6,6 +6,12 @@
       "sha256": "0fcb45f5cee557160c7d9e62fc51bc0c2ba157c6e516dbc9b9c2247e5dfc277a",
       "execution_git_revision": "763a41bdf4a5014620909be970979a084d880c88",
       "reason": "Preserve the exact parser and source-code hashes used by the published Qwen3-14B V0 run."
+    },
+    {
+      "path": "benchmark/manifests/v0-paired-v2.yaml",
+      "sha256": "624c852894fd53bfb693417d51669c53704da1374b80be97f3c27ce88fae10f9",
+      "execution_git_revision": "58b5cbc7efeb1f9408ee977805853079fc148678",
+      "reason": "Preserve the exact whole-response-fence parser used by the retained Phi-4 preflight that failed because all responses added a trailing Explanation paragraph."
     }
   ]
 }

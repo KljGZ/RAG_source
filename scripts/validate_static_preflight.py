@@ -27,6 +27,15 @@ def _as_dict(value: Any, *, label: str) -> dict[str, Any]:
     raise TypeError(f"{label} is not an object")
 
 
+def _optional_dict(value: Any) -> dict[str, Any]:
+    """Return an empty object for missing/malformed optional score metadata."""
+
+    try:
+        return _as_dict(value, label="optional metadata")
+    except TypeError:
+        return {}
+
+
 def _retry_count(value: Any) -> int:
     if value is None:
         return 0
@@ -113,6 +122,7 @@ def main() -> int:
     abstained_count = 0
     retry_count = 0
     sample_error_count = 0
+    score_metadata_count = 0
     turn_count = 0
     sample_input_tokens = 0
     sample_output_tokens = 0
@@ -133,17 +143,12 @@ def main() -> int:
         observed_cells.add(cell_id)
 
         scores = sample.scores
-        if scores is None:
-            raise TypeError(f"sample scores missing: {sample_id}")
-        score = scores.get("structured_parse_scorer")
-        if score is None:
-            raise TypeError(f"structured score missing: {sample_id}")
-        score_metadata = _as_dict(score.metadata, label=f"score metadata: {sample_id}")
-        _as_dict(score_metadata.get("prior"), label=f"prior: {sample_id}")
-        posterior = _as_dict(score_metadata.get("posterior"), label=f"posterior: {sample_id}")
-        verification = _as_dict(
-            score_metadata.get("verification"), label=f"verification: {sample_id}"
-        )
+        score = scores.get("structured_parse_scorer") if scores is not None else None
+        score_metadata = _optional_dict(score.metadata if score is not None else None)
+        score_metadata_count += int(bool(score_metadata))
+        _optional_dict(score_metadata.get("prior"))
+        posterior = _optional_dict(score_metadata.get("posterior"))
+        verification = _optional_dict(score_metadata.get("verification"))
 
         parse_success = score_metadata.get("parse_success") is True
         prior_type_valid = score_metadata.get("prior_answer_type_valid") is True
@@ -208,6 +213,8 @@ def main() -> int:
                 "error_retries": _retry_count(sample.error_retries),
                 "turn_count": sample_turn_count,
                 "total_tokens": int(usage.total_tokens),
+                "score_metadata_present": bool(score_metadata),
+                "score_explanation": score.explanation if score is not None else None,
             }
         )
 
@@ -256,6 +263,7 @@ def main() -> int:
         "exact_design_cells": observed_cells == expected_cells,
         "exact_family_count": len(observed_families) == args.expected_families,
         "all_structured_outputs_parse": parse_success_count == args.expected_samples,
+        "all_score_metadata_present": score_metadata_count == args.expected_samples,
         "all_prior_answer_types_valid": prior_type_valid_count == args.expected_samples,
         "all_posterior_answer_types_valid": posterior_type_valid_count == args.expected_samples,
         "all_citations_reference_supplied_evidence": citation_valid_count == args.expected_samples,
@@ -393,6 +401,7 @@ def main() -> int:
             "family_count": len(observed_families),
             "design_cell_count": len(observed_cells),
             "parse_success_count": parse_success_count,
+            "score_metadata_present_count": score_metadata_count,
             "prior_answer_type_valid_count": prior_type_valid_count,
             "posterior_answer_type_valid_count": posterior_type_valid_count,
             "citation_valid_count": citation_valid_count,

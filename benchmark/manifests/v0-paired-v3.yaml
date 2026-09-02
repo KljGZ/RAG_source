@@ -1,0 +1,42 @@
+schema_version: 1.0.0
+dataset_id: provtrust-v0-paired-synthetic-v3
+purpose: exploratory cross-family replication with registered structured-envelope parsing
+protocol: audited_static_v1_parser_v3
+builder: provtrust.datasets.v0_corpus:build_v0_corpus
+builder_version: paired-static-v1-parser-v3
+seed: 20260831
+path: benchmark/synthetic/v0-paired-v1.jsonl
+sha256: 4ffa52856a67a77d50731843bde8e3c1e978c85999b80962845ee6c572d45028
+config_path: configs/datasets/v0_paired_v1.yaml
+config_sha256: 61837f8d625e2f9d4f274adb89a26d00d538953fbf8870e4b263565e3d794b2f
+splits_path: benchmark/splits/v0-paired-v1.jsonl
+splits_sha256: 6c4b05b46e0ac07f7d395b9a75734ff3ce763edc2d05fa6d83f83c1eb7b42f11
+audit_path: artifacts/system/V0_PAIRED_DATASET_AUDIT.json
+audit_sha256: e94bcea969364d488ea98d2af9a0e433ecec041a3f546af477ec598657dcf221
+license: Apache-2.0
+redistributable: true
+contains_fabricated_real_world_claims: false
+family_count: 16
+item_count: 240
+variants_per_family: 15
+split_counts:
+  test: 75
+  train: 120
+  validation: 45
+structured_output_policy:
+  accepted_serializations:
+    - raw_json
+    - single_json_code_fence
+    - leading_json_code_fence_with_explanation
+  explanation_suffix_label: "Explanation:"
+  require_single_leading_fence: true
+  reject_unregistered_surrounding_text: true
+  reject_multiple_or_nested_fences: true
+  preserve_raw_completion: true
+  record_parse_mode: true
+source_code_sha256:
+  scripts/build_v0_paired.py: 5a7bcd36827df9d076726cff37db40ea29aa466222f87eaf24c56ee509fec114
+  src/provtrust/datasets/synthetic_builder.py: 21f206b153aeb8c907b779aeaec8d6d563f0410e9dbce62cd33d6d295efd00e1
+  src/provtrust/datasets/stimulus_audit.py: 15c2487b0b22c0ed3d26fd93a2a14e50c2ffd3e87884f9de72bc013852789d55
+  src/provtrust/datasets/v0_corpus.py: ae7d0efe3d89929a0b127337275918a3615a8fd142f6b6a528243c83acd42f64
+  src/provtrust/tasks/common.py: af15dad8130a3e0870fce3190b11e702dde2375e7d6e6ed401af854b687ce097

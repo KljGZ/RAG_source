@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0.0",
+  "status": "failed_output_contract",
+  "scientific_claims_allowed": false,
+  "stage": "v0",
+  "captured_at": "2026-09-02T02:13:02Z",
+  "experiment_config": "configs/experiments/pilot_phi4_v0_paired_v2_preflight.yaml",
+  "experiment_plan_sha256": "3f6def95194b8e9b3e210206766074010c3b3e25c2ce74369f06d630543b8d61",
+  "tested_git_revision": "58b5cbc",
+  "model": "hf/microsoft/phi-4",
+  "model_root_sha256": "5ae5572dbbc916ad0eb44e9e755e3dd345b46262d344c32db38b133b2cd56eeb",
+  "execution": {
+    "eval_status": "success",
+    "eval_invalidated": false,
+    "completed_samples": 15,
+    "expected_samples": 15,
+    "model_calls": 30,
+    "sample_errors": 0,
+    "error_retries": 0,
+    "total_tokens": 21549,
+    "started_at": "2026-09-02T02:10:35Z",
+    "completed_at": "2026-09-02T02:13:02Z"
+  },
+  "output_contract": {
+    "parse_success_count": 0,
+    "parse_failure_count": 15,
+    "score_metadata_present_count": 0,
+    "prior_leading_json_fence_with_trailing_explanation_count": 15,
+    "posterior_leading_json_fence_with_trailing_explanation_count": 15,
+    "parser_v2_policy": "Accept raw JSON or exactly one whole-response lowercase json fence; reject all surrounding prose.",
+    "observed_pattern": "Every prior and posterior contained a valid leading lowercase json fence followed by an Explanation paragraph, so parser v2 rejected the complete response as registered.",
+    "retry_permitted": false
+  },
+  "raw_log": {
+    "path": "artifacts/runs/pilot_phi4_v0_paired_v2_preflight/2026-09-02T02-10-35-00-00_static-factorial_gJGt4ZzMAc9r3Ubz7GYHhf.eval",
+    "sha256": "1341ef394fee1ace8fdce03df1739450e4aedbd5eb558aaf3c99b81b2e210551",
+    "bytes": 100949
+  },
+  "disposition": "Retain the full failed preflight. Do not retry parser v2. Any broader model-general extraction policy must be versioned before another benchmark attempt and applied to both Phi-4 and Qwen3-14B under a new manifest.",
+  "interpretation_boundary": "The engineering run completed but no structured observations passed the registered parser. It cannot support accuracy, SDI, PGSD, assurance-rate, or cross-model claims."
+}
