@@ -103,6 +103,19 @@ retried. Both Phi-4 and Qwen3-14B require new parser-v3 preflights and, if activ
 new parser-v3 full runs before any strict cross-model comparison. The dataset, prompt,
 trials, decoding, estimands, scoring semantics, and scientific labels remain unchanged.
 
+Parser-v3 activation record before either full-run response: both registered one-family
+preflights passed all execution-integrity gates at Git revision `0125612`. Phi-4
+completed 15/15 samples and 30 calls with zero errors/retries, 15/15 parsed outputs,
+and activation-evidence SHA-256
+`8102961e7dbb57c3d71f4ea79f5d2dc84e593488a29b7cf271b3e36af2fd9c8b`.
+Qwen3-14B independently met the same gates with activation-evidence SHA-256
+`4149be2c8b1675d3fcaac82b8d5a9807b5cf24c4a2d359f0fe6cc6b4493fa909`.
+The registered full-plan identities are
+`1ddc5d22e396832343ddb32a5d143c2a93bd391f6ce64310be9b7d157e7c9689`
+for Phi-4 and
+`ff15a4c493f98101a2cf2738edb0a8b3d8e8187f5a87260952000d60e409f8b1`
+for Qwen3-14B. These identities were fixed before either parser-v3 full run.
+
 ## Retention and interpretation
 
 The full result is retained if the frozen run passes integrity checks, including a

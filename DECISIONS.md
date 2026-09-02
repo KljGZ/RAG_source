@@ -179,3 +179,16 @@
 - Mark both parser-v2 preflight plans blocked, preserve their manifest at execution
   revision `58b5cbc`, and require new Phi-4 and Qwen3-14B parser-v3 preflights before
   either full run or strict cross-model comparison.
+
+## 2026-09-01 — Parser-v3 full-run activation
+
+- Accept both parser-v3 engineering preflights only after their registered validators
+  passed every frozen-input, model-asset, allocation, Git, sample, call-count, parser,
+  answer-type, citation, and zero-retry gate. The Inspect headline score is legacy
+  answer correctness and is not used as a parsing or activation metric.
+- Retain the preflight behavioral observations without treating them as scientific
+  effects: Phi-4 produced 14/15 and Qwen3-14B 13/15 unsupported verification
+  assurances, while neither run contained a completed verification tool trace.
+- Freeze separate 240-sample parser-v3 full plans for both models before either full
+  outcome is generated. Require both full reruns and integrity-accepted analyses
+  before the preregistered descriptive cross-model comparison.

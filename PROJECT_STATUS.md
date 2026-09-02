@@ -1,6 +1,6 @@
 # Project status
 
-Current stage: **Qwen3-14B 240-sample static V0 complete and integrity-accepted**
+Current stage: **parser-v3 cross-model preflights accepted; two full V0 reruns frozen**
 
 ## Deployment state
 
@@ -32,6 +32,11 @@ Current stage: **Qwen3-14B 240-sample static V0 complete and integrity-accepted*
   observations; neither that rate nor answer accuracy was used as an activation gate.
 - [x] The full deterministic static run completed with 240/240 samples, 480 calls,
   zero errors/retries, 296,090 tokens, and exact 16-family × 15-cell coverage.
+- [x] Parser-v3 engineering preflights independently passed for Phi-4 and Qwen3-14B:
+  each completed 15/15 samples and 30 calls with zero errors/retries and 100% parser,
+  answer-type, citation, frozen-input, model-asset, and allocation acceptance.
+- [x] Parser-v3 full plans for both models were frozen before either new full-run
+  response; each retains the same 240 trials, prompt, decoding, and 14 estimands.
 - [x] Raw-log acceptance and the 224-effect analysis publication gates passed; the raw
   eval, observations, paired effects, summary, and manifests agree by SHA-256 on the
   workstation and compute node.
@@ -68,7 +73,8 @@ Current stage: **Qwen3-14B 240-sample static V0 complete and integrity-accepted*
 - [x] Physical GPU index 2 allocated by the user for continuous use; CPU use approved.
 - [ ] Additional target/judge model registries and any paid API budget approved.
 - [x] First full 16-family/240-sample V0 static experiment run and reported.
-- [ ] Multi-model static replication and interactive-verification/PAVG experiments run.
+- [ ] Parser-v3 full reruns, strict cross-model comparison, and interactive-
+  verification/PAVG experiments run.
 - [ ] V1 plan frozen or confirmatory outcomes inspected.
 
 The first exploratory static V0 experiment has run; no paid API call or V1
@@ -76,5 +82,7 @@ confirmatory experiment has run. Qwen3-14B showed zero adoption effects for 12/1
 contrasts, a -0.5 raw adoption effect for each weaker-warrant contrast, and a 90%
 false-verification-assurance rate. Neither warrant contrast survived the registered
 14-test Holm correction. These results cannot support a general SDI, PGSD, or model-
-quality conclusion. Next gates are multi-model replication, interactive verification,
-PAVG baselines, licensed/validated real data, and independent target/judge registries.
+quality conclusion. The immediate gate is the two frozen parser-v3 full reruns and
+their strict descriptive cross-model comparison; subsequent gates are interactive
+verification, PAVG baselines, licensed/validated real data, and independent
+target/judge registries.
