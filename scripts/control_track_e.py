@@ -18,7 +18,6 @@ import yaml
 from provtrust.execution.atomic_io import append_jsonl, atomic_write_json, sha256_file
 from provtrust.execution.input_gate import validate_frozen_execution_inputs
 
-
 CONTROLLER_ID = "track-e-v3-preflight-queue"
 CONTROLLER_CONFIG = "configs/controller/track_e_v3.local.yaml"
 CONTROLLER_SCRIPT = "scripts/control_track_e.py"
@@ -159,6 +158,7 @@ def _run_monitor(config: dict[str, Any], root: Path) -> dict[str, Any]:
         cwd=root,
         capture_output=True,
         text=True,
+        check=False,
     )
     try:
         report = _object(json.loads(result.stdout), "monitor report")
@@ -512,6 +512,7 @@ def _worker(config_path: Path, plan_name: str) -> int:
             str(allocation),
         ],
         cwd=root,
+        check=False,
     )
     if run.returncode != 0:
         atomic_write_json(
@@ -540,6 +541,7 @@ def _worker(config_path: Path, plan_name: str) -> int:
             evidence,
         ),
         cwd=root,
+        check=False,
     )
     evidence_value = _read_json(evidence)
     passed = (

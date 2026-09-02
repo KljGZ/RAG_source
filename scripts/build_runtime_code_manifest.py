@@ -33,7 +33,7 @@ def main() -> int:
     source_root = root / "src/provtrust"
     paths = sorted(source_root.rglob("*.py"))
     paths.append(root / "scripts/validate_interactive_preflight.py")
-    paths = sorted(set(_contained_file(root, path) for path in paths))
+    paths = sorted({_contained_file(root, path) for path in paths})
     entries = [
         {
             "path": path.relative_to(root).as_posix(),
