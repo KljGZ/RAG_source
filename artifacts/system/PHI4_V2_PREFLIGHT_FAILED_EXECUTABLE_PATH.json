@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0.0",
+  "status": "failed_before_model_execution",
+  "captured_at": "2026-09-02T02:00:12.793Z",
+  "scientific_claims_allowed": false,
+  "stage": "v0",
+  "experiment_config": "configs/experiments/pilot_phi4_v0_paired_v2_preflight.yaml",
+  "experiment_plan_sha256": "3f6def95194b8e9b3e210206766074010c3b3e25c2ce74369f06d630543b8d61",
+  "tested_git_revision": "ce2e772",
+  "failure_stage": "child_executable_resolution",
+  "exit_code": 127,
+  "cause": "The remote non-login SSH shell invoked provtrust by absolute path but did not include the active Conda environment bin directory in PATH, so taskset could not resolve the plan executable named inspect.",
+  "model_weights_loaded": false,
+  "model_response_generated": false,
+  "inspect_eval_log_created": false,
+  "retry_consumed": false,
+  "gpu_free_memory_mib_before_attempt": 91327,
+  "disposition": "Retained as an engineering-gate failure. Resolve the child executable from the active Python environment, add regression coverage, commit the correction, and repeat all preflight gates before a new attempt.",
+  "interpretation_boundary": "This failure occurred before Inspect or model execution and contains no scientific outcome."
+}

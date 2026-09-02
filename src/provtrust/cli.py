@@ -6,6 +6,7 @@ import json
 import os
 import shutil
 import subprocess
+import sys
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Annotated, Any
@@ -130,6 +131,32 @@ def _resolve_task_resource_arguments(command: list[str], root: Path) -> list[str
     return resolved
 
 
+def _resolve_plan_executable(command: list[str], environment: dict[str, str]) -> list[str]:
+    """Resolve a plan executable from PATH or the active Python environment.
+
+    Remote non-login shells can invoke ``provtrust`` by absolute path while omitting
+    its Conda ``bin`` directory from PATH. Resolve the child command before wrapping
+    it with ``taskset`` so a reviewed plan cannot fail merely because of that shell
+    difference.
+    """
+
+    if not command:
+        raise typer.BadParameter("experiment command must not be empty")
+    executable = command[0]
+    if Path(executable).is_absolute():
+        if not Path(executable).is_file():
+            raise typer.BadParameter(f"experiment executable does not exist: {executable}")
+        return list(command)
+    resolved = shutil.which(executable, path=environment.get("PATH"))
+    if resolved is None:
+        environment_candidate = Path(sys.executable).resolve().parent / executable
+        if environment_candidate.is_file():
+            resolved = str(environment_candidate)
+    if resolved is None:
+        raise typer.BadParameter(f"experiment executable not found: {executable}")
+    return [resolved, *command[1:]]
+
+
 @app.command("run-plan")
 def run_plan(
     config: Annotated[Path, typer.Option(exists=True, dir_okay=False)],
@@ -195,6 +222,7 @@ def run_plan(
         "provtrust_system_prompt_sha256": str(plan["system_prompt_sha256"]),
     }
     constrained_command = _resolve_task_resource_arguments(list(command), project_root)
+    constrained_command = _resolve_plan_executable(constrained_command, environment)
     for key, value in metadata.items():
         constrained_command.extend(("--metadata", f"{key}={value}"))
     taskset = shutil.which("taskset")

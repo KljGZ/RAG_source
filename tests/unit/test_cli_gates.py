@@ -2,9 +2,11 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
+import typer
 from typer.testing import CliRunner
 
-from provtrust.cli import _resolve_task_resource_arguments, app
+from provtrust.cli import _resolve_plan_executable, _resolve_task_resource_arguments, app
 
 runner = CliRunner()
 
@@ -63,3 +65,24 @@ def test_task_resource_arguments_are_resolved_against_project_root(tmp_path: Pat
     assert resolved[4] == f"dataset_path={dataset.resolve()}"
     assert resolved[6] == "ordinary_value=unchanged"
     assert command[4] == "dataset_path=benchmark/synthetic/smoke.jsonl"
+
+
+def test_plan_executable_falls_back_to_active_python_environment(
+    tmp_path: Path, monkeypatch
+) -> None:
+    environment_bin = tmp_path / "bin"
+    environment_bin.mkdir()
+    executable = environment_bin / "inspect"
+    executable.write_text("", encoding="utf-8")
+    monkeypatch.setattr("provtrust.cli.sys.executable", str(environment_bin / "python"))
+
+    resolved = _resolve_plan_executable(["inspect", "eval", "task"], {"PATH": ""})
+
+    assert resolved == [str(executable), "eval", "task"]
+
+
+def test_plan_executable_refuses_an_unknown_command(tmp_path: Path, monkeypatch) -> None:
+    monkeypatch.setattr("provtrust.cli.sys.executable", str(tmp_path / "bin" / "python"))
+
+    with pytest.raises(typer.BadParameter, match="experiment executable not found"):
+        _resolve_plan_executable(["missing-command"], {"PATH": ""})

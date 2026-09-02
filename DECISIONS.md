@@ -137,3 +137,16 @@
 - Enforce the 35-GiB free-memory launch gate even when the reviewed GPU has sufficient
   total capacity. Preexisting jobs are read-only observations and are never stopped,
   resized, or reclassified as project processes.
+
+## 2026-09-01 — Remote child-executable resolution
+
+- Retain the first Phi-4 parser-v2 preflight launch as a pre-model engineering
+  failure. The absolute `provtrust` entry point ran in a non-login SSH shell, but
+  `taskset` could not resolve the plan's `inspect` child because that shell omitted
+  the active Conda `bin` directory from `PATH`; no Inspect log or model output was
+  produced and no retry budget was consumed.
+- Resolve a reviewed plan's executable from the inherited `PATH` first and then from
+  the directory of the active Python interpreter before applying CPU affinity. Do
+  not modify the frozen experiment plan or rely on an interactive-shell activation.
+- Cover both the active-environment fallback and unknown-executable refusal with
+  regression tests before repeating the full preflight gate sequence.
