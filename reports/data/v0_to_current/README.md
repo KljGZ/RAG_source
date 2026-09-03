@@ -53,6 +53,22 @@ python scripts/export_v0_public_data.py
 eval 的 scorer metadata 提取；该脚本只保留组件布尔值与工具名，不导出调用参数、
 工具输出或消息正文。
 
+### 评分器 V2 修正说明
+
+本目录中的 `interactive_preflight_trace_samples.csv` 与组件汇总忠实保留首次公开时
+写入旧 `.eval` 的 `trial_specific_interactive_v1` 元数据。后续审计发现其 C5
+缺失记录组件存在空真错误。不得把旧表中该组件的 6 个 true 当作实际搜索。
+
+修正后的逐样本双版本比较、全部组件、变更字段、原始日志哈希与 25 道门保存在：
+
+- `artifacts/system/INTERACTIVE_V4_NO_TOOLS_PREFLIGHT_RESCORE.json`；
+- `artifacts/system/INTERACTIVE_V4_TOOLS_UNPROMPTED_PREFLIGHT_RESCORE.json`；
+- `artifacts/system/INTERACTIVE_V4_TOOLS_PROMPTED_PREFLIGHT_RESCORE.json`。
+
+三者各将两个 C5 值修正为 false，未改变触发数、调用数或严格完成数。模型无关语义
+验收见 `artifacts/system/INTERACTIVE_TRACE_V2_ACCEPTANCE.json`。旧表与新证据并存，
+以避免静默改写历史数据。
+
 ## 解释限制
 
 静态表是两个约 14B 级开源模型、同一合成封闭语料与确定性解码下的探索性

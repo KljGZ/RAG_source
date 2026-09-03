@@ -58,6 +58,14 @@ silently replace earlier outputs.
   missing-record component could pass without an observed search. Record the defect,
   require a versioned scorer amendment and preflight-log rescore, and downgrade the
   hourly controller to service/integrity monitoring before any formal outcome exists.
+- Correct the absence predicate in `trial_specific_interactive_v2`: missing records
+  require a successful target-bound search with a valid list response and no exact-ID
+  hit. Add regression tests plus a nine-gate model-free semantic acceptance.
+- Rescore all three immutable V3 preflight logs under amendment 003. Pass 25 integrity
+  gates per policy, correct exactly six C5 component values, and retain invariant
+  trigger, call, and 0/10 strict-completion counts without generating model output.
+- Freeze three input-contract-8 V4 full plans, a 112-file V2 runtime manifest, and a
+  new GPU-2-only V5 controller/state namespace before restoring launch authority.
 
 ## [0.1.0] - 2026-08-31
 

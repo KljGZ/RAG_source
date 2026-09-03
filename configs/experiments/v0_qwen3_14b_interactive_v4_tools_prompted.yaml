@@ -1,0 +1,150 @@
+schema_version: "1.0.0"
+input_contract_version: 8
+stage: v0
+execution_status: ready
+exploratory: true
+scientific_claims_allowed: true
+confirmatory: false
+purpose: corrected full closed-world interactive verification baseline with prompted tools
+track: interactive_verification
+interactive_policy: tools_prompted
+scorer_definition: trial_specific_interactive_v2
+run_kind: exploratory_v0_full
+replacement_history:
+  supersedes_plan_sha256: 91f24c14e67f6f0810b5d5b9b76fc6507a77e28ebbf7b7833217cd820aeef312
+  reason: target-bound correction of missing-record verification under amendment 003
+protocol_preregistration: analysis/preregistration/V0_INTERACTIVE_VERIFICATION.md
+protocol_preregistration_sha256: a6270bf38e262afc8e583ba9ab78fabd5a7b4a7d445c3f28ff65bcb7a25d94fa
+analysis_preregistration: analysis/preregistration/V0_INTERACTIVE_VERIFICATION_ANALYSIS_PLAN.md
+analysis_preregistration_sha256: 5ca9ce4d2a9d0c75b3dfd5db71ce9c1730350f55f5f1802fa7f49775ba6043f5
+engineering_amendment: analysis/preregistration/V0_INTERACTIVE_VERIFICATION_ENGINEERING_AMENDMENT_003.md
+engineering_amendment_sha256: 29844c579a84b3a33d71bbd10a731be44f7508fabf4e715b994ee895b8a4fbd6
+amendment_history:
+  - path: analysis/preregistration/V0_INTERACTIVE_VERIFICATION_ENGINEERING_AMENDMENT_001.md
+    sha256: 5e789b92aec1a0a648c04e0ee325bbff4eedcd3cb067f7914623dd6bb06822df
+  - path: analysis/preregistration/V0_INTERACTIVE_VERIFICATION_ENGINEERING_AMENDMENT_002.md
+    sha256: cac9ea352c97667a00080821a741612f1e5c413a144fc81502be9384eb091a41
+  - path: analysis/preregistration/V0_INTERACTIVE_VERIFICATION_ENGINEERING_AMENDMENT_003.md
+    sha256: 29844c579a84b3a33d71bbd10a731be44f7508fabf4e715b994ee895b8a4fbd6
+runtime_code_manifest: configs/runtime/interactive-v2-qwen3-full-v2.manifest.json
+runtime_code_manifest_sha256: 222a0237ec849bda61e991f8521d1e962b1c769b4b9b6ff14f85918f9dd2f795
+trace_scorer_acceptance: artifacts/system/INTERACTIVE_TRACE_V2_ACCEPTANCE.json
+trace_scorer_acceptance_sha256: febfc588058bd0b2d8500b97986e2c45dd12dc5a5e8040a20e05175b02049853
+dataset_manifest: benchmark/manifests/v0-interactive-v1-tools_prompted.yaml
+dataset_manifest_sha256: 9fd4d556bf5d76831e3ce23abd3583a36d2dd6b84b4de908b2bfa3cf5a6ee78a
+tool_environment_manifest: benchmark/manifests/interactive-v1-tools.yaml
+tool_environment_manifest_sha256: c68fec20b240f199d38e71079750522162afa0f1b66b43aae7fe3e2f55371fd2
+tool_environment_acceptance: artifacts/system/INTERACTIVE_ENV_TOOLS_PROMPTED.json
+tool_environment_acceptance_sha256: f6822c848c1e8194982466f4768d2c4ba47755234539f43ad8eb8abe8738e2ca
+model_registration: configs/models/qwen3-14b-interactive-v3.yaml
+model_registration_sha256: fe5348f6cb0e9338999350edc468042a6f81eaeede5a0c21426fd89b72926cdb
+model_asset_manifest: configs/models/assets/qwen3-14b-cc692f4.manifest.json
+model_asset_manifest_sha256: 5737d6eadb313042cf6d14634ffb3eaf8eb2149572a7b5f993caa459a0210bba
+model_args: configs/models/qwen3-14b-static.local.yaml
+system_prompt: prompts/frozen/interactive-verification-system-v1.txt
+system_prompt_sha256: df598da58cf46b81a421a1371e559778d70afba3a1edf78be8d900c091a95d5d
+activation_evidence: artifacts/system/INTERACTIVE_V4_TOOLS_PROMPTED_PREFLIGHT_RESCORE.json
+activation_evidence_sha256: f28168504609ddfcb3ab4d2d9ea4ffbdcd8f64ef82361f0fdf94ea37ee3574c3
+activation_identity:
+  source_preflight_sha256: 114898ca84249b84820c07b29da626f9c28d1f92e610010b44fb6ee2d012249a
+  preflight_plan_sha256: 668f6229bcca60a642201028c2a5c57bf455e7977137b75cbdd4a4542a351f74
+  preflight_raw_log_sha256: 2f83447b5a37230bfb01e18d7873e678b79c23b6cb7a47e444e1a3616be1fd63
+  preflight_git_revision: 49cf89c29d121ef6929604ee4efc57a29eded6d1
+  rescore_definition: trial_specific_interactive_v2
+  rescore_scorer_sha256: b01d1af317fb5b0493c53251b93655f4fc2319968b70fdaa8d22bd6c0549d980
+  scorer_acceptance_sha256: febfc588058bd0b2d8500b97986e2c45dd12dc5a5e8040a20e05175b02049853
+seed: 20260831
+epochs: 1
+sample_count: 160
+family_count: 16
+scenario_count: 5
+minimum_model_turns: 320
+temperature: 0.0
+top_p: 1.0
+top_k: 1
+max_tokens: 256
+enable_thinking: false
+retry_on_error: 0
+resource_allocation_required: true
+minimum_resources:
+  cpu_cores: 16
+  ram_gib: 64
+  storage_gib: 100
+  gpu_count: 1
+  minimum_gpu_memory_gib: 35
+  estimated_gpu_hours: 2
+  api_budget_usd: 0
+inspect_command:
+  - inspect
+  - eval
+  - src/provtrust/tasks/interactive_verification.py@interactive_verification
+  - -T
+  - dataset_path=benchmark/synthetic/v0-interactive-v1-tools_prompted.jsonl
+  - -T
+  - search_index_path=web_env/search_index/documents.jsonl
+  - -T
+  - snapshot_root=web_env/source_snapshots
+  - -T
+  - source_registry_path=web_env/canonical_sources/registry.json
+  - -T
+  - identifier_registry_path=web_env/canonical_sources/identifiers.json
+  - -T
+  - provenance_registry_path=web_env/canonical_sources/provenance-v1.json
+  - -T
+  - system_prompt_path=prompts/frozen/interactive-verification-system-v1.txt
+  - -T
+  - policy=tools_prompted
+  - --model
+  - hf/Qwen/Qwen3-14B
+  - --model-config
+  - configs/models/qwen3-14b-static.local.yaml
+  - --max-tokens
+  - "256"
+  - --seed
+  - "20260831"
+  - --epochs
+  - "1"
+  - --max-connections
+  - "1"
+  - --max-samples
+  - "1"
+  - --log-dir
+  - artifacts/runs/v0_qwen3_14b_interactive_v4_tools_prompted
+analysis_command:
+  - python
+  - scripts/analyze_interactive_run.py
+  - artifacts/runs/v0_qwen3_14b_interactive_v4_tools_prompted/RUN.eval
+  - --dataset-manifest
+  - benchmark/manifests/v0-interactive-v1-tools_prompted.yaml
+  - --tool-environment-manifest
+  - benchmark/manifests/interactive-v1-tools.yaml
+  - --model-registration
+  - configs/models/qwen3-14b-interactive-v3.yaml
+  - --model-asset-manifest
+  - configs/models/assets/qwen3-14b-cc692f4.manifest.json
+  - --runtime-code-manifest
+  - configs/runtime/interactive-v2-qwen3-full-v2.manifest.json
+  - --analysis-preregistration
+  - analysis/preregistration/V0_INTERACTIVE_VERIFICATION_ANALYSIS_PLAN.md
+  - --expected-analysis-preregistration-sha256
+  - 5ca9ce4d2a9d0c75b3dfd5db71ce9c1730350f55f5f1802fa7f49775ba6043f5
+  - --expected-allocation-id
+  - user-gpu2-open-source-v0-20260831
+  - --expected-model
+  - hf/Qwen/Qwen3-14B
+  - --expected-model-root-sha256
+  - 494ab49926699409cf08e0f127175353082777bb25dc163dd93ed3b55fe1afeb
+  - --expected-policy
+  - tools_prompted
+  - --expected-plan-sha256
+  - PLAN_SHA256
+  - --expected-git-revision
+  - GIT_REVISION
+  - --expected-samples
+  - "160"
+  - --expected-families
+  - "16"
+  - --analysis-dir
+  - artifacts/analyses/v0_qwen3_14b_interactive_v4_tools_prompted
+  - --output
+  - artifacts/system/V0_INTERACTIVE_V4_TOOLS_PROMPTED_RUN_ACCEPTANCE.json

@@ -1,6 +1,6 @@
 # Project status
 
-Current stage: **Track E V3 preflights accepted; full run held for scorer amendment and GPU gate**
+Current stage: **Track E scorer V2 accepted; corrected full run gated on GPU availability**
 
 ## Deployment state
 
@@ -59,11 +59,15 @@ Current stage: **Track E V3 preflights accepted; full run held for scorer amendm
   explicit missingness, family-cluster, exact-pair, and five-test Holm rules.
 - [x] Three hash-bound 160-row full policy plans and an allowlisted GPU-2 controller
   were prepared for sequential hourly execution.
-- [ ] Amend the missing-record component predicate before full Track E execution. A
-  publication audit found that `presented_record_existence_checked` can pass for a
-  missing page without a search action. This did not change any preflight's overall
-  `completed=false` result, but it must be corrected, registered, and revalidated
-  before the 480-trial outcome matrix.
+- [x] Amend the missing-record component predicate before full Track E execution.
+  Definition `trial_specific_interactive_v2` now requires a successful target-bound
+  search to establish absence. Nine model-free semantic gates and three sets of 25
+  immutable-log rescore gates passed. Exactly six C5 component values were corrected;
+  trigger, call, and strict-completion counts were unchanged.
+- [x] Freeze three replacement 160-row V4 plans behind input contract 8, amendment
+  003, scorer acceptance, policy-specific rescore evidence, and a 112-file runtime
+  manifest. The V5 allowlisted controller uses a new external state directory and
+  cannot consume or overwrite the held V4-controller state.
 
 ## Scientific implementation state
 
@@ -114,9 +118,11 @@ triggered no verification tools in 10/10 trials, while `tools_prompted` triggere
 10/10 trials and made 28 successful calls. None of the prompted traces completed all
 seven required components, and all ten prompted posteriors claimed verification.
 These values neither gate nor alter the full run. Component-level publication review
-subsequently exposed a vacuous missing-record predicate: both no-call policies marked
-the two absent-page cells as having checked existence. The full matrix must therefore
-remain outcome-free until an engineering amendment, negative tests, runtime/plan hash
-refresh, and preflight-log rescoring are complete. GPU 2 must additionally pass the
-frozen 46,080 MiB stable-free-memory gate. No V1 or PAVG run is authorized at this
-boundary.
+subsequently exposed a vacuous missing-record predicate: all three policies marked
+their two absent-page cells as having checked existence without a target-bound
+successful search. Amendment 003, negative and positive tests, the V2 semantic
+acceptance, immutable-log rescoring, and replacement runtime/plan/controller freezing
+are now complete. The correction changed exactly those six component values from true
+to false and changed no policy's trigger count, call count, or 0/10 strict-completion
+count. Formal Track E remains governed by the independent 46,080 MiB stable-free-memory
+gate on physical GPU 2. No V1 or PAVG run is authorized at this boundary.

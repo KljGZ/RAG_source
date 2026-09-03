@@ -1,0 +1,573 @@
+{
+  "builder": {
+    "path": "scripts/build_runtime_code_manifest.py",
+    "sha256": "a8d091f9e0bfd40b35076ef17f16142f7c1b86ae4100ef6328985f90de3f41fb"
+  },
+  "entrypoint": "src/provtrust/tasks/interactive_verification.py",
+  "file_count": 112,
+  "files": [
+    {
+      "bytes": 35861,
+      "path": "scripts/analyze_interactive_run.py",
+      "sha256": "087007086d2ccf09977b5d3573fd21d3f6e5c0d7d9f93029a09c4c94dc416534"
+    },
+    {
+      "bytes": 12087,
+      "path": "scripts/combine_interactive_results.py",
+      "sha256": "498b1b760774e188e76a6e35dac8355fef46597e37b26065963285a5aeb0b6fa"
+    },
+    {
+      "bytes": 15903,
+      "path": "scripts/rescore_interactive_preflight.py",
+      "sha256": "3aab5b5fcd444b5dff6cc8737f2a1a418c6814045912e1bc5e30c04f799c4c59"
+    },
+    {
+      "bytes": 28468,
+      "path": "scripts/validate_interactive_preflight.py",
+      "sha256": "751fb487245f4631ca389c8c398c5e98cd120a20a6c5ccdf25a5b13ba5060a8c"
+    },
+    {
+      "bytes": 6246,
+      "path": "scripts/validate_interactive_trace_v2.py",
+      "sha256": "0c299d128cea12ac74de7144496c78d28aabef4f741fe754ccc3d387851a92bd"
+    },
+    {
+      "bytes": 68,
+      "path": "src/provtrust/__init__.py",
+      "sha256": "5f2542ce9d43008259e6e75d8b3dde4a301aa75333b5b3867b062fa95f59d6d4"
+    },
+    {
+      "bytes": 643,
+      "path": "src/provtrust/analysis/__init__.py",
+      "sha256": "2785450809689d931b3c9e9e2caea951df591bf5b4f1113b371f317912161bf4"
+    },
+    {
+      "bytes": 1544,
+      "path": "src/provtrust/analysis/bootstrap.py",
+      "sha256": "f318a5376578108bdb6a0dea56f72d54ba740648e702e48bd2a3cdbb50f66f54"
+    },
+    {
+      "bytes": 4067,
+      "path": "src/provtrust/analysis/estimands.py",
+      "sha256": "8db7d887ac7b519d329384c00851f5f67401bff2e763145eb56505ae819ef289"
+    },
+    {
+      "bytes": 9251,
+      "path": "src/provtrust/analysis/interactive_results.py",
+      "sha256": "ba2f931555d12662b2ee56300403ea8ddabbe93fecdb24e77bfc1ea7c62bc1e8"
+    },
+    {
+      "bytes": 1105,
+      "path": "src/provtrust/analysis/plots.py",
+      "sha256": "59bc54f226f9ecbdbecb255a8c61605ada1bdfeb1e375756202efeb30ae19a3c"
+    },
+    {
+      "bytes": 1132,
+      "path": "src/provtrust/analysis/power.py",
+      "sha256": "feeb7cafc8f148bd5130dc57900c778a1d2ae3265b5947277687f0d5ae22e8b4"
+    },
+    {
+      "bytes": 1481,
+      "path": "src/provtrust/analysis/randomization_test.py",
+      "sha256": "b6dfb64cdd7145a7f04dd5965754cb0c12b218021677dbdd28937bb8d2729708"
+    },
+    {
+      "bytes": 4790,
+      "path": "src/provtrust/analysis/static_results.py",
+      "sha256": "9f356066ee7f1ec68f9a80ee76ab4e471e0c7f3054568111cce9e79a46ad32c6"
+    },
+    {
+      "bytes": 582,
+      "path": "src/provtrust/analysis/tables.py",
+      "sha256": "0fbd6c50b8dab62c93a7ca3e46d2a4a7e2fc18e13ac6329470fe632d86982122"
+    },
+    {
+      "bytes": 25484,
+      "path": "src/provtrust/audit.py",
+      "sha256": "218f52421bfc048c36088e4c57f13625e8e1bc510a4c284c52548c37e91b0ec4"
+    },
+    {
+      "bytes": 11459,
+      "path": "src/provtrust/cli.py",
+      "sha256": "f1e7310959d2519242ea84da3106ae3f3f528623edda356473235654e8970fd4"
+    },
+    {
+      "bytes": 502,
+      "path": "src/provtrust/datasets/__init__.py",
+      "sha256": "f25a2142817ec4a290ea209922f804c1c3f1199c024918e5c8c41def07291b9f"
+    },
+    {
+      "bytes": 591,
+      "path": "src/provtrust/datasets/authoritybench_adapter.py",
+      "sha256": "28ba80b480e18719bcb226a65ba01cd74cf2096fef7b170d21362b08594a1158"
+    },
+    {
+      "bytes": 834,
+      "path": "src/provtrust/datasets/groupqa_adapter.py",
+      "sha256": "94c3c80f00e9dead32dc5640fb25a60e553145be189c2cdb12f67c4915134781"
+    },
+    {
+      "bytes": 25626,
+      "path": "src/provtrust/datasets/interactive_v0.py",
+      "sha256": "cd50f87e9051376e1f568b95336085352461e8d38f802f3ea3a7ed0ead304d4e"
+    },
+    {
+      "bytes": 894,
+      "path": "src/provtrust/datasets/io.py",
+      "sha256": "1df3ef244da9952f499ab2fc3030ded211886e732a4ba9cea5ec7ae979429489"
+    },
+    {
+      "bytes": 2567,
+      "path": "src/provtrust/datasets/l2d_adapter.py",
+      "sha256": "a1b66903a82cf63fdc907f9e8acfebe0e94407d372753292bc9a4143d8027365"
+    },
+    {
+      "bytes": 1295,
+      "path": "src/provtrust/datasets/mirage_adapter.py",
+      "sha256": "31cd04d884adcf7ab478e11a41edb1a3c7433e77e1a385d35294a10ca44ed6c2"
+    },
+    {
+      "bytes": 1290,
+      "path": "src/provtrust/datasets/real_source_builder.py",
+      "sha256": "84d3cfae3a30824206c799e123cce71080424fb9070ecb752d3bda38dfadf7a3"
+    },
+    {
+      "bytes": 2585,
+      "path": "src/provtrust/datasets/split.py",
+      "sha256": "8a9063f07865c300bcede18c768b96c942d7ad4412d02a6957c02e633c70a934"
+    },
+    {
+      "bytes": 6177,
+      "path": "src/provtrust/datasets/stimulus_audit.py",
+      "sha256": "15c2487b0b22c0ed3d26fd93a2a14e50c2ffd3e87884f9de72bc013852789d55"
+    },
+    {
+      "bytes": 16507,
+      "path": "src/provtrust/datasets/synthetic_builder.py",
+      "sha256": "21f206b153aeb8c907b779aeaec8d6d563f0410e9dbce62cd33d6d295efd00e1"
+    },
+    {
+      "bytes": 6016,
+      "path": "src/provtrust/datasets/v0_corpus.py",
+      "sha256": "ae7d0efe3d89929a0b127337275918a3615a8fd142f6b6a528243c83acd42f64"
+    },
+    {
+      "bytes": 5252,
+      "path": "src/provtrust/datasets/validate.py",
+      "sha256": "096edef659e32f8237d1457c0d67e5c2ff663a2a126a2f2a50128552ccd5ec14"
+    },
+    {
+      "bytes": 595,
+      "path": "src/provtrust/defense/__init__.py",
+      "sha256": "93a32d22545f81b51755b4bb99ac77e40fa9fd1124a3aa74c9fcda4de81a0c4a"
+    },
+    {
+      "bytes": 1275,
+      "path": "src/provtrust/defense/abstention.py",
+      "sha256": "48f1e534ad6891b82e727aec8c583769cff7d1f64a72d1eab24fc37d69567b16"
+    },
+    {
+      "bytes": 1744,
+      "path": "src/provtrust/defense/attribution_verifier.py",
+      "sha256": "939a617a1d1a361b0538f9945e2d96a50efbe23ebe82b6c70e4075f5785281f7"
+    },
+    {
+      "bytes": 509,
+      "path": "src/provtrust/defense/claim_atomizer.py",
+      "sha256": "227b8dd50c01714752b98d96a1e5178039edd13b0a7109e52ebb21ac8893bf1e"
+    },
+    {
+      "bytes": 3039,
+      "path": "src/provtrust/defense/evidence_aggregator.py",
+      "sha256": "305defd17e6744a26098df4065c630edd2244168f029fdd04353f2902249a432"
+    },
+    {
+      "bytes": 1661,
+      "path": "src/provtrust/defense/pavg_agent.py",
+      "sha256": "d96315e16af341ea091df438c65e759719a85885dba9e7f3d012f932a50f119a"
+    },
+    {
+      "bytes": 653,
+      "path": "src/provtrust/defense/provenance_graph.py",
+      "sha256": "4c11159c880f33e8756a1b82622ce8b6f70caa743296cfec331a16dccc07a4b8"
+    },
+    {
+      "bytes": 1731,
+      "path": "src/provtrust/defense/risk_gate.py",
+      "sha256": "e8eee26f0d094964a4994597d44f380dc7c513143bc2d838b9695781ec29ef56"
+    },
+    {
+      "bytes": 902,
+      "path": "src/provtrust/defense/source_resolver.py",
+      "sha256": "6a573738931b6bbdc938f5acd0947ee9e547b71482a0b0c15f9123b208d13308"
+    },
+    {
+      "bytes": 621,
+      "path": "src/provtrust/defense/warrant_checker.py",
+      "sha256": "bffdd9975a29688a427e784e000dc96d083534f717ab7b3925d5f483e330421d"
+    },
+    {
+      "bytes": 578,
+      "path": "src/provtrust/execution/__init__.py",
+      "sha256": "67f1373e06e7724b2c96d1bb60a777081ac3c9b1988975aed4f3280634cf63b7"
+    },
+    {
+      "bytes": 4218,
+      "path": "src/provtrust/execution/allocation.py",
+      "sha256": "58b6a6f2b8e458cc1fb0500f94ba8e09abfa8ef52f66b3fe2edab263c6e09c39"
+    },
+    {
+      "bytes": 1573,
+      "path": "src/provtrust/execution/atomic_io.py",
+      "sha256": "93234535fdcf3a90a28aaeb643df00588e03a45ac96ae06ecc2cb0ed32e48a5c"
+    },
+    {
+      "bytes": 3871,
+      "path": "src/provtrust/execution/checkpoint.py",
+      "sha256": "80d279a26f955a8bfc16355e18252c0f6a12628429be28f415229cee685d7be2"
+    },
+    {
+      "bytes": 2761,
+      "path": "src/provtrust/execution/cost_ledger.py",
+      "sha256": "eafdfb8f2fee38ef175cf903dd07d13854ded9d0b837fb56ce47e5c43f54df32"
+    },
+    {
+      "bytes": 768,
+      "path": "src/provtrust/execution/environment_manifest.py",
+      "sha256": "611a4a5bc53bad7d045c6fc8aa5bb31b04027aacc0a3e5a90d6e61bd1f6bfa77"
+    },
+    {
+      "bytes": 27481,
+      "path": "src/provtrust/execution/input_gate.py",
+      "sha256": "605b479d721e6a44e2f930cea7410115bcaf2d89720b6a21ae7d11949d822a8a"
+    },
+    {
+      "bytes": 1363,
+      "path": "src/provtrust/execution/inspect_compat.py",
+      "sha256": "0d4cefcdbe7b09a03b15e00ede1df598a64fc2fedffa3c126ce8370f34be1d08"
+    },
+    {
+      "bytes": 3655,
+      "path": "src/provtrust/execution/inspect_qwen3_hybrid.py",
+      "sha256": "b9593ec658224c97e3df4c156827d4c88077efb46411ec805bbbc77a25f63867"
+    },
+    {
+      "bytes": 7141,
+      "path": "src/provtrust/execution/model_assets.py",
+      "sha256": "ebe1c1df8df7c79c41b6c828f3b0d71e36c37141180513a91ab5d153d831a845"
+    },
+    {
+      "bytes": 1590,
+      "path": "src/provtrust/execution/retry.py",
+      "sha256": "ae5f96b76bc2e635b785b5ae981bc56547874550cfaa0d6d8c4b40949f8fef27"
+    },
+    {
+      "bytes": 799,
+      "path": "src/provtrust/execution/run_ids.py",
+      "sha256": "f45845287e0750a76eb97859b99960e7ab6f7a7c6b87cd5db032b69aaf8541bc"
+    },
+    {
+      "bytes": 697,
+      "path": "src/provtrust/execution/sharding.py",
+      "sha256": "894fc6c21d59dc09bc0d53fc97bee9d6a6ab01f26703f704ba9a8c190d7bb9e0"
+    },
+    {
+      "bytes": 964,
+      "path": "src/provtrust/interventions/__init__.py",
+      "sha256": "958f00350d5c248ccd4390a63fdb23712d4f6b3f1e34f9581fecf28d5e2a407f"
+    },
+    {
+      "bytes": 676,
+      "path": "src/provtrust/interventions/attribution_spoof.py",
+      "sha256": "2e3453a927c07c8dd69cfb37829abab5e94c7b7bcd3fc6817551f12c9f5c0311"
+    },
+    {
+      "bytes": 605,
+      "path": "src/provtrust/interventions/authority_style.py",
+      "sha256": "87f8e7fd206ee757434da166bd905716bbbf72f673deace6ef55b94a1f30e18e"
+    },
+    {
+      "bytes": 958,
+      "path": "src/provtrust/interventions/common.py",
+      "sha256": "7de61ab69361ba6eca6fb64577bc48f3bc6e8f0d01fba76950635307515f5982"
+    },
+    {
+      "bytes": 1293,
+      "path": "src/provtrust/interventions/duplicate_source.py",
+      "sha256": "d7f66424f46be205aec95952a05cffd1625bfeccb81fb346b61ec057b7266c40"
+    },
+    {
+      "bytes": 402,
+      "path": "src/provtrust/interventions/length_control.py",
+      "sha256": "2047b4abdcc9571251e94afe37759506201f5ff7f791e808db4e3ccefb9d73ea"
+    },
+    {
+      "bytes": 395,
+      "path": "src/provtrust/interventions/order_swap.py",
+      "sha256": "27bc43b6cf4a287034f1a6f2f5157301197be466e36c628c8b75ea723b335af3"
+    },
+    {
+      "bytes": 799,
+      "path": "src/provtrust/interventions/source_dependency.py",
+      "sha256": "7d5db817b79411879e9e8180742ce217c49604b12a44e27fd7b4cc0dc05319ca"
+    },
+    {
+      "bytes": 660,
+      "path": "src/provtrust/interventions/source_swap.py",
+      "sha256": "2a2dc04673b48b3929d6103696b5a8139cacb2d97ec6f20fc436ea06ac974613"
+    },
+    {
+      "bytes": 327,
+      "path": "src/provtrust/interventions/user_endorsement.py",
+      "sha256": "87c64912fefabb358f0432aca66c6898e3512932ac909b15c4d25dda7e2bf1ab"
+    },
+    {
+      "bytes": 1340,
+      "path": "src/provtrust/interventions/warrant_raise.py",
+      "sha256": "93256e443b39ae77cd1b7eb63f50c922d605b2a049a20ed836c1533cff8b7ae9"
+    },
+    {
+      "bytes": 12814,
+      "path": "src/provtrust/monitoring.py",
+      "sha256": "111300a092541ab08501c545cdb76b104d6215a54a306dbccc29904d759eed4b"
+    },
+    {
+      "bytes": 648,
+      "path": "src/provtrust/registries/__init__.py",
+      "sha256": "a94e0d394fb81c4d76cea2631b17b54b249280c7d03b92d67b7af96def006612"
+    },
+    {
+      "bytes": 1115,
+      "path": "src/provtrust/registries/base.py",
+      "sha256": "cdca387e38c12fb834cb46cf3d1104e0e05a8998d1fafc3e4d263413a602651f"
+    },
+    {
+      "bytes": 518,
+      "path": "src/provtrust/registries/datasets.py",
+      "sha256": "86803ed081ef323fb235f1d00e1c20331655fca368a7723d3fbf2d2eacb95876"
+    },
+    {
+      "bytes": 6019,
+      "path": "src/provtrust/registries/models.py",
+      "sha256": "b1d2343f37cfd832c111ca062aba04cf129c24a27ef59ccca383b9eee3094183"
+    },
+    {
+      "bytes": 750,
+      "path": "src/provtrust/registries/prompts.py",
+      "sha256": "8add02009052abfc9b8ff0015885401b87f4a6aebfbeec04ce1235c9045e451a"
+    },
+    {
+      "bytes": 449,
+      "path": "src/provtrust/registries/scorers.py",
+      "sha256": "b3587268ec83d5dd1ab07a958dd9516c8cf6f37e068f2cbec376dc90250ded1e"
+    },
+    {
+      "bytes": 520,
+      "path": "src/provtrust/registries/sources.py",
+      "sha256": "81db3d52f2e7150ceb47e55fd193fa321dd5bb2a02f96bceb2496febfdfeb599"
+    },
+    {
+      "bytes": 978,
+      "path": "src/provtrust/schemas/__init__.py",
+      "sha256": "7741c2535c78e6d4475fccaca9238947bbf872d2d5507f502b1702a3b76f5c5e"
+    },
+    {
+      "bytes": 1138,
+      "path": "src/provtrust/schemas/claim.py",
+      "sha256": "bfc6779c895502993fe0b321ebec31f91078e8fa18d0ce9bfa8908f8a8a9a7a9"
+    },
+    {
+      "bytes": 2132,
+      "path": "src/provtrust/schemas/evidence.py",
+      "sha256": "75efbd6dec8c2d2a58cd2b039d42f626c681de72157dfc2f3c784ded7f3b001e"
+    },
+    {
+      "bytes": 2562,
+      "path": "src/provtrust/schemas/provenance.py",
+      "sha256": "147796c367aa49062a0ac012aa8c1289444bdb3cdb58f97b2a4c86cac996a995"
+    },
+    {
+      "bytes": 3789,
+      "path": "src/provtrust/schemas/run.py",
+      "sha256": "980a91ec083fbf210ce8bd93f685b61eddf0b89bdd55de61250da83c14a0a023"
+    },
+    {
+      "bytes": 1755,
+      "path": "src/provtrust/schemas/source.py",
+      "sha256": "16ad7ef74d027e3c8f5fdfe8a6515d323089b5cab66de66aeb9bbe76c6b0c1c4"
+    },
+    {
+      "bytes": 1258,
+      "path": "src/provtrust/schemas/tool_event.py",
+      "sha256": "f553e4b591a93e3c217974cf351880e2bdd9bc7bf695787d49ccc6a7e1129081"
+    },
+    {
+      "bytes": 3248,
+      "path": "src/provtrust/schemas/trial.py",
+      "sha256": "b64060bb0b7b14782397a38182082fe3295ce6f1d6904e482e54e0350643c6e7"
+    },
+    {
+      "bytes": 1049,
+      "path": "src/provtrust/scorers/__init__.py",
+      "sha256": "97aa7262b67d2514990925f05e9df92b27a3d1f6f2d5a811f99ab03cdabe5159"
+    },
+    {
+      "bytes": 615,
+      "path": "src/provtrust/scorers/attribution.py",
+      "sha256": "736f1d73052d470bd4b0f4ddeb9b2d22d3c8b65c3076b92508258233abac599d"
+    },
+    {
+      "bytes": 936,
+      "path": "src/provtrust/scorers/belief_update.py",
+      "sha256": "05d1b9690f5b08d9da560610235e868a812ba35308605c91e2e3a2d5b6d1cbf4"
+    },
+    {
+      "bytes": 1620,
+      "path": "src/provtrust/scorers/calibration.py",
+      "sha256": "18758886235a4adf24654aa39b32c3a43403e7e27b2a9bd25546958d56a93372"
+    },
+    {
+      "bytes": 881,
+      "path": "src/provtrust/scorers/human_agreement.py",
+      "sha256": "c8814aacef36234cd2a914186b1f5e2253e62fb7f939668bad8147935f76bd00"
+    },
+    {
+      "bytes": 667,
+      "path": "src/provtrust/scorers/independence.py",
+      "sha256": "d32080389e88ce5fdf8c93723edfc8dbfd064adeabf603552311c38f5db245de"
+    },
+    {
+      "bytes": 10797,
+      "path": "src/provtrust/scorers/interactive_trace.py",
+      "sha256": "b01d1af317fb5b0493c53251b93655f4fc2319968b70fdaa8d22bd6c0549d980"
+    },
+    {
+      "bytes": 703,
+      "path": "src/provtrust/scorers/ragchecker_adapter.py",
+      "sha256": "58062e796e996ae483cbd065f7144b1b5853ea74ed7ec6478b5947e5a96fe3e9"
+    },
+    {
+      "bytes": 1563,
+      "path": "src/provtrust/scorers/rationale.py",
+      "sha256": "4ee1a7bc9f91340d696f7ef832d7791d073daf0212d4c75b5e76c09b97758e24"
+    },
+    {
+      "bytes": 747,
+      "path": "src/provtrust/scorers/source_sensitivity.py",
+      "sha256": "8e268d5729363b1adc15c2f31770d955073fa4b73e9d89b3ca191e21b87d0c46"
+    },
+    {
+      "bytes": 1357,
+      "path": "src/provtrust/scorers/tool_trace.py",
+      "sha256": "c9357f1cb8a10a380565a40f3992d31708ccf9a470d7144f51a2bf8a5c5c80f4"
+    },
+    {
+      "bytes": 1097,
+      "path": "src/provtrust/scorers/warrant.py",
+      "sha256": "744a6504553099c37b408d0f3e53422d9f965f018f6ea28212f89ba1174a67ec"
+    },
+    {
+      "bytes": 910,
+      "path": "src/provtrust/tasks/__init__.py",
+      "sha256": "3ec86cf8c947bf4d1f67453a2b6d72b0cca17888614a06364e9ded206fd3585b"
+    },
+    {
+      "bytes": 291,
+      "path": "src/provtrust/tasks/attribution_authenticity.py",
+      "sha256": "78ea65a4d409fca32e71eeb50cdfd090dd53a2912b5ce95bdd00ffc26ff7de72"
+    },
+    {
+      "bytes": 16907,
+      "path": "src/provtrust/tasks/common.py",
+      "sha256": "1df42dbb7bf6f8fc53e6692eb57fb6a39fade93d02a538e104c9b75525e0dba5"
+    },
+    {
+      "bytes": 284,
+      "path": "src/provtrust/tasks/consensus_laundering.py",
+      "sha256": "c69a38a5a83b7b38da2f9079b2aaeaeefb519f1d4bedebfed246d6976b775e1c"
+    },
+    {
+      "bytes": 258,
+      "path": "src/provtrust/tasks/evidence_warrant.py",
+      "sha256": "322387471a684bae7740f6a7bd5fd59de446bdb39f3de26bcbfb48252127b565"
+    },
+    {
+      "bytes": 8128,
+      "path": "src/provtrust/tasks/interactive_verification.py",
+      "sha256": "061234b3b45bdb09c3c521daf7e67e5843925941a4321e1cc2aa8f6aa0d09cac"
+    },
+    {
+      "bytes": 4811,
+      "path": "src/provtrust/tasks/l2d_replication.py",
+      "sha256": "62cf9691761106308e312b5251977220bae0ba0156ad0c215653884154593256"
+    },
+    {
+      "bytes": 423,
+      "path": "src/provtrust/tasks/mirage_stress.py",
+      "sha256": "57f0eb3b00406b4f7585d7371358a5a7282da7eac7033b3ec5a4132b3e78e2c6"
+    },
+    {
+      "bytes": 1886,
+      "path": "src/provtrust/tasks/pavg_defense.py",
+      "sha256": "3db4637cd260d799b5fe2ea4496c51ce54942e580f5abbc2c27e770ea08a209e"
+    },
+    {
+      "bytes": 302,
+      "path": "src/provtrust/tasks/rationale_faithfulness.py",
+      "sha256": "ffb49c53690436cb5c321e98705eeacd6364f1660904e2487e38818ea7b04836"
+    },
+    {
+      "bytes": 264,
+      "path": "src/provtrust/tasks/static_factorial.py",
+      "sha256": "e8a36402c43df433a88317082ffc2b3e6f849814a7095c1e156d9ca34f5e0763"
+    },
+    {
+      "bytes": 770,
+      "path": "src/provtrust/tools/__init__.py",
+      "sha256": "883f1a823f60e7daa781a4bcb9c6b6bdd0179300a4ba0c3529cfe038b31f9b66"
+    },
+    {
+      "bytes": 1747,
+      "path": "src/provtrust/tools/canonical_lookup.py",
+      "sha256": "f43b12f636e9575b180a9992c8c485b6174b5c30667bd4ee2b79f9ae593e5897"
+    },
+    {
+      "bytes": 4998,
+      "path": "src/provtrust/tools/controlled_search.py",
+      "sha256": "e8337a32b284c1d20d8947a09af2858e7d2f0097796850b43d555cda38295e5d"
+    },
+    {
+      "bytes": 1477,
+      "path": "src/provtrust/tools/find_evidence.py",
+      "sha256": "9b49527a6fad90d5ac4db79a5ec178e00cbd1d8dcb77d2df2dc53a79c8d1a292"
+    },
+    {
+      "bytes": 3336,
+      "path": "src/provtrust/tools/open_snapshot.py",
+      "sha256": "b917592f77de44a77316ed4c59df92aebb0e98f0731d6592493953ae5af829f1"
+    },
+    {
+      "bytes": 3175,
+      "path": "src/provtrust/tools/provenance_trace.py",
+      "sha256": "418ef0a68c064bd23fee53d3837c02880acc88cf7213e6b56a59afb23c968306"
+    },
+    {
+      "bytes": 1915,
+      "path": "src/provtrust/tools/tool_policy.py",
+      "sha256": "b9a46adb7ba8a38a63717c1f12719840a0f83d238f106be333b540fcaf90d97d"
+    },
+    {
+      "bytes": 2175,
+      "path": "src/provtrust/tools/verify_identifier.py",
+      "sha256": "0ce5bd54830afe4510a03510a32a20c43c8e1b7e7ffc1db10e534b8f7e3a8ca1"
+    },
+    {
+      "bytes": 3896,
+      "path": "src/provtrust/web.py",
+      "sha256": "531a963beb972a4c5e04dd90f9146aad25ad36beb1448d03fbf7c9330fafbf95"
+    }
+  ],
+  "manifest_id": "interactive-v2-qwen3-full-v2",
+  "purpose": "freeze project code imported by Track E execution and validation",
+  "schema_version": "1.0.0"
+}

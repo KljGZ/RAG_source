@@ -1,0 +1,38 @@
+{
+  "acceptance": {
+    "failures": [],
+    "gates": {
+      "contradictory_hit_does_not_establish_absence": true,
+      "definition_is_v2": true,
+      "invalid_result_type_does_not_establish_absence": true,
+      "missing_tool_result_does_not_establish_absence": true,
+      "no_call_does_not_establish_absence": true,
+      "returned_existing_record_establishes_existence": true,
+      "single_component_never_implies_strict_completion": true,
+      "target_bound_empty_search_establishes_absence": true,
+      "unrelated_empty_search_does_not_establish_absence": true
+    }
+  },
+  "amendment": {
+    "path": "analysis/preregistration/V0_INTERACTIVE_VERIFICATION_ENGINEERING_AMENDMENT_003.md",
+    "sha256": "29844c579a84b3a33d71bbd10a731be44f7508fabf4e715b994ee895b8a4fbd6"
+  },
+  "dataset_config": {
+    "path": "configs/datasets/v0_paired_v1.yaml",
+    "sha256": "61837f8d625e2f9d4f274adb89a26d00d538953fbf8870e4b263565e3d794b2f"
+  },
+  "definition": "trial_specific_interactive_v2",
+  "interpretation_boundary": "This model-free artifact validates trace semantics only; it contains no model behavior and supports no behavioral claim.",
+  "run_kind": "model_free_trace_semantics_acceptance",
+  "schema_version": "1.0.0",
+  "scientific_claims_allowed": false,
+  "scorer": {
+    "path": "src/provtrust/scorers/interactive_trace.py",
+    "sha256": "b01d1af317fb5b0493c53251b93655f4fc2319968b70fdaa8d22bd6c0549d980"
+  },
+  "status": "passed",
+  "validator": {
+    "path": "scripts/validate_interactive_trace_v2.py",
+    "sha256": "0c299d128cea12ac74de7144496c78d28aabef4f741fe754ccc3d387851a92bd"
+  }
+}

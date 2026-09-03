@@ -31,15 +31,19 @@ remain separately gated and are not implied by this first-tranche authorization.
 - Confirmatory V1 remains gated on a frozen `EXPERIMENT_PLAN.lock.yaml` produced
   before looking at V1 outcomes.
 
-## Track E full-run blocker discovered during public-data review
+## Track E scorer blocker discovered during public-data review — resolved
 
-- The current missing-page component can mark
+- The version-1 missing-page component could mark
   `presented_record_existence_checked=true` when no controlled search occurred. The
   issue is visible in both zero-tool-call preflights for the two
   `c5_missing_reference` rows. Overall preflight completion remains 0/10 for every
   policy, so no reported completion outcome changes.
-- Do not start a 160-row Track E policy run until the predicate requires an observed,
-  target-bound absence check; add negative tests, register the engineering amendment,
-  refresh all runtime/plan hashes, and revalidate the retained preflight logs.
-- The independent resource blocker also remains: physical GPU 2 must provide at
+- Amendment 003 and `trial_specific_interactive_v2` now require a successful,
+  JSON-list-valued search explicitly naming the presented `document_id`. Nine
+  model-free semantics gates passed. All three immutable logs passed 25 rescore gates;
+  exactly their six C5 component values changed from true to false, while trigger,
+  tool-call, and strict-completion counts remained invariant.
+- Three input-contract-8 replacement plans, a 112-file runtime manifest, and the V5
+  allowlisted controller are frozen. The scorer defect no longer blocks execution.
+- The independent resource blocker remains: physical GPU 2 must provide at
   least 46,080 MiB free in two consecutive controller samples.

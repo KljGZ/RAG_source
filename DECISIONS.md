@@ -278,3 +278,26 @@
   in effect, but remove its authority to invoke `control_track_e_full.py` or start any
   model process. This reversible hold prevents an old frozen scorer from producing
   formal outcomes if GPU 2 becomes free unexpectedly.
+
+## 2026-09-03 — Accept scorer V2 correction and release replacement Track E queue
+
+- Register amendment 003 before any formal Track E response. Define absent presented
+  records as checked only when a successful list-valued `controlled_search` query
+  explicitly contains the trial's presented `document_id` and every such result omits
+  that identifier. Reject no call, unrelated search, failed search, invalid output, or
+  a contradictory hit.
+- Accept the correction because all nine model-free semantics gates and all 25 gates
+  on each immutable-log rescore passed. The only component changes are the two C5 rows
+  per policy. Preserve the original logs and V1 scorer metadata; never overwrite or
+  relabel them.
+- Record that rescore definition IDs changed for all 30 rows, but behavioral trace
+  invariants did not: trigger counts remain 0, 0, and 10; tool-call counts remain 0,
+  0, and 28; strict completion remains 0/10 for every policy. These preflight values
+  remain engineering observations and are excluded from formal estimates.
+- Supersede the unexecuted V3 full plans with input-contract-8 V4 plans. Bind amendment
+  003, policy-specific rescore evidence, the model-free scorer acceptance, and the
+  112-file V2 runtime manifest. Use a V5 controller and new state/output directories;
+  retain the old controller and state for audit only.
+- Restore hourly launch authority only to the exact V5 queue and only after deployment
+  at a clean bound revision. Preserve the two-reading 46,080-MiB GPU-2 gate, sequential
+  policy order, zero automatic retries, and all existing process/service boundaries.
