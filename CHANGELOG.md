@@ -42,6 +42,14 @@ silently replace earlier outputs.
 - Retain the first no-tools acceptance failure caused solely by comparing Inspect's
   seven-character Git display to the same full revision; accept only unambiguous
   bidirectional Git-prefix matching and revalidate the immutable log without rerun.
+- Retain and hash-freeze all three passed Track E hybrid-parser preflights; keep their
+  behavior descriptive and outside the 480-trial scientific matrix.
+- Freeze the Track E full-run analysis contract, including parse-missingness rules,
+  family-cluster bootstrap intervals, exact paired diagnostics, and one five-test
+  exploratory Holm family before any full-policy response.
+- Prepare three exact 160-row full-policy plans and a compiled, GPU-2-only hourly
+  controller that can advance only those plans and cannot launch V1, PAVG, gated,
+  paid-API, or other-model work.
 
 ## [0.1.0] - 2026-08-31
 

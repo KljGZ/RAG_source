@@ -27,12 +27,20 @@ def main() -> int:
         "--entrypoint",
         default="src/provtrust/tasks/interactive_verification.py",
     )
+    parser.add_argument(
+        "--extra-file",
+        action="append",
+        default=[],
+        type=Path,
+        help="Additional project-relative execution or analysis file to freeze.",
+    )
     args = parser.parse_args()
 
     root = Path.cwd().resolve()
     source_root = root / "src/provtrust"
     paths = sorted(source_root.rglob("*.py"))
     paths.append(root / "scripts/validate_interactive_preflight.py")
+    paths.extend(root / path for path in args.extra_file)
     paths = sorted({_contained_file(root, path) for path in paths})
     entries = [
         {

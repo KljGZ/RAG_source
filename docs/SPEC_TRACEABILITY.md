@@ -16,7 +16,7 @@ been supported.
 | Track B: static causal decomposition | 15-cell exact paired design and paired task | frozen corpus/audits; 240-sample Qwen3-14B run; 224 paired effects and integrity manifests | verified | first exploratory model complete; multi-model replication pending |
 | Track C: authenticity and warrant | interventions, tasks, gaps/monotonicity scorers | counterfactual/scorer tests | verified | untested |
 | Track D: independence/consensus laundering | provenance graphs, idempotent aggregation, task/scorers | root and non-amplification tests | verified | untested |
-| Track E: interactive verification | controlled tools, prior/posterior solver, seven-component trial-specific trace diagnostics | three hash-bound model-free acceptances over 160 trials and 81 documents per policy | verified | three one-family model preflights ready; no interactive outcome yet |
+| Track E: interactive verification | controlled tools, prior/posterior solver, seven-component trial-specific trace diagnostics, frozen full-run analyzer | three hash-bound model-free acceptances plus three accepted one-family V3 model preflights | verified | preflights complete; three 160-row full-policy plans frozen for sequential execution |
 | Track F: rationale causal faithfulness | declared-factor output plus counterfactual consistency scorer | scorer test | verified | model runs pending |
 | Track G: PAVG defense | risk gate, attribution/warrant/root aggregation, abstention, tool protocol | defense tests and task build | verified | baseline comparison pending |
 | MIRAGE isolated stress adapter | safety-gated manifest reader and task | harmless safety manifest build test | verified | upstream/license/resource gated |
@@ -26,7 +26,7 @@ been supported.
 | Atomic output, retries, costs, sharding | execution package and SQLite state machines | crash/state/budget tests | verified | no production run |
 | Resource authorization and isolation | reviewed allocation, physical-to-logical GPU mask, frozen-input CLI gate | allocation/input-tamper tests and CUDA probe | verified | GPU 2 allocated; compatibility passed |
 | Controlled private webpages/search | loopback FastAPI services | `BROWSER_SMOKE.remote.json` | deployed | only harmless fixture loaded |
-| Hourly process supervision | PID identity, allowlist, restart rate, lock/disk checks | active hourly heartbeat plus healthy manual acceptance run | deployed | service-only guardrail; run-specific GPU monitor deferred until a long run starts |
+| Hourly process supervision | PID identity, compiled plan allowlist, stable GPU gate, restart limits, lock/disk checks | accepted service monitor and completed V3 preflight queue; V4 full-run controller tests | deployed | V4 queue restricted to three frozen Track E V0 plans on GPU 2 |
 | Reproducibility, ethics, threat model, cards | `docs/`, locks, prompt/dataset manifests | strict audit/tests | verified | publication artifacts pending |
 | Stage-level Git history | `docs/VERSIONING.md` | logical commits on `codex/v0` | active | V0 scientific checkpoint/tag deferred until datasets and the exploratory matrix finish |
 
@@ -48,7 +48,8 @@ The implementation is deployable, but full empirical completion cannot be genera
 by infrastructure alone. It still requires licensed upstream data, human/deterministic
 gold validation, additional target/judge model revisions, and any paid API budget.
 The first target (Qwen3-14B) and physical GPU 2 are frozen/allocated, and the exact
-one-family preflight plus 240-sample single-model synthetic run passed their integrity
-gates. Additional models, judges, interactive verification/PAVG runs, licensed real
+one-family preflights plus 240-sample static runs passed their integrity gates. The
+three Track E V3 preflights also passed and the 480-trial full baseline matrix is
+frozen but not yet complete. Additional models, judges, PAVG runs, licensed real
 data, and confirmatory V1 remain explicit gates rather than placeholders silently
 treated as completed work.

@@ -233,3 +233,27 @@
   completion, model-selected tool errors, accuracy, abstention, confidence, and false
   assurance remain observable behavior and cannot be used to accept, retry, or reject
   a preflight.
+
+## 2026-09-02 — Track E full-run release boundary
+
+- Accept all three hybrid-parser preflights because every registered engineering gate
+  passed, not because of their behavior. Retain the descriptive pattern: no tool was
+  triggered without an explicit verification prompt; prompting triggered all ten
+  trials and 28 successful calls, but completed no strict seven-component trace and
+  produced ten unsupported verification assurances.
+- Do not alter the dataset, prompt, policy matrix, completion rule, model, decoding,
+  or sample order in response to this pattern. Exclude every preflight response from
+  full-run estimates and generate all 160 rows again for each policy.
+- Freeze answer-missingness and trace-recomputation rules before the full run. Trace
+  outcomes retain the 160-trial denominator; parse-dependent outcomes use explicit
+  observed denominators and never silently encode a parse failure as a substantive
+  zero or false value.
+- Use family-cluster bootstrap intervals and family-level sign flips for paired risk
+  and policy contrasts. Apply Holm only to the five analysis-plan tests; keep all
+  other p-values secondary and never interpret a degenerate zero effect as
+  equivalence.
+- Authorize the V4 controller to advance exactly the no-tools, unprompted-tools, and
+  prompted-tools 160-row plans, sequentially on physical GPU 2 after two stable
+  45-GiB free-memory readings. It may recover only the existing allowlisted services,
+  cannot kill a process, and cannot launch V1, PAVG, gated, paid-API, other-model, or
+  MIRAGE work.

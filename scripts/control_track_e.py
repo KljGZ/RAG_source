@@ -23,6 +23,7 @@ CONTROLLER_CONFIG = "configs/controller/track_e_v3.local.yaml"
 CONTROLLER_SCRIPT = "scripts/control_track_e.py"
 MONITOR_CONFIG = "configs/monitoring/remote.local.yaml"
 ALLOCATION_CONFIG = "configs/clusters/allocation.local.yaml"
+STATE_DIRECTORY_NAME = "track-e-v3"
 PHYSICAL_GPU_INDEX = 2
 MINIMUM_FREE_GPU_MEMORY_GIB = 45.0
 MINIMUM_STABLE_READINGS = 2
@@ -90,7 +91,7 @@ def _load_config(path: Path) -> tuple[dict[str, Any], Path, Path]:
     if allowed_state_root != expected_state_root:
         raise ValueError("allowed_state_root differs from the deployment profile")
     state_dir = _external_directory(config.get("state_dir"), allowed_state_root, "state_dir")
-    if state_dir != (expected_state_root / "track-e-v3").resolve():
+    if state_dir != (expected_state_root / STATE_DIRECTORY_NAME).resolve():
         raise ValueError("state_dir differs from the deployment profile")
     if config.get("schema_version") != "1.0.0" or config.get("controller_id") != CONTROLLER_ID:
         raise ValueError("controller identity differs from the deployment profile")

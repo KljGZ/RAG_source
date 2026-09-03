@@ -1,6 +1,6 @@
 # Project status
 
-Current stage: **two-model parser-v3 static V0 complete and integrity-accepted**
+Current stage: **Track E V3 preflights accepted; 480-trial full-run release prepared**
 
 ## Deployment state
 
@@ -51,6 +51,14 @@ Current stage: **two-model parser-v3 static V0 complete and integrity-accepted**
   full Linux Mypy validation is repeated after remote synchronization.
 - [x] CPU-only `glmmTMB` synthetic recovery converged with a positive-definite
   Hessian and recovered all five predeclared positive directions.
+- [x] All three Qwen3-14B Track E V3 engineering preflights passed exact execution,
+  frozen-input, parser, trace, allocation, and zero-retry gates on one clean revision.
+- [x] Preflight evidence and raw-log identities were synchronized byte-for-byte and
+  retained without pooling their behavioral observations into the full experiment.
+- [x] A full-run analysis plan was frozen before any 160-row policy response, with
+  explicit missingness, family-cluster, exact-pair, and five-test Holm rules.
+- [x] Three hash-bound 160-row full policy plans and an allowlisted GPU-2 controller
+  were prepared for sequential hourly execution.
 
 ## Scientific implementation state
 
@@ -79,7 +87,8 @@ Current stage: **two-model parser-v3 static V0 complete and integrity-accepted**
 - [ ] Additional target/judge model registries and any paid API budget approved.
 - [x] First full 16-family/240-sample V0 static experiment run and reported.
 - [x] Parser-v3 full reruns and strict descriptive cross-model comparison run.
-- [ ] Interactive-verification and PAVG experiments run.
+- [ ] The 480-trial interactive-verification full matrix run and jointly analyzed.
+- [ ] PAVG experiments run after the three baseline policies complete.
 - [ ] V1 plan frozen or confirmatory outcomes inspected.
 
 The first exploratory static V0 experiment has run; no paid API call or V1
@@ -94,3 +103,11 @@ and show no categorical adoption effect for the tested provenance or proxy cues,
 the saturated binary endpoint prevents equivalence claims. Next gates are interactive
 verification, PAVG baselines, graded endpoints, licensed/validated real data, and
 independent target/judge registries.
+
+Track E preflight behavior is descriptive only: `no_tools` and `tools_unprompted`
+triggered no verification tools in 10/10 trials, while `tools_prompted` triggered in
+10/10 trials and made 28 successful calls. None of the prompted traces completed all
+seven required components, and all ten prompted posteriors claimed verification.
+These values neither gate nor alter the full run. The next executable boundary is the
+three-policy 480-trial full matrix under the frozen V4 controller; no V1 or PAVG run
+is authorized at this boundary.
