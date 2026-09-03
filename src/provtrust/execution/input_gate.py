@@ -44,9 +44,7 @@ def _task_argument(command: list[str], name: str) -> str | None:
     matches = [
         value.partition("=")[2]
         for index, value in enumerate(command)
-        if index > 0
-        and command[index - 1] == "-T"
-        and value.partition("=")[0] == name
+        if index > 0 and command[index - 1] == "-T" and value.partition("=")[0] == name
     ]
     return matches[0] if len(matches) == 1 else None
 
@@ -106,9 +104,7 @@ def _validate_tool_environment(
         errors.append(snapshot_error)
     elif snapshot_manifest_path is not None:
         try:
-            snapshot_manifest = json.loads(
-                snapshot_manifest_path.read_text(encoding="utf-8")
-            )
+            snapshot_manifest = json.loads(snapshot_manifest_path.read_text(encoding="utf-8"))
             entries = snapshot_manifest.get("files")
             if not isinstance(entries, list):
                 raise TypeError("snapshot file list missing")
@@ -189,9 +185,7 @@ def validate_frozen_execution_inputs(plan: dict[str, Any], root: Path) -> tuple[
     tool_track = plan.get("track") in {"interactive_verification", "pavg_defense"}
     if tool_track:
         required_fields.append("tool_environment_manifest")
-    interactive_v4 = (
-        tool_track and isinstance(contract_version, int) and contract_version >= 4
-    )
+    interactive_v4 = tool_track and isinstance(contract_version, int) and contract_version >= 4
     interactive_v5 = (
         plan.get("track") == "interactive_verification"
         and isinstance(contract_version, int)
@@ -202,14 +196,19 @@ def validate_frozen_execution_inputs(plan: dict[str, Any], root: Path) -> tuple[
         and isinstance(contract_version, int)
         and contract_version >= 6
     )
+    interactive_v8 = (
+        plan.get("track") == "interactive_verification"
+        and isinstance(contract_version, int)
+        and contract_version >= 8
+    )
     if interactive_v4:
-        required_fields.extend(
-            ("protocol_preregistration", "tool_environment_acceptance")
-        )
+        required_fields.extend(("protocol_preregistration", "tool_environment_acceptance"))
     if interactive_v5:
         required_fields.append("engineering_amendment")
     if interactive_v6:
         required_fields.append("runtime_code_manifest")
+    if interactive_v8:
+        required_fields.append("trace_scorer_acceptance")
     for field in required_fields:
         path, error = _project_path(root, plan.get(field), label=field)
         if error:
@@ -227,26 +226,20 @@ def validate_frozen_execution_inputs(plan: dict[str, Any], root: Path) -> tuple[
             "activation_evidence": "activation_evidence_sha256",
         }
         if tool_track:
-            frozen_hash_fields["tool_environment_manifest"] = (
-                "tool_environment_manifest_sha256"
-            )
+            frozen_hash_fields["tool_environment_manifest"] = "tool_environment_manifest_sha256"
         if interactive_v4:
             frozen_hash_fields.update(
                 {
                     "protocol_preregistration": "protocol_preregistration_sha256",
-                    "tool_environment_acceptance": (
-                        "tool_environment_acceptance_sha256"
-                    ),
+                    "tool_environment_acceptance": ("tool_environment_acceptance_sha256"),
                 }
             )
         if interactive_v5:
-            frozen_hash_fields["engineering_amendment"] = (
-                "engineering_amendment_sha256"
-            )
+            frozen_hash_fields["engineering_amendment"] = "engineering_amendment_sha256"
         if interactive_v6:
-            frozen_hash_fields["runtime_code_manifest"] = (
-                "runtime_code_manifest_sha256"
-            )
+            frozen_hash_fields["runtime_code_manifest"] = "runtime_code_manifest_sha256"
+        if interactive_v8:
+            frozen_hash_fields["trace_scorer_acceptance"] = "trace_scorer_acceptance_sha256"
         for resolved_field, plan_field in frozen_hash_fields.items():
             expected = plan.get(plan_field)
             if not isinstance(expected, str) or expected != sha256_file(resolved[resolved_field]):
@@ -266,21 +259,20 @@ def validate_frozen_execution_inputs(plan: dict[str, Any], root: Path) -> tuple[
         )
         if not isinstance(activation_evidence, dict):
             raise TypeError("activation evidence must contain a JSON object")
-        tool_environment = (
-            _load_yaml(resolved["tool_environment_manifest"])
-            if tool_track
-            else None
-        )
+        tool_environment = _load_yaml(resolved["tool_environment_manifest"]) if tool_track else None
         tool_acceptance = (
-            json.loads(
-                resolved["tool_environment_acceptance"].read_text(encoding="utf-8")
-            )
+            json.loads(resolved["tool_environment_acceptance"].read_text(encoding="utf-8"))
             if interactive_v4
             else None
         )
         runtime_code_manifest = (
             json.loads(resolved["runtime_code_manifest"].read_text(encoding="utf-8"))
             if interactive_v6
+            else None
+        )
+        trace_scorer_acceptance = (
+            json.loads(resolved["trace_scorer_acceptance"].read_text(encoding="utf-8"))
+            if interactive_v8
             else None
         )
     except (OSError, TypeError, ValueError, json.JSONDecodeError, yaml.YAMLError):
@@ -306,6 +298,76 @@ def validate_frozen_execution_inputs(plan: dict[str, Any], root: Path) -> tuple[
         manifest.root_sha256
     ):
         errors.append("activation_model_root_hash_mismatch")
+    if interactive_v8:
+        if not isinstance(trace_scorer_acceptance, dict):
+            errors.append("trace_scorer_acceptance_invalid")
+        else:
+            scorer_acceptance_result = trace_scorer_acceptance.get("acceptance")
+            scorer_identity = trace_scorer_acceptance.get("scorer")
+            scorer_amendment = trace_scorer_acceptance.get("amendment")
+            if trace_scorer_acceptance.get("status") != "passed":
+                errors.append("trace_scorer_acceptance_not_passed")
+            if trace_scorer_acceptance.get("definition") != ("trial_specific_interactive_v2"):
+                errors.append("trace_scorer_acceptance_definition_mismatch")
+            if not isinstance(scorer_acceptance_result, dict) or (
+                scorer_acceptance_result.get("failures") != []
+                or not isinstance(scorer_acceptance_result.get("gates"), dict)
+                or not all(scorer_acceptance_result["gates"].values())
+            ):
+                errors.append("trace_scorer_acceptance_gates_failed")
+            if not isinstance(scorer_identity, dict):
+                errors.append("trace_scorer_acceptance_code_invalid")
+            else:
+                scorer_path, scorer_path_error = _project_path(
+                    root,
+                    scorer_identity.get("path"),
+                    label="trace_scorer_implementation",
+                )
+                if scorer_path_error:
+                    errors.append(scorer_path_error)
+                elif scorer_path is not None and scorer_identity.get("sha256") != sha256_file(
+                    scorer_path
+                ):
+                    errors.append("trace_scorer_acceptance_code_mismatch")
+            if not isinstance(scorer_amendment, dict) or scorer_amendment.get(
+                "sha256"
+            ) != sha256_file(resolved["engineering_amendment"]):
+                errors.append("trace_scorer_acceptance_amendment_mismatch")
+
+        rescore = activation_evidence.get("rescore")
+        rescore_acceptance = activation_evidence.get("acceptance")
+        activation_scorer_acceptance = activation_evidence.get("scorer_acceptance")
+        activation_amendment = activation_evidence.get("amendment")
+        if activation_evidence.get("run_kind") != "preflight_rescore":
+            errors.append("activation_evidence_not_preflight_rescore")
+        if activation_evidence.get("scientific_claims_allowed") is not False:
+            errors.append("activation_rescore_claim_boundary_invalid")
+        if activation_evidence.get("policy") != plan.get("interactive_policy"):
+            errors.append("activation_rescore_policy_mismatch")
+        if (
+            not isinstance(rescore, dict)
+            or rescore.get("definition") != "trial_specific_interactive_v2"
+            or rescore.get("no_new_model_output") is not True
+            or not isinstance(rescore.get("sample_count"), int)
+            or rescore.get("sample_count", 0) <= 0
+        ):
+            errors.append("activation_rescore_identity_invalid")
+        if (
+            not isinstance(rescore_acceptance, dict)
+            or rescore_acceptance.get("failures") != []
+            or not isinstance(rescore_acceptance.get("gates"), dict)
+            or not all(rescore_acceptance["gates"].values())
+        ):
+            errors.append("activation_rescore_gates_failed")
+        if not isinstance(activation_scorer_acceptance, dict) or (
+            activation_scorer_acceptance.get("sha256")
+            != sha256_file(resolved["trace_scorer_acceptance"])
+        ):
+            errors.append("activation_rescore_scorer_acceptance_mismatch")
+        if not isinstance(activation_amendment, dict) or activation_amendment.get(
+            "sha256"
+        ) != sha256_file(resolved["engineering_amendment"]):
+            errors.append("activation_rescore_amendment_mismatch")
     if interactive_v4:
         if not isinstance(tool_acceptance, dict):
             errors.append("tool_environment_acceptance_invalid")
@@ -351,9 +413,7 @@ def validate_frozen_execution_inputs(plan: dict[str, Any], root: Path) -> tuple[
                 if sha256_file(acceptance_path) != adapter.acceptance_sha256:
                     errors.append("provider_adapter_acceptance_hash_mismatch")
                 try:
-                    adapter_acceptance = json.loads(
-                        acceptance_path.read_text(encoding="utf-8")
-                    )
+                    adapter_acceptance = json.loads(acceptance_path.read_text(encoding="utf-8"))
                     if not isinstance(adapter_acceptance, dict):
                         raise TypeError("adapter acceptance must be an object")
                     if adapter_acceptance.get("status") != "passed":
@@ -367,10 +427,7 @@ def validate_frozen_execution_inputs(plan: dict[str, Any], root: Path) -> tuple[
                         != adapter.implementation_sha256
                     ):
                         errors.append("provider_adapter_acceptance_code_mismatch")
-                    if (
-                        adapter_acceptance.get("runtime_version")
-                        != adapter.runtime_version
-                    ):
+                    if adapter_acceptance.get("runtime_version") != adapter.runtime_version:
                         errors.append("provider_adapter_acceptance_runtime_mismatch")
                 except (OSError, TypeError, ValueError, json.JSONDecodeError):
                     errors.append("provider_adapter_acceptance_parse_failure")
@@ -426,9 +483,8 @@ def validate_frozen_execution_inputs(plan: dict[str, Any], root: Path) -> tuple[
                 )
                 if source_error:
                     errors.append(source_error)
-                elif (
-                    source_path is not None
-                    and (not isinstance(expected, str) or sha256_file(source_path) != expected)
+                elif source_path is not None and (
+                    not isinstance(expected, str) or sha256_file(source_path) != expected
                 ):
                     errors.append("dataset_source_code_hash_mismatch")
 
@@ -477,14 +533,17 @@ def validate_frozen_execution_inputs(plan: dict[str, Any], root: Path) -> tuple[
         expected_model_args = resolved["model_args"].relative_to(root).as_posix()
         if _command_option(typed_command, "--model-config") != expected_model_args:
             errors.append("inspect_model_args_path_mismatch")
-        if isinstance(dataset_relative, str) and f"dataset_path={dataset_relative}" not in typed_command:
+        if (
+            isinstance(dataset_relative, str)
+            and f"dataset_path={dataset_relative}" not in typed_command
+        ):
             errors.append("inspect_dataset_path_mismatch")
         if tool_track:
             assert isinstance(tool_environment, dict)
             errors.extend(_validate_tool_environment(tool_environment, root, typed_command))
-            expected_tool_manifest = resolved["tool_environment_manifest"].relative_to(
-                root
-            ).as_posix()
+            expected_tool_manifest = (
+                resolved["tool_environment_manifest"].relative_to(root).as_posix()
+            )
             if dataset_manifest.get("tool_environment_manifest") != expected_tool_manifest:
                 errors.append("dataset_tool_environment_manifest_mismatch")
             if dataset_manifest.get("tool_environment_manifest_sha256") != sha256_file(
@@ -499,8 +558,7 @@ def validate_frozen_execution_inputs(plan: dict[str, Any], root: Path) -> tuple[
                 errors.append("inspect_system_prompt_path_mismatch")
             policy = dataset_manifest.get("interactive_policy")
             if plan.get("track") == "interactive_verification" and (
-                not isinstance(policy, str)
-                or _task_argument(typed_command, "policy") != policy
+                not isinstance(policy, str) or _task_argument(typed_command, "policy") != policy
             ):
                 errors.append("interactive_policy_mismatch")
         if interactive_v6:
@@ -508,8 +566,6 @@ def validate_frozen_execution_inputs(plan: dict[str, Any], root: Path) -> tuple[
                 errors.append("runtime_code_manifest_invalid")
             else:
                 errors.extend(
-                    _validate_runtime_code_manifest(
-                        runtime_code_manifest, root, typed_command
-                    )
+                    _validate_runtime_code_manifest(runtime_code_manifest, root, typed_command)
                 )
     return tuple(sorted(set(errors)))

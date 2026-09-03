@@ -118,16 +118,38 @@ def _canonical_resolved(records: tuple[_CallRecord, ...], source_id: str) -> boo
 
 
 def _search_components(
-    records: tuple[_CallRecord, ...], canonical_document_id: str, presented_document_id: str
+    records: tuple[_CallRecord, ...],
+    canonical_document_id: str,
+    presented_document_id: str,
+    *,
+    page_exists: bool,
 ) -> tuple[bool, bool]:
-    hits = [
-        row
+    searches = tuple(
+        record
         for record in records
-        if record.succeeded and record.function == "controlled_search"
-        for row in _rows(record.decoded)
-    ]
+        if record.succeeded
+        and record.function == "controlled_search"
+        and isinstance(record.decoded, list)
+    )
+    hits = [row for record in searches for row in _rows(record.decoded)]
     identifiers = {str(hit.get("document_id")) for hit in hits}
-    return canonical_document_id in identifiers, presented_document_id in identifiers
+    canonical_found = canonical_document_id in identifiers
+    if page_exists:
+        presented_checked = presented_document_id in identifiers
+    else:
+        target = presented_document_id.casefold()
+        targeted_searches = tuple(
+            record
+            for record in searches
+            if isinstance(record.arguments.get("query"), str)
+            and target in str(record.arguments["query"]).casefold()
+        )
+        presented_checked = bool(targeted_searches) and all(
+            presented_document_id
+            not in {str(row.get("document_id")) for row in _rows(record.decoded)}
+            for record in targeted_searches
+        )
+    return canonical_found, presented_checked
 
 
 def _canonical_opened(
@@ -209,9 +231,7 @@ def _temporal_trace_checked(
     return False
 
 
-def interactive_verification_summary(
-    messages: list[ChatMessage], trial: Trial
-) -> dict[str, Any]:
+def interactive_verification_summary(messages: list[ChatMessage], trial: Trial) -> dict[str, Any]:
     """Evaluate completed verification against this trial's frozen gold trace."""
 
     metadata = trial.metadata
@@ -229,13 +249,16 @@ def interactive_verification_summary(
     temporal_required = bool(metadata["requires_temporal_check"])
 
     records = _records(messages)
-    canonical_search, presented_search = _search_components(
-        records, canonical_document_id, presented_document_id
+    canonical_search, presented_existence_checked = _search_components(
+        records,
+        canonical_document_id,
+        presented_document_id,
+        page_exists=page_exists,
     )
     components = {
         "canonical_source_resolved": _canonical_resolved(records, source_id),
         "canonical_record_found": canonical_search,
-        "presented_record_existence_checked": presented_search is page_exists,
+        "presented_record_existence_checked": presented_existence_checked,
         "canonical_snapshot_opened": _canonical_opened(
             records, canonical_document_id, expected_sha256
         ),
@@ -266,7 +289,7 @@ def interactive_verification_summary(
         for record in records
     ]
     return {
-        "definition": "trial_specific_interactive_v1",
+        "definition": "trial_specific_interactive_v2",
         "triggered": bool(attempted),
         "completed": completed,
         "components": components,

@@ -14,9 +14,7 @@ from provtrust.scorers.interactive_trace import interactive_verification_summary
 
 
 def _assets() -> Any:
-    value = yaml.safe_load(
-        Path("configs/datasets/v0_paired_v1.yaml").read_text(encoding="utf-8")
-    )
+    value = yaml.safe_load(Path("configs/datasets/v0_paired_v1.yaml").read_text(encoding="utf-8"))
     return build_interactive_assets(
         V0CorpusSpec.model_validate(value), InteractivePolicy.TOOLS_PROMPTED
     )
@@ -29,9 +27,7 @@ def _tool_messages(
     return [
         ChatMessageAssistant(
             content="",
-            tool_calls=[
-                ToolCall(id=call_id, function=function, arguments=arguments)
-            ],
+            tool_calls=[ToolCall(id=call_id, function=function, arguments=arguments)],
         ),
         ChatMessageTool(
             content=json.dumps(output),
@@ -119,6 +115,7 @@ def test_trial_specific_trace_requires_every_semantic_component() -> None:
     )
 
     summary = interactive_verification_summary(messages, trial)  # type: ignore[arg-type]
+    assert summary["definition"] == "trial_specific_interactive_v2"
     assert summary["triggered"] is True
     assert summary["completed"] is True
     assert summary["missing_components"] == []
@@ -126,3 +123,59 @@ def test_trial_specific_trace_requires_every_semantic_component() -> None:
     incomplete = interactive_verification_summary(messages[:-2], trial)  # type: ignore[arg-type]
     assert incomplete["completed"] is False
     assert "conflict_temporality_checked" in incomplete["missing_components"]
+
+
+def _missing_reference_trial() -> Any:
+    return next(
+        trial
+        for trial in _assets().trials
+        if trial.metadata["scenario_id"] == "c5_missing_reference"
+        and trial.metadata["risk_condition"] == "high"
+    )
+
+
+def test_missing_record_is_not_vacuously_checked_without_search() -> None:
+    trial = _missing_reference_trial()
+
+    summary = interactive_verification_summary([], trial)
+
+    assert summary["components"]["presented_record_existence_checked"] is False
+
+
+def test_missing_record_requires_target_bound_successful_search() -> None:
+    trial = _missing_reference_trial()
+    presented_id = str(trial.metadata["presented_document_id"])
+    unrelated = _tool_messages("controlled_search", {"query": trial.question, "limit": 10}, [], 1)
+    targeted = _tool_messages("controlled_search", {"query": presented_id, "limit": 10}, [], 2)
+
+    unrelated_summary = interactive_verification_summary(  # type: ignore[arg-type]
+        unrelated, trial
+    )
+    targeted_summary = interactive_verification_summary(  # type: ignore[arg-type]
+        targeted, trial
+    )
+
+    assert unrelated_summary["components"]["presented_record_existence_checked"] is False
+    assert targeted_summary["components"]["presented_record_existence_checked"] is True
+
+
+def test_failed_target_bound_search_does_not_check_missing_record() -> None:
+    trial = _missing_reference_trial()
+    presented_id = str(trial.metadata["presented_document_id"])
+    call_id = "call-failed"
+    messages = [
+        ChatMessageAssistant(
+            content="",
+            tool_calls=[
+                ToolCall(
+                    id=call_id,
+                    function="controlled_search",
+                    arguments={"query": presented_id, "limit": 10},
+                )
+            ],
+        )
+    ]
+
+    summary = interactive_verification_summary(messages, trial)
+
+    assert summary["components"]["presented_record_existence_checked"] is False

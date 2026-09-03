@@ -156,9 +156,7 @@ def main() -> int:
     manifest = yaml.safe_load(args.dataset_manifest.read_text(encoding="utf-8"))
     if not isinstance(manifest, dict):
         raise TypeError("dataset manifest must contain an object")
-    tool_manifest = yaml.safe_load(
-        args.tool_environment_manifest.read_text(encoding="utf-8")
-    )
+    tool_manifest = yaml.safe_load(args.tool_environment_manifest.read_text(encoding="utf-8"))
     if not isinstance(tool_manifest, dict):
         raise TypeError("tool environment manifest must contain an object")
     expected_rows, dataset_path = _expected_rows(manifest, args.expected_samples)
@@ -169,9 +167,7 @@ def main() -> int:
     asset_manifest = json.loads(args.model_asset_manifest.read_text(encoding="utf-8"))
     if not isinstance(asset_manifest, dict):
         raise TypeError("model asset manifest must contain an object")
-    model_registration = yaml.safe_load(
-        args.model_registration.read_text(encoding="utf-8")
-    )
+    model_registration = yaml.safe_load(args.model_registration.read_text(encoding="utf-8"))
     if not isinstance(model_registration, dict):
         raise TypeError("model registration must contain an object")
     provider_adapter = _optional_dict(model_registration.get("provider_adapter"))
@@ -243,11 +239,7 @@ def main() -> int:
         observed_risks[risk] += 1
         observed_policies.add(policy)
 
-        score = (
-            sample.scores.get("structured_parse_scorer")
-            if sample.scores is not None
-            else None
-        )
+        score = sample.scores.get("structured_parse_scorer") if sample.scores is not None else None
         score_metadata = _optional_dict(score.metadata if score is not None else None)
         prior = _optional_dict(score_metadata.get("prior"))
         posterior = _optional_dict(score_metadata.get("posterior"))
@@ -255,7 +247,7 @@ def main() -> int:
         calls = verification.get("calls")
         calls_list = calls if isinstance(calls, list) else []
         trace_valid = (
-            verification.get("definition") == "trial_specific_interactive_v1"
+            verification.get("definition") == "trial_specific_interactive_v2"
             and isinstance(verification.get("triggered"), bool)
             and isinstance(verification.get("completed"), bool)
             and isinstance(verification.get("components"), dict)
@@ -403,10 +395,8 @@ def main() -> int:
         "all_score_metadata_present": score_metadata_count == args.expected_samples,
         "all_structured_outputs_parse": parse_success_count == args.expected_samples,
         "all_prior_answer_types_valid": prior_type_valid_count == args.expected_samples,
-        "all_posterior_answer_types_valid": posterior_type_valid_count
-        == args.expected_samples,
-        "all_citations_reference_supplied_evidence": citation_valid_count
-        == args.expected_samples,
+        "all_posterior_answer_types_valid": posterior_type_valid_count == args.expected_samples,
+        "all_citations_reference_supplied_evidence": citation_valid_count == args.expected_samples,
         "all_trace_metadata_valid": trace_metadata_valid_count == args.expected_samples,
         "all_trace_arguments_redacted": trace_redacted_count == args.expected_samples,
         "no_tools_policy_has_zero_tool_calls": not no_tools or tool_call_count == 0,
@@ -430,9 +420,7 @@ def main() -> int:
     if provider_adapter:
         gates.update(
             {
-                "provider_adapter_id_logged": eval_metadata.get(
-                    "provtrust_provider_adapter_id"
-                )
+                "provider_adapter_id_logged": eval_metadata.get("provtrust_provider_adapter_id")
                 == provider_adapter.get("adapter_id"),
                 "provider_adapter_family_logged": eval_metadata.get(
                     "provtrust_provider_adapter_family"
@@ -450,22 +438,16 @@ def main() -> int:
                     str(provider_adapter.get("runtime"))
                 )
                 == provider_adapter.get("runtime_version"),
-                "provider_adapter_implementation_hash": adapter_implementation
-                is not None
+                "provider_adapter_implementation_hash": adapter_implementation is not None
                 and sha256_file(adapter_implementation)
                 == provider_adapter.get("implementation_sha256"),
-                "provider_adapter_acceptance_hash": adapter_acceptance_path
-                is not None
+                "provider_adapter_acceptance_hash": adapter_acceptance_path is not None
                 and sha256_file(adapter_acceptance_path)
                 == provider_adapter.get("acceptance_sha256"),
-                "provider_adapter_acceptance_passed": adapter_acceptance.get("status")
-                == "passed",
-                "provider_adapter_acceptance_identity": adapter_acceptance.get(
-                    "adapter_id"
-                )
+                "provider_adapter_acceptance_passed": adapter_acceptance.get("status") == "passed",
+                "provider_adapter_acceptance_identity": adapter_acceptance.get("adapter_id")
                 == provider_adapter.get("adapter_id")
-                and adapter_acceptance.get("model_family")
-                == provider_adapter.get("model_family")
+                and adapter_acceptance.get("model_family") == provider_adapter.get("model_family")
                 and adapter_acceptance.get("implementation_sha256")
                 == provider_adapter.get("implementation_sha256"),
             }
@@ -481,9 +463,7 @@ def main() -> int:
                 "runtime_code_manifest_files_match": _runtime_manifest_files_match(
                     runtime_code_manifest
                 ),
-                "runtime_code_entrypoint_matches": runtime_code_manifest.get(
-                    "entrypoint"
-                )
+                "runtime_code_entrypoint_matches": runtime_code_manifest.get("entrypoint")
                 == log.eval.task_file,
             }
         )

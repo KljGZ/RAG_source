@@ -168,9 +168,7 @@ def test_frozen_execution_gate_accepts_exact_inputs(tmp_path: Path) -> None:
 def test_frozen_execution_gate_detects_weight_tampering(tmp_path: Path) -> None:
     plan = _frozen_fixture(tmp_path)
     (tmp_path / "models/Qwen3-fixture/weights.safetensors").write_bytes(b"tampered")
-    assert "size_mismatch:weights.safetensors" in validate_frozen_execution_inputs(
-        plan, tmp_path
-    )
+    assert "size_mismatch:weights.safetensors" in validate_frozen_execution_inputs(plan, tmp_path)
 
 
 def test_frozen_execution_gate_rejects_online_model_args(tmp_path: Path) -> None:
@@ -254,3 +252,15 @@ def test_interactive_v6_also_requires_a_runtime_code_manifest(
     errors = validate_frozen_execution_inputs(plan, tmp_path)
 
     assert "runtime_code_manifest_must_be_relative" in errors
+
+
+def test_interactive_v8_also_requires_trace_scorer_acceptance(
+    tmp_path: Path,
+) -> None:
+    plan = _frozen_fixture(tmp_path)
+    plan["input_contract_version"] = 8
+    plan["track"] = "interactive_verification"
+
+    errors = validate_frozen_execution_inputs(plan, tmp_path)
+
+    assert "trace_scorer_acceptance_must_be_relative" in errors
