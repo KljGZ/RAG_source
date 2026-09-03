@@ -1,0 +1,83 @@
+{
+  "schema_version": "1.0.0",
+  "snapshot_scope": "read_only_remote_state_before_publication",
+  "observed_at_server_local": "2026-09-03T11:26:56+08:00",
+  "monitor_checked_at_utc": "2026-09-03T03:27:27.754945+00:00",
+  "repository": {
+    "path": "/home/jkl/projects/RAG_source",
+    "branch": "codex/v0",
+    "revision": "e326f2ea525033dfdc4342ee2be6cdaf107bc107",
+    "clean": true
+  },
+  "environment": {
+    "locks_ok": true,
+    "lock_error": null
+  },
+  "storage": {
+    "free_disk_gib": 2300.667,
+    "minimum_free_disk_gib": 100.0,
+    "disk_ok": true
+  },
+  "controlled_services": [
+    {
+      "name": "controlled-web",
+      "endpoint": "127.0.0.1:18080",
+      "pid": 2705871,
+      "healthy": true,
+      "monitor_action": "none"
+    },
+    {
+      "name": "controlled-search",
+      "endpoint": "127.0.0.1:18081",
+      "pid": 2705876,
+      "healthy": true,
+      "monitor_action": "none"
+    }
+  ],
+  "gpus": [
+    {
+      "physical_index": 0,
+      "name": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "total_mib": 97887,
+      "used_mib": 69768,
+      "free_mib": 27523,
+      "utilization_percent": 100
+    },
+    {
+      "physical_index": 1,
+      "name": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "total_mib": 97887,
+      "used_mib": 73468,
+      "free_mib": 23823,
+      "utilization_percent": 100
+    },
+    {
+      "physical_index": 2,
+      "name": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "total_mib": 97887,
+      "used_mib": 82606,
+      "free_mib": 14685,
+      "utilization_percent": 100,
+      "allocated_to_this_project": true
+    }
+  ],
+  "track_e_full_controller": {
+    "latest_controller_check_utc": "2026-09-03T03:15:31.485920+00:00",
+    "status": "deferred",
+    "reason": "insufficient_stable_gpu_memory",
+    "physical_gpu_index": 2,
+    "minimum_stable_free_memory_mib": 46080,
+    "controller_observed_free_memory_mib": [16925, 16925],
+    "next_plan": "interactive-v3-no-tools-full",
+    "passed_plans": [],
+    "active_controller_process": false,
+    "active_inspect_eval_process": false,
+    "run_directory_files": [
+      "controller.lock",
+      "events.jsonl",
+      "latest.json"
+    ],
+    "formal_eval_output_present": false,
+    "lock_note": "The zero-byte controller.lock is a flock synchronization inode; file presence alone is not an active lock. No controller or Inspect eval process was running at observation time."
+  }
+}

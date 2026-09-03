@@ -257,3 +257,24 @@
   45-GiB free-memory readings. It may recover only the existing allowlisted services,
   cannot kill a process, and cannot launch V1, PAVG, gated, paid-API, other-model, or
   MIRAGE work.
+
+## 2026-09-03 — Public V0 data release and Track E scorer hold
+
+- Publish audit-safe structured data from V0 through the accepted Track E preflights:
+  480 static observations, 448 family-level paired effects, all 28 model-contrast
+  summaries, and 30 interactive preflight observations with component/tool summaries.
+  Do not publish raw prompts, free-text model messages, tool payloads, or unrestricted
+  `.eval` archives; retain their paths, byte sizes, and SHA-256 identities in Git.
+- During component-level publication review, retain the discovery that
+  `presented_record_existence_checked` can pass for an absent page when no search was
+  attempted. This is a scorer semantic defect, not a new model outcome. It does not
+  change any retained preflight's overall `completed=false` value because every such
+  trial lacks multiple other mandatory components.
+- Hold the outcome-free 480-trial matrix before execution. Require an engineering
+  amendment, target-bound negative-absence semantics, regression tests, refreshed
+  runtime/plan hashes, and rescoring of the retained preflight logs before re-enabling
+  the V4 launch controller. Preserve the independent 45-GiB stable GPU-memory gate.
+- Keep the hourly heartbeat active as a service/integrity monitor while the hold is
+  in effect, but remove its authority to invoke `control_track_e_full.py` or start any
+  model process. This reversible hold prevents an old frozen scorer from producing
+  formal outcomes if GPU 2 becomes free unexpectedly.

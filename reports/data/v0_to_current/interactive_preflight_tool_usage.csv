@@ -1,0 +1,5 @@
+call_count,failed_call_count,policy,successful_call_count,tool_name
+6,0,tools_prompted,6,controlled_search
+8,0,tools_prompted,8,find_evidence
+8,0,tools_prompted,8,open_snapshot
+6,0,tools_prompted,6,verify_identifier

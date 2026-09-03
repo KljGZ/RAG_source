@@ -30,3 +30,16 @@ remain separately gated and are not implied by this first-tranche authorization.
   It is not a V0 blocker.
 - Confirmatory V1 remains gated on a frozen `EXPERIMENT_PLAN.lock.yaml` produced
   before looking at V1 outcomes.
+
+## Track E full-run blocker discovered during public-data review
+
+- The current missing-page component can mark
+  `presented_record_existence_checked=true` when no controlled search occurred. The
+  issue is visible in both zero-tool-call preflights for the two
+  `c5_missing_reference` rows. Overall preflight completion remains 0/10 for every
+  policy, so no reported completion outcome changes.
+- Do not start a 160-row Track E policy run until the predicate requires an observed,
+  target-bound absence check; add negative tests, register the engineering amendment,
+  refresh all runtime/plan hashes, and revalidate the retained preflight logs.
+- The independent resource blocker also remains: physical GPU 2 must provide at
+  least 46,080 MiB free in two consecutive controller samples.

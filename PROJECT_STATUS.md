@@ -1,6 +1,6 @@
 # Project status
 
-Current stage: **Track E V3 preflights accepted; 480-trial full-run release prepared**
+Current stage: **Track E V3 preflights accepted; full run held for scorer amendment and GPU gate**
 
 ## Deployment state
 
@@ -59,6 +59,11 @@ Current stage: **Track E V3 preflights accepted; 480-trial full-run release prep
   explicit missingness, family-cluster, exact-pair, and five-test Holm rules.
 - [x] Three hash-bound 160-row full policy plans and an allowlisted GPU-2 controller
   were prepared for sequential hourly execution.
+- [ ] Amend the missing-record component predicate before full Track E execution. A
+  publication audit found that `presented_record_existence_checked` can pass for a
+  missing page without a search action. This did not change any preflight's overall
+  `completed=false` result, but it must be corrected, registered, and revalidated
+  before the 480-trial outcome matrix.
 
 ## Scientific implementation state
 
@@ -108,6 +113,10 @@ Track E preflight behavior is descriptive only: `no_tools` and `tools_unprompted
 triggered no verification tools in 10/10 trials, while `tools_prompted` triggered in
 10/10 trials and made 28 successful calls. None of the prompted traces completed all
 seven required components, and all ten prompted posteriors claimed verification.
-These values neither gate nor alter the full run. The next executable boundary is the
-three-policy 480-trial full matrix under the frozen V4 controller; no V1 or PAVG run
-is authorized at this boundary.
+These values neither gate nor alter the full run. Component-level publication review
+subsequently exposed a vacuous missing-record predicate: both no-call policies marked
+the two absent-page cells as having checked existence. The full matrix must therefore
+remain outcome-free until an engineering amendment, negative tests, runtime/plan hash
+refresh, and preflight-log rescoring are complete. GPU 2 must additionally pass the
+frozen 46,080 MiB stable-free-memory gate. No V1 or PAVG run is authorized at this
+boundary.

@@ -50,6 +50,14 @@ silently replace earlier outputs.
 - Prepare three exact 160-row full-policy plans and a compiled, GPU-2-only hourly
   controller that can advance only those plans and cannot launch V1, PAVG, gated,
   paid-API, or other-model work.
+- Publish a Chinese V0-to-current comprehensive report plus audit-safe CSV exports of
+  every accepted static sample, paired effect, contrast, interactive preflight sample,
+  tool count, and seven-component outcome; retain raw evals by hash rather than
+  exposing unrestricted transcripts.
+- Hold the untouched Track E full matrix after publication review found that the
+  missing-record component could pass without an observed search. Record the defect,
+  require a versioned scorer amendment and preflight-log rescore, and downgrade the
+  hourly controller to service/integrity monitoring before any formal outcome exists.
 
 ## [0.1.0] - 2026-08-31
 

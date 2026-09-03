@@ -22,6 +22,13 @@ still require an outcome-blind confirmatory V1.
 The outcome-blind second-model protocol is recorded in
 `analysis/preregistration/V0_PHI4_REPLICATION.md` before any Phi-4 response is generated.
 
+The current evidence release is documented in
+`reports/V0_TO_CURRENT_COMPREHENSIVE_REPORT_ZH.md`. Its audit-safe, row-level tables,
+data dictionary, raw-eval hash index, and checksums are under
+`reports/data/v0_to_current/`. Full Track E execution is held until the missing-record
+component amendment recorded in `BLOCKERS.md` is completed; no formal interactive
+outcome has been generated.
+
 ## Remote environment
 
 The canonical compute environment is a Conda environment named `provtrust`
