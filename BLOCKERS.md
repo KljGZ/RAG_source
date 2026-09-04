@@ -47,3 +47,16 @@ remain separately gated and are not implied by this first-tranche authorization.
   allowlisted controller are frozen. The scorer defect no longer blocks execution.
 - The independent resource blocker remains: physical GPU 2 must provide at
   least 46,080 MiB free in two consecutive controller samples.
+
+## Track E unknown-document fault containment — resolved for replacement execution
+
+- V5 retained two complete policy runs, then blocked the prompted policy after an
+  intentionally absent C5 document raised an uncaught `KeyError`. The failed raw log
+  is immutable and cannot be retried, resumed, or pooled.
+- Amendment 004 converts only that model-facing unknown-document condition to a
+  recoverable Inspect `ToolError`. Eleven model-free acceptance gates prove that a
+  parallel valid open survives, the missing open remains failed, and it cannot satisfy
+  absence or strict-completion semantics.
+- Three input-contract-9 plans and the V6 controller use new output/state namespaces
+  and require a complete 480-row same-revision replacement. Activation remains gated
+  by clean deployment and two physical-GPU-2 readings with at least 46,080 MiB free.

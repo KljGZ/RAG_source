@@ -1,6 +1,6 @@
 # Project status
 
-Current stage: **Track E scorer V2 accepted; corrected full run gated on GPU availability**
+Current stage: **Track E fault-containment repair accepted; V6 replacement gated on clean deployment**
 
 ## Deployment state
 
@@ -68,6 +68,15 @@ Current stage: **Track E scorer V2 accepted; corrected full run gated on GPU ava
   003, scorer acceptance, policy-specific rescore evidence, and a 112-file runtime
   manifest. The V5 allowlisted controller uses a new external state directory and
   cannot consume or overwrite the held V4-controller state.
+- [x] Retain two integrity-passed V5 policy runs and one integrity-invalid prompted
+  run. The invalid prefix, root `KeyError`, cancelled pair, analyzer refusal, and raw
+  hashes remain auditable and are not pooled.
+- [x] Register amendment 004, convert unknown model-selected snapshot identifiers to
+  nonfatal Inspect tool errors, and pass 11 model-free fault-containment gates plus
+  single-call, parallel-sibling, and scorer regression tests without importing Torch.
+- [x] Freeze three input-contract-9 version-5 plans, a 113-file runtime manifest, and
+  the V6 GPU-2-only controller in new run, analysis, and state namespaces.
+- [ ] Complete and jointly analyze the 480-row V6 same-revision replacement matrix.
 
 ## Scientific implementation state
 
@@ -124,5 +133,12 @@ successful search. Amendment 003, negative and positive tests, the V2 semantic
 acceptance, immutable-log rescoring, and replacement runtime/plan/controller freezing
 are now complete. The correction changed exactly those six component values from true
 to false and changed no policy's trigger count, call count, or 0/10 strict-completion
-count. Formal Track E remains governed by the independent 46,080 MiB stable-free-memory
-gate on physical GPU 2. No V1 or PAVG run is authorized at this boundary.
+count. V5 subsequently completed the no-tools and unprompted-tools policies but the
+prompted policy was invalidated when a model-selected direct open of an intentionally
+absent C5 document escaped as a fatal `KeyError`. Amendment 004 preserves that call as
+a failed behavioral event while routing it through Inspect's recoverable `ToolError`
+channel. Because joint analysis requires one Git revision and the tool wrapper is part
+of the treatment environment, V6 must regenerate all 480 rows; V5 and V6 observations
+will not be mixed. Formal execution remains governed by the independent 46,080 MiB
+stable-free-memory gate on physical GPU 2. No V1 or PAVG run is authorized at this
+boundary.

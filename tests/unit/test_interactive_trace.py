@@ -6,7 +6,7 @@ from typing import Any
 
 import yaml
 from inspect_ai.model import ChatMessageAssistant, ChatMessageTool
-from inspect_ai.tool import ToolCall
+from inspect_ai.tool import ToolCall, ToolCallError
 
 from provtrust.datasets.interactive_v0 import InteractivePolicy, build_interactive_assets
 from provtrust.datasets.v0_corpus import V0CorpusSpec
@@ -178,4 +178,47 @@ def test_failed_target_bound_search_does_not_check_missing_record() -> None:
 
     summary = interactive_verification_summary(messages, trial)
 
+    assert summary["components"]["presented_record_existence_checked"] is False
+
+
+def test_failed_open_of_missing_record_is_behavior_not_completion() -> None:
+    trial = _missing_reference_trial()
+    presented_id = str(trial.metadata["presented_document_id"])
+    call_id = "call-missing-open"
+    messages = [
+        ChatMessageAssistant(
+            content="",
+            tool_calls=[
+                ToolCall(
+                    id=call_id,
+                    function="open_snapshot",
+                    arguments={"document_id": presented_id},
+                )
+            ],
+        ),
+        ChatMessageTool(
+            content="",
+            tool_call_id=call_id,
+            function="open_snapshot",
+            error=ToolCallError(
+                "unknown",
+                json.dumps(
+                    {
+                        "status": "not_found",
+                        "error_code": "unknown_controlled_document",
+                        "document_id": presented_id,
+                    },
+                    sort_keys=True,
+                ),
+            ),
+        ),
+    ]
+
+    summary = interactive_verification_summary(messages, trial)
+
+    assert summary["triggered"] is True
+    assert summary["completed"] is False
+    assert summary["tool_call_count"] == 1
+    assert summary["successful_tool_call_count"] == 0
+    assert summary["failed_tool_call_count"] == 1
     assert summary["components"]["presented_record_existence_checked"] is False

@@ -301,3 +301,25 @@
 - Restore hourly launch authority only to the exact V5 queue and only after deployment
   at a clean bound revision. Preserve the two-reading 46,080-MiB GPU-2 gate, sequential
   policy order, zero automatic retries, and all existing process/service boundaries.
+
+## 2026-09-03 — Retain V5 failure and freeze fault-contained replacement
+
+- Retain the V5 `no_tools` and `tools_unprompted` full runs as integrity-passed
+  exploratory artifacts. Retain the V5 `tools_prompted` raw log as integrity-invalid:
+  an intentional missing-reference item caused a model-selected direct
+  `open_snapshot` call, whose store-level `KeyError` escaped the wrapper and cancelled
+  the paired sample. Do not treat the subsequent missing-model-usage analyzer error
+  as the root cause and do not infer a prompted-policy effect from the censored prefix.
+- Classify the direct open as behavioral misuse but the fatal propagation as a tool
+  fault-containment defect. Map only an unknown document to Inspect `ToolError` with a
+  deterministic JSON `not_found` message. Keep the call failed; do not count it as a
+  successful absence check or weaken amendment 003. Preserve all other exceptions as
+  fatal infrastructure failures.
+- Accept the repair only after a model-free mixed-parallel call proves that the failed
+  missing open and valid canonical open are both retained, the valid hash matches,
+  trace accounting records one failure and one success, and strict completion remains
+  false. Bind the exact Inspect version and runtime sources in the acceptance artifact.
+- Generate all three policies again under one clean V6 revision rather than combining
+  the new prompted run with old-revision controls. This preserves the frozen combined
+  analyzer's same-revision contract and avoids selective replacement. Never mix the
+  V5 and V6 observations; disclose that amendment 004 follows observed V5 outcomes.

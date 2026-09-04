@@ -1,0 +1,86 @@
+{
+  "acceptance": {
+    "failures": [],
+    "gates": {
+      "failed_open_does_not_establish_absence": true,
+      "parallel_valid_open_completed": true,
+      "parallel_valid_open_hash_matches": true,
+      "partial_trace_is_not_completion": true,
+      "trace_records_both_calls": true,
+      "trace_records_one_failed_call": true,
+      "trace_records_one_successful_call": true,
+      "two_parallel_results_retained": true,
+      "unknown_document_error_is_structured": true,
+      "unknown_document_is_tool_error": true,
+      "valid_canonical_open_is_retained": true
+    }
+  },
+  "acceptance_id": "open_snapshot_fault_containment_v1",
+  "inputs": {
+    "benchmark/synthetic/v0-interactive-v1-tools_prompted.jsonl": "f2d1e4fe0a22a7ee20d5668030ed360ed73db587cac99167a8d3f47bf2ee4ea8",
+    "src/provtrust/scorers/interactive_trace.py": "b01d1af317fb5b0493c53251b93655f4fc2319968b70fdaa8d22bd6c0549d980",
+    "src/provtrust/tools/open_snapshot.py": "7a7fa0ec009402886667ff43a1ebd721f692c91498b303f6d91e0a324ecf3f7d",
+    "web_env/search_index/documents.jsonl": "342c7210c7c099d6bd0d41e7c84d4f89105f85bb0efd67f4e9e07183d0a847e5",
+    "web_env/source_snapshots/MANIFEST.json": "a1a4b41c0d9b77efa1da461830ec3331f263f59b3300aadc5741af4ea2d8ed88"
+  },
+  "inspect_ai_version": "0.3.261",
+  "model_calls": 0,
+  "observed": {
+    "known_payload": {
+      "claimed_source_id": "v0-canonical-registry",
+      "controlled_url": "http://127.0.0.1:18080/source/v0-family-001:canonical",
+      "document_id": "v0-family-001:canonical",
+      "document_role": "canonical",
+      "evidence_ids": [
+        "v0-family-001:canonical:evidence"
+      ],
+      "identifier": "AST-2026-001",
+      "provenance_root_id": "v0-family-001:canonical",
+      "published_at": "2026-08-01T09:00:00Z",
+      "relative_path": "63ca5dd5f12f114d329b239fbbb8847de15d1c19b6ba893d2b60fb2e6a9eee4c.txt",
+      "sha256": "63ca5dd5f12f114d329b239fbbb8847de15d1c19b6ba893d2b60fb2e6a9eee4c",
+      "source_id": "v0-canonical-registry",
+      "text": "Publisher: Aster Canonical Registry\nDocument: v0-family-001:canonical\nAnnouncement: AST-2026-001\nPublished: 2026-08-01T09:00:00Z\nRecord status: final.\nThe registry lists Aster module A01 and tracks the amber seal field.\nCanonical finding: Aster module A01 carries the amber seal.\nNo later update is registered for this record.\n",
+      "title": "Canonical record for Aster module A01"
+    },
+    "message_count": 2,
+    "missing_error_payload": {
+      "document_id": "v0-family-001:c5_missing_reference:presented",
+      "error_code": "unknown_controlled_document",
+      "status": "not_found"
+    },
+    "missing_error_type": "unknown"
+  },
+  "purpose": "prove that an unknown controlled document remains a failed model-selected tool call without terminating the sample or cancelling a parallel valid call",
+  "schema_version": "1.0.0",
+  "status": "passed",
+  "torch_imported": false,
+  "trace": {
+    "completed": false,
+    "components": {
+      "canonical_evidence_span_recorded": false,
+      "canonical_record_found": false,
+      "canonical_snapshot_opened": true,
+      "canonical_source_resolved": false,
+      "claimed_identifier_checked": false,
+      "conflict_temporality_checked": false,
+      "presented_record_existence_checked": false
+    },
+    "definition": "trial_specific_interactive_v2",
+    "failed_tool_call_count": 1,
+    "successful_tool_call_count": 1,
+    "tool_call_count": 2,
+    "triggered": true
+  },
+  "trial": {
+    "canonical_document_id": "v0-family-001:canonical",
+    "item_id": "a879980e1944c57db9114a50",
+    "presented_document_id": "v0-family-001:c5_missing_reference:presented",
+    "risk": "low",
+    "scenario": "c5_missing_reference"
+  },
+  "validator": {
+    "path": "scripts/validate_open_snapshot_fault_containment.py",
+    "sha256": "63815fa830effd1bc761c5f9e37e361c64ffb20dcace472f68d80576dfbb34c6"
+  }
+}

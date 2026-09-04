@@ -1,0 +1,28 @@
+schema_version: "1.0.0"
+controller_id: track-e-v6-fault-contained-full-run-queue
+project_root: /home/REMOTE_USER/projects/RAG_source
+allowed_state_root: /home/REMOTE_USER/provtrust_runs
+state_dir: /home/REMOTE_USER/provtrust_runs/track-e-v6-full
+controller_script: scripts/control_track_e_v6_full.py
+controller_sha256: REPLACE_WITH_SHA256
+expected_git_revision: REPLACE_WITH_FULL_GIT_REVISION
+python_executable: /home/REMOTE_USER/miniforge3/envs/provtrust/bin/python
+provtrust_executable: /home/REMOTE_USER/miniforge3/envs/provtrust/bin/provtrust
+monitor_config: configs/monitoring/remote.local.yaml
+allocation: configs/clusters/allocation.local.yaml
+physical_gpu_index: 2
+minimum_free_gpu_memory_gib: 45
+stable_readings: 2
+stable_interval_seconds: 5
+plans:
+  - name: interactive-v5-no-tools-full
+    path: configs/experiments/v0_qwen3_14b_interactive_v5_no_tools.yaml
+    sha256: 75a7a9623ab482b0ffbd1e571789e115b37a694389f2c03c30375be55a606d98
+  - name: interactive-v5-tools-unprompted-full
+    path: configs/experiments/v0_qwen3_14b_interactive_v5_tools_unprompted.yaml
+    sha256: 49cb1854001d552bd5819c612c1b3ae3bce3ef562156c15f87c138334d6b6881
+  - name: interactive-v5-tools-prompted-full
+    path: configs/experiments/v0_qwen3_14b_interactive_v5_tools_prompted.yaml
+    sha256: 91ca3b6c62fc14093e5109a7ff3ec37e9dedcf2c7eb7c5b867874b6e247fa438
+
+

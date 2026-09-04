@@ -1,0 +1,155 @@
+schema_version: "1.0.0"
+input_contract_version: 9
+stage: v0
+execution_status: ready
+exploratory: true
+scientific_claims_allowed: true
+confirmatory: false
+purpose: fault-contained replacement full closed-world interactive verification baseline without tools
+track: interactive_verification
+interactive_policy: no_tools
+scorer_definition: trial_specific_interactive_v2
+run_kind: exploratory_v0_full
+replacement_history:
+  supersedes_plan_sha256: 8c0c533adaf354e282a27c5abba591908a1f1a297ac14239243304c5af30bdf9
+  reason: fault containment replacement under amendment 004 with a complete same-revision rerun
+protocol_preregistration: analysis/preregistration/V0_INTERACTIVE_VERIFICATION.md
+protocol_preregistration_sha256: a6270bf38e262afc8e583ba9ab78fabd5a7b4a7d445c3f28ff65bcb7a25d94fa
+analysis_preregistration: analysis/preregistration/V0_INTERACTIVE_VERIFICATION_ANALYSIS_PLAN.md
+analysis_preregistration_sha256: 5ca9ce4d2a9d0c75b3dfd5db71ce9c1730350f55f5f1802fa7f49775ba6043f5
+engineering_amendment: analysis/preregistration/V0_INTERACTIVE_VERIFICATION_ENGINEERING_AMENDMENT_004.md
+engineering_amendment_sha256: 242440f48ed61b449a714ef24328eff7b07681ef35e450ab4d0ca6c9bb052025
+amendment_history:
+  - path: analysis/preregistration/V0_INTERACTIVE_VERIFICATION_ENGINEERING_AMENDMENT_001.md
+    sha256: 5e789b92aec1a0a648c04e0ee325bbff4eedcd3cb067f7914623dd6bb06822df
+  - path: analysis/preregistration/V0_INTERACTIVE_VERIFICATION_ENGINEERING_AMENDMENT_002.md
+    sha256: cac9ea352c97667a00080821a741612f1e5c413a144fc81502be9384eb091a41
+  - path: analysis/preregistration/V0_INTERACTIVE_VERIFICATION_ENGINEERING_AMENDMENT_003.md
+    sha256: 29844c579a84b3a33d71bbd10a731be44f7508fabf4e715b994ee895b8a4fbd6
+  - path: analysis/preregistration/V0_INTERACTIVE_VERIFICATION_ENGINEERING_AMENDMENT_004.md
+    sha256: 242440f48ed61b449a714ef24328eff7b07681ef35e450ab4d0ca6c9bb052025
+runtime_code_manifest: configs/runtime/interactive-v3-qwen3-full-v3.manifest.json
+runtime_code_manifest_sha256: cafad47f5044c24dc7f1d02441922df3505b53d2e7634cb68a4b55dedae05895
+trace_scorer_acceptance: artifacts/system/INTERACTIVE_TRACE_V2_ACCEPTANCE.json
+trace_scorer_acceptance_sha256: febfc588058bd0b2d8500b97986e2c45dd12dc5a5e8040a20e05175b02049853
+fault_containment_acceptance: artifacts/system/OPEN_SNAPSHOT_FAULT_CONTAINMENT_ACCEPTANCE.json
+fault_containment_acceptance_sha256: 2cb4880b1547b1c67eddd0c5b79246a17cdb4fdef7e728fbff8a5e4f81a04980
+dataset_manifest: benchmark/manifests/v0-interactive-v1-no_tools.yaml
+dataset_manifest_sha256: 0583b5702aa110d3db50126e095c422734b2921c137fe94752c7f5fc2b01b6fb
+tool_environment_manifest: benchmark/manifests/interactive-v1-tools.yaml
+tool_environment_manifest_sha256: c68fec20b240f199d38e71079750522162afa0f1b66b43aae7fe3e2f55371fd2
+tool_environment_acceptance: artifacts/system/INTERACTIVE_ENV_NO_TOOLS.json
+tool_environment_acceptance_sha256: 841092946d063e661f7fec24c928a6b74e4d447af5499050bc2e85bd9e6dc7e3
+model_registration: configs/models/qwen3-14b-interactive-v3.yaml
+model_registration_sha256: fe5348f6cb0e9338999350edc468042a6f81eaeede5a0c21426fd89b72926cdb
+model_asset_manifest: configs/models/assets/qwen3-14b-cc692f4.manifest.json
+model_asset_manifest_sha256: 5737d6eadb313042cf6d14634ffb3eaf8eb2149572a7b5f993caa459a0210bba
+model_args: configs/models/qwen3-14b-static.local.yaml
+system_prompt: prompts/frozen/interactive-verification-system-v1.txt
+system_prompt_sha256: df598da58cf46b81a421a1371e559778d70afba3a1edf78be8d900c091a95d5d
+activation_evidence: artifacts/system/INTERACTIVE_V4_NO_TOOLS_PREFLIGHT_RESCORE.json
+activation_evidence_sha256: c9c8a6985952fd6454b6a4695a87790d0b92e369417cec957088b59e27bdf89f
+activation_identity:
+  source_preflight_sha256: 4cfc079236c6c5c22e10caab8948b6bbce427f0602030bdceb704dd4c49fd872
+  preflight_plan_sha256: e97104928946c0cdce150c2b59502f3f8d45346712db9a5a8e1fcfbecfc18070
+  preflight_raw_log_sha256: ba1e9f8069f245b5fe835ade96c6aa49ac16339c9556789b06ac249ff1006282
+  preflight_git_revision: 49cf89c29d121ef6929604ee4efc57a29eded6d1
+  rescore_definition: trial_specific_interactive_v2
+  rescore_scorer_sha256: b01d1af317fb5b0493c53251b93655f4fc2319968b70fdaa8d22bd6c0549d980
+  scorer_acceptance_sha256: febfc588058bd0b2d8500b97986e2c45dd12dc5a5e8040a20e05175b02049853
+  rescore_amendment_sha256: 29844c579a84b3a33d71bbd10a731be44f7508fabf4e715b994ee895b8a4fbd6
+seed: 20260831
+epochs: 1
+sample_count: 160
+family_count: 16
+scenario_count: 5
+minimum_model_turns: 320
+temperature: 0.0
+top_p: 1.0
+top_k: 1
+max_tokens: 256
+enable_thinking: false
+retry_on_error: 0
+resource_allocation_required: true
+minimum_resources:
+  cpu_cores: 16
+  ram_gib: 64
+  storage_gib: 100
+  gpu_count: 1
+  minimum_gpu_memory_gib: 35
+  estimated_gpu_hours: 1
+  api_budget_usd: 0
+inspect_command:
+  - inspect
+  - eval
+  - src/provtrust/tasks/interactive_verification.py@interactive_verification
+  - -T
+  - dataset_path=benchmark/synthetic/v0-interactive-v1-no_tools.jsonl
+  - -T
+  - search_index_path=web_env/search_index/documents.jsonl
+  - -T
+  - snapshot_root=web_env/source_snapshots
+  - -T
+  - source_registry_path=web_env/canonical_sources/registry.json
+  - -T
+  - identifier_registry_path=web_env/canonical_sources/identifiers.json
+  - -T
+  - provenance_registry_path=web_env/canonical_sources/provenance-v1.json
+  - -T
+  - system_prompt_path=prompts/frozen/interactive-verification-system-v1.txt
+  - -T
+  - policy=no_tools
+  - --model
+  - hf/Qwen/Qwen3-14B
+  - --model-config
+  - configs/models/qwen3-14b-static.local.yaml
+  - --max-tokens
+  - "256"
+  - --seed
+  - "20260831"
+  - --epochs
+  - "1"
+  - --max-connections
+  - "1"
+  - --max-samples
+  - "1"
+  - --log-dir
+  - artifacts/runs/v0_qwen3_14b_interactive_v5_no_tools
+analysis_command:
+  - python
+  - scripts/analyze_interactive_run.py
+  - artifacts/runs/v0_qwen3_14b_interactive_v5_no_tools/RUN.eval
+  - --dataset-manifest
+  - benchmark/manifests/v0-interactive-v1-no_tools.yaml
+  - --tool-environment-manifest
+  - benchmark/manifests/interactive-v1-tools.yaml
+  - --model-registration
+  - configs/models/qwen3-14b-interactive-v3.yaml
+  - --model-asset-manifest
+  - configs/models/assets/qwen3-14b-cc692f4.manifest.json
+  - --runtime-code-manifest
+  - configs/runtime/interactive-v3-qwen3-full-v3.manifest.json
+  - --analysis-preregistration
+  - analysis/preregistration/V0_INTERACTIVE_VERIFICATION_ANALYSIS_PLAN.md
+  - --expected-analysis-preregistration-sha256
+  - 5ca9ce4d2a9d0c75b3dfd5db71ce9c1730350f55f5f1802fa7f49775ba6043f5
+  - --expected-allocation-id
+  - user-gpu2-open-source-v0-20260831
+  - --expected-model
+  - hf/Qwen/Qwen3-14B
+  - --expected-model-root-sha256
+  - 494ab49926699409cf08e0f127175353082777bb25dc163dd93ed3b55fe1afeb
+  - --expected-policy
+  - no_tools
+  - --expected-plan-sha256
+  - PLAN_SHA256
+  - --expected-git-revision
+  - GIT_REVISION
+  - --expected-samples
+  - "160"
+  - --expected-families
+  - "16"
+  - --analysis-dir
+  - artifacts/analyses/v0_qwen3_14b_interactive_v5_no_tools
+  - --output
+  - artifacts/system/V0_INTERACTIVE_V5_NO_TOOLS_RUN_ACCEPTANCE.json

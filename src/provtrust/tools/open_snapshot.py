@@ -6,7 +6,7 @@ import hashlib
 import json
 from pathlib import Path
 
-from inspect_ai.tool import Tool, tool
+from inspect_ai.tool import Tool, ToolError, tool
 
 from provtrust.tools.controlled_search import ControlledSearchIndex, SearchDocument
 from provtrust.tools.tool_policy import ToolPolicy
@@ -86,8 +86,15 @@ def open_snapshot(
             JSON containing content and its computed digest.
         """
 
-        return json.dumps(
-            store.open_document(document_id, expected_sha256), ensure_ascii=False
-        )
+        try:
+            document = store.open_document(document_id, expected_sha256)
+        except KeyError:
+            error = {
+                "status": "not_found",
+                "error_code": "unknown_controlled_document",
+                "document_id": document_id,
+            }
+            raise ToolError(json.dumps(error, ensure_ascii=False, sort_keys=True)) from None
+        return json.dumps(document, ensure_ascii=False)
 
     return execute

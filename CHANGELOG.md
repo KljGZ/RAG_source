@@ -66,6 +66,15 @@ silently replace earlier outputs.
   trigger, call, and 0/10 strict-completion counts without generating model output.
 - Freeze three input-contract-8 V4 full plans, a 112-file V2 runtime manifest, and a
   new GPU-2-only V5 controller/state namespace before restoring launch authority.
+- Retain the V5 no-tools and unprompted-tools 160-row runs after all integrity gates
+  passed; retain the prompted-tools run as invalid after an unknown-document
+  `KeyError` interrupted execution, without retrying or pooling its prefix.
+- Register amendment 004 and map only unknown `open_snapshot` document identifiers
+  to Inspect's nonfatal `ToolError` channel. Pass model-free single-call, parallel
+  sibling, and trace-semantics regression gates without importing Torch.
+- Freeze a complete same-revision replacement matrix behind input-contract-9 plans,
+  a 113-file runtime manifest, and the GPU-2-only V6 controller. Preserve all V5
+  state and require all three policies to be regenerated before joint analysis.
 
 ## [0.1.0] - 2026-08-31
 
